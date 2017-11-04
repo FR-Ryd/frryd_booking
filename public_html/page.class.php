@@ -1,0 +1,161 @@
+﻿<?php
+
+	//For now handle language parsing here. In future, refactor to make an init-function in page for this, other stuff and cas.
+	if (isset($_GET['l'])) {
+		//$_SESSION['language'] = $_GET['l'];
+		Language::setSelectedLanguage($_GET['l']);
+	}
+	
+	class Page {
+	
+		public function initCAS() {
+			include_once('CAS.php');
+			
+			phpCAS::setDebug("derp");
+			phpCAS::client(CAS_VERSION_2_0,'login.liu.se',443,'/cas/');
+            //TODO: Fixa certifikat och dyligt.
+            phpCAS::setNoCasServerValidation();
+		}
+
+		public function display() {
+		
+		?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="sv" lang="sv" >
+ <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title><?php echo(Language::text("site_title")); ?></title>
+  <link rel="stylesheet" href="jquery-ui.css">
+  <link rel="stylesheet" type="text/css" href="default.css" />
+	<link rel="icon" type="image/x-icon" href="images/favicon.ico">
+  <script type="text/javascript" src="jquery-1.8.2.js"></script>
+  <script type="text/javascript" src="jquery-ui.js"></script>
+  <script type="text/javascript" src="ui.js"></script>
+  <script type="text/javascript" src="livesearch.js"></script>
+
+	<script>
+		function getVote(int) {
+		  if (window.XMLHttpRequest) {
+			// code for IE7+, Firefox, Chrome, Opera, Safari
+			xmlhttp=new XMLHttpRequest();
+		  } else {  // code for IE6, IE5
+			xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+		  }
+		  xmlhttp.onreadystatechange=function() {
+			if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+			  document.getElementById("poll").innerHTML=xmlhttp.responseText;
+			}
+		  }
+		  xmlhttp.open("GET","poll/poll.php?vote="+int,true);
+		  xmlhttp.send();
+		}
+	</script>
+
+<?php if(User::isAdmin()) { 
+// The server only accepts connections of card related things from inside the office,
+// but no need to let the endusers know that. 
+?>
+    <script type="text/javascript" src="cardbox.js"></script>
+<?php } ?>
+
+ 
+ </head>
+<?php
+	flush();
+?>
+ <body>
+	<div id="site-top">
+        <?php if(User::isAdmin()) { ?>
+        <div id='CardBox'>
+				<input type='text' id='CardBoxCard' value='Card number' disabled>
+				<input type='text' id='CardBoxName' value='User name' readonly>
+				<input type='text' id='CardBoxLiuId' value='Liu id' disabled>
+				<input type='button' id='CardBoxLiuGet' value='Get by liu id'>
+				<input type='button' id='CardBoxLiuRegister' value='Register with this liu id' disabled >
+				<input type='button' id='CardBoxLiuNew' value='Create new user with supplied liu-id' disabled>
+        </div>		
+        <?php } ?>
+		<div class="lang-top" style="float: right;">
+			<?php
+			foreach (Language::getLanguages() as $language) { ?>
+					<a href="<?php echo($_SERVER['PHP_SELF']."?l=".$language['id']); ?>"> <?php echo($language['name']); ?></a>
+			<?php } ?>
+		</div>
+		<!--<h1><a href="index.php"><?php //echo(Language::text("site_title")); ?></a></h1>-->
+		
+		<div id="logo"> 
+				<a href="index.php">
+					<img src="https://frryd.se/wp-content/uploads/2015/09/logo-farg-trans.png" alt="Fr Ryd Logo">
+				</a>
+		</div>
+		
+	</div>
+
+	<?php
+		//kom på ej något annat sätt för att kunna kolla språk från livesearch.php, funkade ej me $GLOBALS elle ngt jag kunde tänka på
+		//så fick bli detta för att kunna få reda på språket
+		$currlang = Language::getSelectedLanguage(); //hämtar info när sparar session language ändras och lägger in den till currlang
+		file_put_contents("currlang", utf8_decode($currlang)); //kan betraktas som ful hax att lägga den i en fil, men men
+		$this->displayContent();
+	?>
+
+ </body>
+</html>
+		<?php
+	}	
+	
+		public function handleInput() {
+			null;
+		}
+		
+		protected function displayContent() {
+			echo "TOMT";
+		}
+		
+		protected function displayMenu() {
+			?>
+			<div class="menu">
+				<div class="menu-navi">
+					<a href="index.php"><?php echo(Language::text("booking_menu_title")); ?></a>
+					<a href="user.php?showUser=<?php $currUser=User::getUser(); echo($currUser); ?>">Profile</a>
+					<?php if (User::isAdmin()) { ?>
+					<a href="session.php">Pass</a>
+					<a href="item.php">Föremål</a>
+					<a href="user.php">Användare</a>
+					<a href="booking.php">Bokningar</a>
+					<a href="languages.php">Språk</a>
+					<!--<a href="email.php">Epost</a>-->
+					<?php
+					
+					}
+					if (User::isAuthed()) {
+						echo("<a href='logout.php'>" . Language::text("logout") . "</a>");
+						echo "(Inloggad som " . User::getUser().")";
+					} else {
+						echo("<a href='login.php'>Login</a>\n");
+					}
+					?>
+					
+					<br class="clear" />
+				</div>
+			</div>
+			<?php
+		}
+		
+		protected function displayMessage() {
+			if (isset($_SESSION['message'])){
+				?>
+				<div class="message">
+					<?php echo(nl2br($_SESSION['message'])); ?>
+				</div>
+				<?php
+				$_SESSION['message'] = null;
+			}
+		}
+	
+	
+	}
+?>

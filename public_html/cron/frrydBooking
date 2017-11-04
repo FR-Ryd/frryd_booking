@@ -1,0 +1,6 @@
+# /etc/cron.d/frrydBooking: crontab fragment for FrRyds Booking System
+# This sends reminder emails to people using the booking system.
+
+# Run at 12:30 every day, yay!
+MAILTO=it@frryd.se
+30 12     * * *     www-data   cd /srv/www/booking; /usr/bin/php send_email.php
