@@ -465,8 +465,6 @@
         }
 
 		protected function displayContent() {
-
-
 			$this->displayMenu();
 
 			$this->displayMessage();

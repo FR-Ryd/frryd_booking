@@ -56,7 +56,6 @@
         // If not found and not default language, tries default language.
         // If still not found, gives a hint to what is wrong.
         public static function text($key, $language = null) {
-
             if ($language == null) {
 				$language = self::getSelectedLanguage();
 			}
@@ -67,7 +66,8 @@
             }
 
 			if ($language != self::$defaultLanguage) {
-				// try one more time
+				// if selected language is not defualt language but fails,
+				//try to get translation using default language
 				return self::text($key, self::$defaultLanguage);
 			} else {
 				return "(Unspecified text from key " . $key . ")";
