@@ -103,19 +103,16 @@
 
 					<a href="user.php?showUser=<?php
 						$currUser=User::getUser(); echo($currUser);
-					?>"><?php
-						echo(Language::text("profile_menu_title"));
-					?></a>
+					?>"><?php echo(Language::text("profile_menu_title"));?></a>
 					<?php
 
 					if (User::isAdmin()) {
-						//TODO translate admin menu options
 					?>
-						<a href="session.php">Pass</a>
-						<a href="item.php">Föremål</a>
-						<a href="user.php">Användare</a>
-						<a href="booking.php">Bokningar</a>
-						<a href="languages.php">Språk</a>
+						<a href="session.php"><?php echo(Language::text("sessions_menu_title"));?></a>
+						<a href="item.php"><?php echo(Language::text("items_menu_title"));?></a>
+						<a href="user.php"><?php echo(Language::text("users_menu_title"));?></a>
+						<a href="booking.php"><?php echo(Language::text("bookings_menu_title"));?></a>
+						<a href="languages.php"><?php echo(Language::text("language_menu_title"));?></a>
 						<?php
 
 					}
