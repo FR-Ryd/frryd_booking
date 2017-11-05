@@ -30,84 +30,92 @@
 
 		public static function delete($bookingItemId) {
             $db = Database::getDb();
-	    $db->execute("DELETE FROM booking_items WHERE id = :bookingItemId;",
-		array(":bookingItemId" => $bookingItemId));
+		    $db->execute("DELETE FROM booking_items WHERE id = :bookingItemId;",
+			array(":bookingItemId" => $bookingItemId));
 		}
 
 		public static function deleteBookingItemsForBooking($bookingId) {
-        $db = Database::getDb();
-	    $db->execute("DELETE FROM booking_items WHERE booking = :bookingId;",
-		array(":bookingId" => $bookingId));
+	        $db = Database::getDb();
+		    $db->execute("DELETE FROM booking_items WHERE booking = :bookingId;",
+				array(":bookingId" => $bookingId));
 		}
 
 		public static function update($bookingItemId, $itemId, $pickupSessionId, $returnSessionId, $numItems, $comment, $pickedUpTime, $returnedTime) {
             $db = Database::getDb();
-	    $db->execute("UPDATE booking_items SET
-		item = :itemId,
-		pickup_session = :pickupSessionId,
-		return_session = :returnSessionId,
-		num_items = :numItems,
-		comment = :comment,
-		picked_up_time = :pickedUpTime,
-		returned_time = :returnedTime
-		WHERE id = :bookingItemId;",
-		array(
-		    ":itemId" => $itemId,
-		    ":pickupSessionId" => $pickupSessionId,
-		    ":returnSessionId" => $returnSessionId,
-		    ":numItems" => $numItems,
-		    ":comment" => $comment,
-		    ":pickedUpTime" => $pickedUpTime,
-		    ":returnedTime" => $returnedTime,
-		    ":bookingItemId" => $bookingItemId));
+		    $db->execute("UPDATE booking_items SET
+					item = :itemId,
+					pickup_session = :pickupSessionId,
+					return_session = :returnSessionId,
+					num_items = :numItems,
+					comment = :comment,
+					picked_up_time = :pickedUpTime,
+					returned_time = :returnedTime
+					WHERE id = :bookingItemId;",
+				array(
+				    ":itemId" => $itemId,
+				    ":pickupSessionId" => $pickupSessionId,
+				    ":returnSessionId" => $returnSessionId,
+				    ":numItems" => $numItems,
+				    ":comment" => $comment,
+				    ":pickedUpTime" => $pickedUpTime,
+				    ":returnedTime" => $returnedTime,
+				    ":bookingItemId" => $bookingItemId));
 		}
+
 		public static function updateComment($bookingItemId, $comment) {
             $db = Database::getDb();
-	    $db->execute("UPDATE booking_items SET comment = :comment WHERE id = :bookingItemId;",
-		array(":comment" => $comment, ":bookingItemId" => $bookingItemId));
+		    $db->execute("UPDATE booking_items SET comment = :comment WHERE id = :bookingItemId;",
+				array(":comment" => $comment, ":bookingItemId" => $bookingItemId));
 		}
+
 		public static function updatePickedUp($bookingItemId, $time) {
             $db = Database::getDb();
-	    $db->execute("UPDATE booking_items SET picked_up_time = :time WHERE id = :bookingItemId;",
-		array(":time" => $time, ":bookingItemId" => $bookingItemId));
+		    $db->execute("UPDATE booking_items SET picked_up_time = :time WHERE id = :bookingItemId;",
+				array(":time" => $time, ":bookingItemId" => $bookingItemId));
 		}
+
 		public static function updateReturned($bookingItemId, $time) {
             $db = Database::getDb();
-	    $db->execute("UPDATE booking_items SET returned_time = :time WHERE id = :bookingItemId;",
-		array(":time" => $time, ":bookingItemId" => $bookingItemId));
+		    $db->execute("UPDATE booking_items SET returned_time = :time WHERE id = :bookingItemId;",
+				array(":time" => $time, ":bookingItemId" => $bookingItemId));
 		}
 
 		public static function getBookingItem($bookingItemId) {
             $db = Database::getDb();
-	    $db->query("SELECT * FROM booking_items WHERE id = :bookingItemId;",
-		array(":bookingItemId" => $bookingItemId));
+	    	$db->query("SELECT * FROM booking_items WHERE id = :bookingItemId;",
+				array(":bookingItemId" => $bookingItemId));
+
             return self::fixBookingTimes($db->getRow());
 		}
 
 		public static function getBookingItemsForBooking($bookingId) {
             $db = Database::getDb();
-	    $db->query("SELECT * FROM booking_items WHERE booking = :bookingId ;",
-		array(":bookingId" => $bookingId));
+		    $db->query("SELECT * FROM booking_items WHERE booking = :bookingId ;",
+				array(":bookingId" => $bookingId));
+
             $items = $db->getAllRows();
             foreach($items as $key => $item) {
                 $items[$key] = self::fixBookingTimes($item);
             }
+
             return $items;
 		}
 
 		public static function getBookingItemsForPickupSession($sessionId) {
             $db = Database::getDb();
-	    $db->query("SELECT * FROM booking_items WHERE pickup_session = :sessionId;",
-		array(":sessionId" => $sessionId));
+		    $db->query("SELECT * FROM booking_items WHERE pickup_session = :sessionId;",
+				array(":sessionId" => $sessionId));
+
             $items = $db->getAllRows();
             foreach($items as $key => $item) {
                 $items[$key] = self::fixBookingTimes($item);
             }
+
             return $items;
 		}
 
         public static function getNumBookingItemsForPickupSession($sessionRank) {
-            CRASH();
+            CRASH(); //???
             //Implement this if it seems that we can make a sql-count instead of being smart
             //and getting both items and doing count() on the result from getBookingItemsForPickupSession
 		}
@@ -183,14 +191,13 @@
         //Returns all stuff not returned ever, or if with a session id all not yet returned for that rank
         // which should be returned during that session.
 		public static function getBookingsNotReturnedSession($sessionId = null) {
-			//$db = new Database(self::$dbFileName);
 			$db = Database::getDb();
             if($sessionId) {
                 $db->query("SELECT * FROM booking_items WHERE
-                    (return_session = :sessionId) &&
-                    (returned_time = '0000-00-00 00:00:00') &&
-		    (picked_up_time != '0000-00-00 00:00:00') ORDER BY return_session;",
-		    array(":sessionId" => $sessionId));
+	                    (return_session = :sessionId) &&
+	                    (returned_time = '0000-00-00 00:00:00') &&
+			    		(picked_up_time != '0000-00-00 00:00:00') ORDER BY return_session;",
+		    		array(":sessionId" => $sessionId));
             } else {
                 $db->query("SELECT * FROM booking_items WHERE
                     (returned_time = '0000-00-00 00:00:00') &&
@@ -206,9 +213,8 @@
 		}
 
 		public static function search($key, $value) {
-            CRASH();
+            CRASH(); //???
 			$result = array();
-			//$db = new Database(self::$dbFileName);
 			$db = self::getDb();
 			if ($key == "item_name") {
 				foreach (LendingItem::search("name", $value) as $item) {
@@ -217,6 +223,7 @@
 						$result = array_merge($result, $db->getRows());
 					}
 				}
+
 				return $result;
 			} else {
 				if ($key == "pickup_session" || $key == "return_session") {
@@ -235,8 +242,6 @@
 			return array();
 		}
 
-
-
         // count the number of items of a specific type that are booked, and not returned att this date.
         //   If the period/booking has started, the item must also be picked up
 		public static function getNumBookedItems($itemID, $date, $excludeBookingItemID = null) {
@@ -253,7 +258,7 @@
                 $rows[$key] = self::fixBookingTimes($item);
             }
 
-            //Not awesomeliest but i dont care i think :P
+            //Following code can be improved
             foreach($rows as $bookingItem) {
 
                 if( $bookingItem['id'] == $excludeBookingItemID) {
@@ -281,19 +286,17 @@
 
                 //If picked up, count it.
                 //If the time to pick up is later than today or today, count it.
+				//Ie. if someone was supposed to pick it up but didnt, then count it as free forbooking.
                 if ($pickedUp || strtotime($pickupSessionTime) >= strtotime(date("Y-m-d"))) {
                     $sum += $bookingItem['num_items'];
                 }
-                //Ie. if someone was supposed to pick it up but didnt, then count it as free for booking.
             }
 
             return $sum;
 		}
 
-
-
 		private static function sessionDate($sessions, $sessionRank) {
-	            CRASH();
+	            CRASH(); //???
 		foreach ($sessions as $session) {
 				if ($session['id'] == $sessionRank) {
 					return $session['date'];

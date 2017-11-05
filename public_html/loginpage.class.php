@@ -1,5 +1,5 @@
 <?php
-	// TODO: Kolla ledighet n�r man redigerar bokning
+	//TODO check so item is free when editing booking
 
 	class LoginPage extends Page {
 

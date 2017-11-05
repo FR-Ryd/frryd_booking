@@ -23,6 +23,7 @@
 					$width = min($width, $size[0]);
 					$height = ($width/$size[0])*$size[1];
 					$new = imagecreatetruecolor($width, $height);
+
 					// Fill with background color, since we won't use alpha transpacency
 					imagefilledrectangle($new, 0, 0, $width, $height, imagecolorallocate($new,255,255,255));
 					imageCopyResampled($new, $img, 0, 0, 0, 0, $width, $height, $size[0], $size[1]);

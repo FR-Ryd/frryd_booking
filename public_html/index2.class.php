@@ -1,29 +1,16 @@
 ﻿<?php
 	class Index2 extends Page {
 
-
-
 		protected function displayContent() {
 			$this->displayMenu();
 
 			$this->displayMessage();
-		?>
-<?php
-	// $messagess = "Checkout Cart and Booking is disabled due to SUMMER! (back in September)";
-	// echo "<script type='text/javascript'>alert('$messagess');</script>";
 ?>
 		<div class='live_search'>
 				<input type='text' class='livesearchquery' id='livesearchid' autocomplete="off" placeholder='Search (BETA)'>
 				<input type="image" class="livesearchbutton" src="images/toolbar_find.png" alt="Search">
-				<!--<h4 id="livesearchresults-text">Showing results for: <strong id="livesearch-string">Array</strong></h4>
 				--><ul id="livesearchresults"></ul>
         </div>
-
-	<!--<div class="notice_front">
-		<p>We have made some changes to the booking page.
-			If you notice any issues or mishaps please contact us at
-			<a href="mailto:it@frryd.se">it@frryd.se</a>.</p>
-	</div>-->
 
 	<div class="main">
 
@@ -44,12 +31,6 @@
 		</div>
 
 		<div class="right_cont_info">
-			<!--<div class="opening_hours">
-				<h2>NOTICE!</h2>
-				<p>
-					We are experiencing issues with our booking site, we are trying to fix the problem ASAP!
-				</p>
-			</div>-->
 			<div class="opening_hours">
 				<div id="poll">
 					<h3 class="pollheader">What do your think about the new Search feature?</h3>
@@ -84,8 +65,9 @@
 				<h2>Contact us</h2>
 				<p>
 					If you any questions and/or suggesstions for the lending service, then contact us at <a href="mailto:intendent@frryd.se" style="color:white;line-height:1.8em;">intendent@frryd.se</a>
-					<!--If you have any suggestions or improvements for the webpage, then contact us at <a href="mailto:it@frryd.se">it@frryd.se.</a>-->
+					<br>
 				</p>
+				If you have any suggestions or improvements for the webpage, then contact us at <a href="mailto:it@frryd.se" style="color:white;line-height:1.8em;">it@frryd.se.</a>
 			</div>
 		</div>
 
@@ -111,7 +93,6 @@
 	</script>
 	<?php
 		$time_start = microtime(true);
-    //$times = array();
 
 		foreach (LendingItemCategory::getCategories() as $category) {
 			// For each category
@@ -122,9 +103,6 @@
 			$category_items = LendingItem::getItemsForCategory($categoryID);
 			foreach ($category_items as $item) {
 				// For each item
-        //$item_time_start = microtime(true);
-        //$item_time = array(Language::itemName($item['id']));
-
 
 				?>
 				<div class='bookingFormItem'>
@@ -152,7 +130,7 @@
 
 
 							<?php
-							// Kalender-varianten:
+							// Calendar-version:
 							?>
 
 						<div class="calendarBooking">
@@ -165,9 +143,7 @@
                             </div>
 							<div class="calendar">
 							<?php
-                //$item_time[] = (microtime(true) - $item_time_start);
-								//$this->displayCalendar($item);
-                //$item_time[] = (microtime(true) - $item_time_start);
+
 							?>
 							</div>
 							<?php
@@ -192,8 +168,7 @@
 				</div>
 
 			<?php
-        //$item_time[] = (microtime(true) - $item_time_start);
-        //$times[] = $item_time;
+
 			}
 		}
 		$time_end = microtime(true);
@@ -222,15 +197,15 @@
 		}
 
 		private function displayCalendar($item, $time = "") {
-			// calTime är den som ändras för varje dag som skrivs ut
-			// time är den "tid" vi valt att visa.
+			//calTime changes for every day printed
+			//time is the "time" we chose the show
 
 			if ($time == "") {
 				$time = new DateTime(date("Y-m-d", mktime(0, 0, 0, date("m"), 1, date("Y")))); // current month
 			}
 
 			$calTime = new DateTime(date("Y-m-d", mktime(0, 0, 0, $time->format("m"), 1, $time->format("Y")))); // first day of the month
-			$calTime->modify("-1 sunday +1 day"); // first day of week?
+			$calTime->modify("-1 sunday +1 day"); // first day of week
 
 			?>
 		<?php echo(Language::text("calendar_instruction")); ?>
@@ -241,7 +216,7 @@
 						<th colspan="7">
 
 							<span class="prevMonthButton">
-								&laquo;<?php //echo(Language::text("calendar_previous_month")); ?>
+								&laquo;
 								<input type="hidden" class="itemID" name="itemID" value="<?php echo($item['id']); ?>" />
 								<input type="hidden" class="currentDate" name="currentDate" value="<?php echo($time->format("Y-m-d")); ?>" />
 							</span>
@@ -249,7 +224,7 @@
 							<?php echo($this->month($time->format("n"))); ?> <?php echo($time->format("Y")); ?>
 
 							<span class="nextMonthButton">
-								<?php //echo(Language::text("calendar_next_month")); ?>&raquo;
+								&raquo;
 								<input type="hidden" class="itemID" name="itemID" value="<?php echo($item['id']); ?>" />
 								<input type="hidden" class="currentDate" name="currentDate" value="<?php echo($time->format("Y-m-d")); ?>" />
 							</span>
@@ -258,7 +233,7 @@
 					</tr>
 					<tr>
 						<?php
-							// skriv ut veckodagsrubriker
+							//Print weekday headings
 							for ($w = 1; $w <= 7; $w++) {
 								?>
 								<th>
@@ -271,22 +246,19 @@
 				</thead>
 				<tbody>
 					<?php
+				//Print calendar
 
-				// skriv ut kalendern
+				//Loop for as long as the calTime-month is
+				//the time-month or the month before the time-month
+				//caltime->m == time->m || caltime->m % 12 == time->m - 1
+				//the month before the time-month is time->m - 1
 
-				// loopa så länge calTime-månaden är time-månaden eller månaden innan time-månaden
-				// dvs caltime->m == time->m || caltime->m % 12 == time->m - 1
-				// månaden innan time-månaden är time->m - 1
-
-
-				// Initialize stuff
+				// Initialize
 				// counter for each period
 				$j = 0;
 				$previousSessionDate = -1;
 				$nextSessionDate = -1;
                 $numFree = 0;
-                //$rank = 0;
-
 
 				$prevFree = 0;
 				$available = false;
@@ -300,10 +272,7 @@
                     $nextSessionDate = $nextSession['date'];
                 }
 				if ($currentSession && $nextSession) {
-
-					// Hämta info om denna period/session
-
-                    //DERP: this ($currentSessionDate -> id of sorts?)
+					//Get info about this period/session
 					$bookingNum = BookingItem::getNumBookedItems($item['id'], $currentSessionDate);
 
 					$numFree = ($item['num_items'] - $bookingNum);
@@ -332,8 +301,7 @@
 							$tdClass .= " other-month";
 						}
 
-
-                        // End of a period, ADD TO class to make end-bubble?
+                        // End of a period, ADD TO class to make end-bubble
                         //If next session, and next session date is today, then is today next session start.
 						if (isset($nextSessionDate) && (strtotime($calTime->format("Y-m-d")) == strtotime($nextSessionDate))) {
 							$tdClass .= " period periodEnd";
@@ -345,38 +313,31 @@
 							$available = false;
 							$numFree = 0;
 							$j++;
-							//$prevRank = $rank;
-
 						}
 
-						// Hitta perioder som börjar idag, och slutar i framtiden.
-						// TODO, kolla att de inte är återlämningspass
-
+						//Finds periods starting today and end in the future
+						//TODO check so it's not returnsession
 						$sessions = Session::getPeriodsStarting($calTime->format("Y-m-d"));
 
                         //Has next time and time after that.
 						if (count($sessions) == 2) {
-							// vi hittade två perioder som började idag eller i framtiden
+							//We found two periods that started today or in the future
 
                             //session1 is first now or after today
 							$session1 = $sessions[0];
-							//var_dump($session1); echo("<br>\n");
-                            //echo(strtotime($calTime->format("Y-m-d")) ." == ". strtotime($session1['date']) . "<br>\n");
 
                             //If session1 is today, do things. Like make start-bubble.
 							if (strtotime($calTime->format("Y-m-d")) == strtotime($session1['date'])) {
-								// hittade en period som började idag
+								//Found period starting today
                                 $currentSession = $session1;
 								$currentSessionDate = $session1['date'];
 
-								// Hämta info om denna period/session
+								//Get info about this period/session
 								$bookingNum = BookingItem::getNumBookedItems($item['id'], $currentSessionDate);
 
 								$numFree = ($item['num_items'] - $bookingNum);
 								if ($numFree > 0 && strtotime($currentSessionDate) >= strtotime(date("Y-m-d"))) {
-
 									$available = true;
-
 								}
 
 								$tdClass .= " period periodStart";
@@ -386,16 +347,15 @@
 
                             //In between two sessions, make green tube.
 							} elseif ($currentSessionDate != -1) {
-
-								// mellandag, hittade ingen period som började idag
-								// men vi har hittat nån tidigare.
+								//middleday, found no period beginning today,
+								//but we have found one earlier
 								$tdClass .= " period periodMiddle";
 							}
 
                         //Found 1 session, and any previous 'last' session we had is not today;
                         // -> 1 session left, make tube?
 						} elseif (count($sessions) == 1 && strtotime($calTime->format("Y-m-d")) != strtotime($nextSessionDate)) {
-							// Sista perioden (kollen är att det inte är sista dagen också)
+							//Last period (check is so it's not last day as well)
 							$tdClass .= " period periodMiddle";
 						}
 
@@ -407,7 +367,7 @@
 						}
 					?>
 						<td id="hg_datepicker_date_<?php echo($item['id']); ?>_<?php echo($calTime->format("Y-m-d")); ?>" class="<?php echo($tdClass); ?>" title="<?php echo($title); ?>" >
-							<input type="hidden" class="sortID" name="rank" value="<?php //echo($rank); ?>" />
+							<input type="hidden" class="sortID" name="rank" value="" />
 							<?php if(isset($prevRank)) { ?>
 							<input type="hidden" class="prevSortID" name="prevsort" value="<?php echo($prevRank); ?>" />
 							<?php } ?>
@@ -419,11 +379,11 @@
 							<input type="hidden" class="prevFree" name="prevfree" value="<?php echo($prevFree); ?>" />
 
 							<span title="<?php echo($title); ?>">
-								<?php echo(($calTime->format("j") == "1"  ? $calTime->format("j/n") : $calTime->format("j"))); ?>
+							<?php echo(($calTime->format("j") == "1"  ? $calTime->format("j/n") : $calTime->format("j"))); ?>
               </span>
 						</td>
 						<?php
-              $calTime->modify("+1 day");
+              			$calTime->modify("+1 day");
 					}
 
 					?>
@@ -433,16 +393,13 @@
 				?>
 				</tbody>
 			</table>
-
 			<p>
 				<div style="font-weight:bold;"><?php echo(Language::text("please_note")); ?></div>
 				<?php echo(Language::text("item_descr_there_is")); ?> <?php echo($item['num_items']); ?> <?php echo(Language::text("item_descr_num")); ?><br />
 				<?php echo(Language::text("max_lending_time")); ?> <?php echo($item['max_lending_periods']); ?><br />
 			</p>
 			<?php
-
 		}
-
 
 		private function shortWeekday ($dayNum) {
 			switch ($dayNum) {

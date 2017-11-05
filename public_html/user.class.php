@@ -2,7 +2,6 @@
 	class User {
 
         public static function validLiuId($liu_id) {
-            //return true;
             if(!preg_match('/^[a-z]{5}\d{3}$/', $liu_id) || strlen($liu_id) != 8) {
                 return false;
             }
@@ -25,8 +24,9 @@
             if(!$liu_id) return false;
 
             $db = Database::getDb();
-	    $db->query("SELECT * FROM persons WHERE (admin = true) && (liu_id = :liu_id)",
-		array(":liu_id" => $liu_id));
+		    $db->query("SELECT * FROM persons WHERE (admin = true) && (liu_id = :liu_id)",
+				array(":liu_id" => $liu_id));
+
             if($db->getRow()) {
                 return true;
             }
@@ -35,10 +35,10 @@
 
         public static function hasUser($liu_id) {
             $db = Database::getDb();
-	    $db->query("SELECT * FROM persons WHERE (liu_id = :liu_id)",
-		array(":liu_id" => $liu_id));
+		    $db->query("SELECT * FROM persons WHERE (liu_id = :liu_id)",
+				array(":liu_id" => $liu_id));
             $row = $db->getRow();
-            //var_dump($row);
+
             return ($row != null);
         }
 
@@ -76,7 +76,7 @@
                 return true;
             }
             echo($which);
-            NOOOO();
+            NOOOO(); //???
             return false;
         }
 
@@ -91,8 +91,8 @@
             }
 
             $db = Database::getDb();
-	    $db->query("SELECT * FROM persons WHERE liu_id = :liu_id",
-		array(":liu_id" => $liu_id));
+		    $db->query("SELECT * FROM persons WHERE liu_id = :liu_id",
+				array(":liu_id" => $liu_id));
             $row = $db->getRow();
             if($row == null) {
                 return;
@@ -112,11 +112,9 @@
                 $liu_id = self::getUser();
             }
             $db = Database::getDb();
-//	    $db->execute("UPDATE persons SET :which = :value WHERE liu_id = :liuid",
-//		array(":which" => $which, ":value" => $value, ":liuid" => $liu_id));
-	    $db->execute("UPDATE persons SET ".$which." = :value WHERE liu_id = :liuid",
-		array(":value" => $value, ":liuid" => $liu_id));
 
+		    $db->execute("UPDATE persons SET ".$which." = :value WHERE liu_id = :liuid",
+				array(":value" => $value, ":liuid" => $liu_id));
         }
 
         public static function getName($user = null) {
@@ -184,11 +182,11 @@
 
         public static function setAdmin($liu_id, $value) {
             if(!self::isAdmin()) {
-                return; //No u.
+                return;
             }
             $db = Database::getDb();
-	    $db->execute("UPDATE persons SET admin = :value WHERE (liu_id = :liuid);",
-		array(":value" => $value, ":liuid" => $liu_id));
+		    $db->execute("UPDATE persons SET admin = :value WHERE (liu_id = :liuid);",
+				array(":value" => $value, ":liuid" => $liu_id));
         }
 
         //An essential input field is missing for the dude in question.
@@ -238,8 +236,8 @@
                 $liu_id = self::getUser();
             }
             $db = Database::getDb();
-	    $db->query("SELECT * FROM persons INNER JOIN remarks ON remarks.liu_id = persons.liu_id WHERE persons.liu_id = :liu_id;",
-		array(":liu_id" => $liu_id));
+		    $db->query("SELECT * FROM persons INNER JOIN remarks ON remarks.liu_id = persons.liu_id WHERE persons.liu_id = :liu_id;",
+				array(":liu_id" => $liu_id));
             return $db->getAllRows();
         }
 

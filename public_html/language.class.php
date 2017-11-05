@@ -1,6 +1,5 @@
 <?php
 	class Language {
-
 		private static $defaultLanguage = 1;
 
 		public static function create($newLanguage) {
@@ -11,8 +10,8 @@
 		}
 
 		public static function delete($languageID) {
-            MAKETHISCRASH();
-			//$db = new Database(self::$dbFileName);
+            MAKETHISCRASH(); //???
+
 			$db = self::getDb();
 			if ($db->readAll()) {
 				if (ItemCategoryTranslation::deleteLanguage($languageID)
@@ -22,6 +21,7 @@
 					return $db->replaceAll();
 				}
 			}
+
 			return false;
 		}
 
@@ -40,7 +40,7 @@
 
 
 
-    public static function getSelectedLanguage() {
+	    public static function getSelectedLanguage() {
 			if (isset($_SESSION['language'])) {
 				return $_SESSION['language'];
 			} else {
@@ -73,6 +73,7 @@
 				return "(Unspecified text from key " . $key . ")";
 			}
 		}
+
         //Only tries to query, returns null if no match is found.
         public static function tryText($key, $language) {
 
@@ -101,10 +102,11 @@
                 $value = $row['text'];
                 $language = $row['language'];
 
-		$db->execute("UPDATE translations SET value = :value WHERE (language = :language) AND (name = '$name');",
-		    array(":value" => $value, ":language" => $language));
+			$db->execute("UPDATE translations SET value = :value WHERE (language = :language) AND (name = '$name');",
+			    array(":value" => $value, ":language" => $language));
             }
         }
+
         public static function multipleTextCreate($created) {
 			$db = Database::getDb();
 
@@ -114,8 +116,8 @@
                 $language = $row['language'];
 
 
-		$db->execute("INSERT INTO translations (name, language, value) VALUES(:name, :language, :value);",
-		    array(":name" => $name, ":language" => $language, ":value" => $value));
+			$db->execute("INSERT INTO translations (name, language, value) VALUES(:name, :language, :value);",
+			    array(":name" => $name, ":language" => $language, ":value" => $value));
             }
         }
 
@@ -170,7 +172,7 @@
 				// try one more time
 				return self::itemDescription($itemID, self::$defaultLanguage);
 			} else {
-				return ""; //(Unspecified text)";
+				return "";
 			}
 		}
 
@@ -188,11 +190,8 @@
 				// try one more time
 				return self::itemDescription($itemID, self::$defaultLanguage);
 			} else {
-				return ""; //(Unspecified text)";
+				return "";
 			}
 		}
-
-
-
 	}
 ?>

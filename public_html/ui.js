@@ -3,7 +3,7 @@
 };
 
 if (!Array.prototype.indexOf) {
-  Array.prototype.indexOf = function(elt /*, from*/) {
+  Array.prototype.indexOf = function(elt) {
     var len = this.length;
 
     var from = Number(arguments[1]) || 0;
@@ -53,7 +53,7 @@ if (!Array.prototype.indexOf) {
 	};
 
 	$.fn.calendarSessionAdmin = function(settings) {
-		// pass-väljar-kalendern
+		// session choosing calendar
 
 		this.each(function() {
 
@@ -64,14 +64,14 @@ if (!Array.prototype.indexOf) {
 			var calendarDiv = $(this).find(".calendarSessionContent");
 
             emptyDateCells.live("click", function() {
-				// lediga datum
+				// free dates
 				var date = $(this).find(".date").val();
 
 				if (confirm("Vill du lägga till ett pass här, " + date + "?")) {
 					var form = $("<form action='session.php' method='post'><input type='hidden' name='date' value='"+date+"' /><input type='hidden' name='create_session' value='yes' /></form>");
 					form.appendTo($("body")).submit();
 				} else {
-					//alert("Nähä");
+
 				}
 			});
 
@@ -101,7 +101,7 @@ if (!Array.prototype.indexOf) {
 	};
 
 	$.fn.bookingFormCalendar = function(settings) {
-		// nya, kalendervarianten
+		// new calendar version
 
 		this.each(function() {
 
@@ -141,7 +141,7 @@ if (!Array.prototype.indexOf) {
             return false;
             });
 
-			var dates = $(this).find("td.date.period"); //
+			var dates = $(this).find("td.date.period");
 
 
 			nextMonthButton.live("click", function() {
@@ -169,27 +169,15 @@ if (!Array.prototype.indexOf) {
 
 
 			var bookClick = function () {
-
-
 				var sessionDate = parseInt($(this).find(".sessionDate").val().split("-").join(""));
 				var prevSessionDate = parseInt($(this).find(".prevSessionDate").val().split("-").join(""));
 				var nextSessionDate = parseInt($(this).find(".nextSessionDate").val().split("-").join(""));
 				var numFree = parseInt($(this).children(".numFree").val());
 
-				//var sortID = parseInt($(this).children(".sortID").val());
-
-
-
 				if (!bookedPeriods.length) {
-					// första klicket.
-					//numBooked = Math.floor(Math.random()*numFree) + 1;
-					//numBooked = 1;
-					//alert(numItemsSelector.val());
-					numBooked = numItemsSelector.val();
-					if (numFree > 1) {
-						//alert("Hur många vill du boka?\nDet finns max "+numFree+" st.\nDu har valt "+numBooked+" st.");
-					}
+					// first click
 
+					numBooked = numItemsSelector.val();
 				}
 				if (numFree < numBooked) {
 					alert("Unfortunately there are only "+numFree+" items available this period.\nYou have selected "+numBooked+" items.");
@@ -198,14 +186,12 @@ if (!Array.prototype.indexOf) {
 				}
 				numItemsSelector.children().each(function(i, selected){
 					if ($(selected).val() > numFree) {
-						//$(selected).attr("disabled","disabled").css("color","gray");
+
 					}
 				});
 
 				bookedPeriods.push(sessionDate);
                 bookedPeriodNext[nextSessionDate] = true;
-				//bookedPeriodSorts.push(sortID);
-
 
 				book();
 
@@ -232,12 +218,9 @@ if (!Array.prototype.indexOf) {
 			var unbookClick = function () {
 				var sessionDate = parseInt($(this).children(".sessionDate").val().split("-").join(""));
 				var nextSessionDate = parseInt($(this).find(".nextSessionDate").val().split("-").join(""));
-				//var sortID = parseInt($(this).children(".sortID").val());
 				bookedPeriods.splice(jQuery.inArray(sessionDate, bookedPeriods), 1);
 
                 bookedPeriodNext[nextSessionDate] = false;
-
-				//bookedPeriodSorts.splice(jQuery.inArray(sortID, bookedPeriodSorts), 1);
 
 				book();
 
@@ -254,7 +237,6 @@ if (!Array.prototype.indexOf) {
 			};
 
 			var book = function() {
-
 				// reset the number of items selector
 				numItemsSelector.children().each(function(i, selected){
 					$(this).removeAttr("disabled").css("color","black").html($(this).attr("value"));
@@ -285,9 +267,6 @@ if (!Array.prototype.indexOf) {
 						var prevSessionDate = parseInt($(this).find(".prevSessionDate").val().split("-").join(""));
 						var nextSessionDate = parseInt($(this).find(".nextSessionDate").val().split("-").join(""));
 
-
-						//var sortID = parseInt($(this).children(".sortID").val());
-						//var prevSortID = parseInt($(this).children(".prevSortID").val());
 						var numFree = parseInt($(this).children(".numFree").val());
 						var prevFree = parseInt($(this).children(".prevFree").val());
 
@@ -302,24 +281,22 @@ if (!Array.prototype.indexOf) {
 								numItemsSelector.children().each(function(i, selected){
 									if ($(this).val() > numFree && $(this).attr("disabled") != true) {
 										$(this).attr("disabled","disabled").css("color","gray").html($(this).html() + "");
-										//$(this).attr("disabled","disabled").css("color","gray").html($(this).html() + "Item busy during this period");
 									}
 								});
 							}
 
-
 							$(this).addClass("booked").removeClass("bookable");
 
-
-                            //This date is the first and last date, ie.. the only date! =O
+							//TODO clean up code as described below
+                            //This date is the first and last date, ie.. the only date!
                             // Make it unbookable
-                            //... these if's are retarded :S
+                            //these if's are bad
 							if (sessionDate == smallest && sessionDate == largest) {
 								// an already booked session, on both edges
 								$(this).bind("click.unbook", unbookClick);
 								$(this).addClass("unbookable");
 
-                            //This is the first booked date, yeah!
+                            //This is the first booked date
 							} else if (sessionDate == smallest) {
 								// an already booked session, on the left edge
 
@@ -335,7 +312,7 @@ if (!Array.prototype.indexOf) {
 							} else {
 								// an already booked session in the middle
 
-                                //Seems we can't unbook sessions that are in the middle of other booked sessions, which makes sense.
+                                //We can't unbook sessions that are in the middle of other booked sessions, which makes sense.
 								$(this).removeClass("unbookable");
 
 							}
@@ -344,42 +321,30 @@ if (!Array.prototype.indexOf) {
                         //   bookedPeriods.length < maxPeriods ===> we have not used up all our booking-spree-allowance :P
                         //   numFree >= numBooked ===> there is more stuff to book
                         //   sortid ===> it lies next to a booked date
-                        //       ===> Make things boockable :)
-                        //TODO: sortID-stuff.
+                        //       ===> Make things bookable
+
+                        //TODO: sortID
 						} else if (bookedPeriods.length < maxPeriods && numFree >= numBooked && (prevSessionDate == largest || nextSessionDate == smallest) ) {
 							// an adjacent session
 
 							$(this).bind("click.book", bookClick);
 							$(this).removeClass("booked").removeClass("unbookable").addClass("bookable");
 
-                        //Either we have booked as many as we can, we have booked for as long as we can, or this session is to far from our booked sessions.
+                        //Either we have booked as many as we can, we have booked for as long as we can, or this session is too far from our booked sessions.
 						} else {
 							// a distant session
 
 							$(this).removeClass("booked").removeClass("unbookable").removeClass("bookable");
-
-                            //TODO: sortid
-                            // What does adjancent do?
-							if  (bookedPeriods.length < maxPeriods
-								&& numFree >= numBooked
-								&& false/*(sortID-1 == smallest - 1
-									|| sortID-1 == largest + 1
-									|| sortID+1 == smallest - 1
-									|| sortID+1 == largest + 1)*/) {
-								//$(this).addClass("adjacent");
-							} else {
-								//$(this).removeClass("adjacent");
-							}
 						}
 
 						// Check the same for previous
 						if (jQuery.inArray(prevSessionDate, bookedPeriods) != -1) {
 							// the previous is an already booked session
 							$(this).addClass("prevBooked");
-                        //TODO: sortid
-						//} else if (bookedPeriods.length < maxPeriods && prevFree >= numBooked && (prevSortID == smallest - 1 || prevSortID == largest + 1)) {
-                        // If prev == prev(smallest) then now == smallest
-						} else if (bookedPeriods.length < maxPeriods && prevFree >= numBooked && (sessionDate == smallest || bookedPeriodNext[prevSessionDate] /*prevSortID == largest + 1*/)) {
+
+                        	//TODO: sortid
+
+						} else if (bookedPeriods.length < maxPeriods && prevFree >= numBooked && (sessionDate == smallest || bookedPeriodNext[prevSessionDate])) {
 							// the previous is an adjacent session
 							$(this).removeClass("prevBooked").addClass("prevBookable");
 						} else {
@@ -419,7 +384,6 @@ if (!Array.prototype.indexOf) {
 						+ parseInt(numBooked)));
 
 					$("#cartForm").find("#cartFormFieldset").find("#cartFormFieldsetItem_"+itemID).find(".num").val(numBooked);
-					//alert("Ändrade till "+numBooked);
 				}
 				book();
 			});
@@ -429,14 +393,10 @@ if (!Array.prototype.indexOf) {
 	};
 
 	$.fn.bookingFormItem = function(settings) {
-
-
 		this.each(function() {
-
 			var itemID = parseInt($(this).children(".bookingItemID").val());
 			var maxPeriods = parseInt($(this).children(".maxLendingPeriods").val());
 			var periods = $(this).find(".itemBookingPeriod").filter(".available");
-			//var debugItem = $(this).find(".debugItem");
 
 			var bookedPeriods = [];
 			var bookedPeriodSorts = [];
@@ -452,10 +412,9 @@ if (!Array.prototype.indexOf) {
 				});
 
 			var book = function () {
-				//uppdatera periodernas utseende och funktionalitet
+				//Update the periods look and functionality
 
 				if (bookedPeriodSorts.length) {
-
 					if (bookedPeriodSorts.length <= maxPeriods) {
 						if (bookedPeriodSorts.length) {
 							var smallest = bookedPeriodSorts[0];
@@ -470,11 +429,8 @@ if (!Array.prototype.indexOf) {
 						}
 					}
 
-
 					periods.each(function() {
-
 						var sessionDate = parseInt($(this).children(".sessionDate").val().split("-").join(""));
-						//var sortID = parseInt($(this).children(".sortID").val());
 						var numFree = parseInt($(this).children(".numFree").val());
 
 						$(this).unbind("click");
@@ -540,19 +496,11 @@ if (!Array.prototype.indexOf) {
 				var numFree = parseInt($(this).children(".numFree").val());
 
 				if (!bookedPeriods.length) {
-					//numBooked = Math.floor(Math.random()*numFree) + 1;
 					numBooked = 1;
-					if (numFree > 1) {
-						//alert("Hur många vill du boka?\nDet finns max "+numFree+" st.\nDet blev "+numBooked+" st.");
-					}
 				}
 				bookedPeriods.push(sessionDate);
-				//bookedPeriodSorts.push(sessionDate);
-
 
 				book();
-
-
 
 				if ($("#cartForm").find("#cartFormFieldset").find("#cartFormFieldsetItem_"+itemID).size()) {
 					// append to existing item form
@@ -578,10 +526,8 @@ if (!Array.prototype.indexOf) {
 			var unbookClick = function () {
 				var sessionDate = parseInt($(this).children(".sessionDate").val().split("-").join(""));
 				bookedPeriods.splice(jQuery.inArray(sessionDate, bookedPeriods), 1);
-				//bookedPeriodSorts.splice(jQuery.inArray(sessionID, bookedPeriodSorts), 1);
 
 				book();
-
 
 				if ($("#cartForm").find("#cartFormFieldset").find("#cartFormFieldsetItem_"+itemID).size()) {
 
@@ -639,10 +585,6 @@ $(document).ready(function () {
         $(".userRemarkSection").empty();
 
         $.get(url, function(data){
-          //  loadButton.remove();
-//            calendarBookingDiv.html(data);
-  //          dates = calendarBookingDiv.find("td.date.period");
-    //        book();
             data = data.substring(data.indexOf("{"));
             obj = JSON.parse(data);
             $("#addUserName").val(obj.name);

@@ -6,26 +6,18 @@
 		exit;
 	}
 	session_start();
-	
+
 	function __autoload($className) {
 		if (is_file(strtolower($className).".class.php")) {
 			require_once(strtolower($className).".class.php");
 		} else {
-			error("Beklagar: Kunde inte ladda en nödvändig fil (".$className.")");
+			error("Beklagar: Kunde inte ladda en nï¿½dvï¿½ndig fil (".$className.")");
 			exit;
 		}
 	}
-// includes
-	
-	// Main controller
-	// if input// handle input
-	
-		// handle input
-	// else
-		//display default index page
-		$page = new LanguagePage();
-		$page->initCAS();
-		$page->handleInput();
-		$page->display();
 
+	$page = new LanguagePage();
+	$page->initCAS();
+	$page->handleInput();
+	$page->display();
 ?>

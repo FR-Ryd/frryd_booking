@@ -110,7 +110,6 @@ a {
 }
 
 .pure-control-group .squaredOne {
-    /* float: left; */
     right: -85;
     top: -30;
 }
@@ -357,11 +356,6 @@ a {
 	left: 43px;
 }
 
-
-/*a:visited {
-	color: #FF6600;
-}*/
-
 a:hover{
 	color: #FF6600;
 	text-decoration: none;
@@ -469,10 +463,8 @@ h4#livesearchresults-text {
 }
 
 .result{
-    /* display: none; */
     margin-top: 0;
     background-color: white;
-    /* border: 1px solid #ababab; */
     -webkit-box-shadow: rgba(0, 0, 0, .15) 0 1px 3px;
     -moz-box-shadow: rgba(0,0,0,.15) 0 1px 3px;
     box-shadow: rgba(0, 0, 0, .15) 0 1px 3px;
@@ -600,9 +592,6 @@ a.back-to-top {
 }
 
 #CardBox{
-	/*position:absolute;
-	z-index:1000;
-	margin:-11px 0px 0px 158px;*/
 	z-index: 1000;
     position: relative;
     background-color: #ff6600;
@@ -616,11 +605,6 @@ a.back-to-top {
 #CardBox ul{
 	list-style: none;
 }
-/*
-#CardBox li{
-	float:left;
-	margin-top: 50px;
-}*/
 
 .clear {
 	clear: both;
@@ -628,9 +612,6 @@ a.back-to-top {
 
 #site-top{
 	margin: 0;
-	/*padding: 30px 20px 20px;
-	background-color: #f8f8f8;
-	border-bottom: 0px solid gray;*/
 }
 
 .lang-top{
@@ -686,8 +667,8 @@ a.back-to-top {
 }
 
 .notice_front a{
-		text-weight:100;
-		color:white;
+	text-weight:100;
+	color:white;
 }
 
 .notice_front a:hover{
@@ -706,9 +687,6 @@ a.back-to-top {
 }
 
 .menu {
-	/*background-color: #60a0ff;
-	padding: 5px 10px;*/
-
 	position: absolute;
 	top: 0;
 	right: 0;
@@ -733,7 +711,6 @@ a.back-to-top {
 .menu a {
 	width:auto;
 	color: #444;
-	/*display: block;*/
 	margin-left:90px;
 	font-size:16px;
 	margin-top:10px;
@@ -750,7 +727,6 @@ a.back-to-top {
 }
 
 .message {
-	/*org margin: 90px 10px 20px 10px;*/
 	margin: 90px 10px -70px 10px;
 	padding: 10px;
 	background-color: #fff0d0;
@@ -834,7 +810,6 @@ a.back-to-top {
 	float: left;
 	width: 64px;
 	margin: 5px;
-	/*margin-top: 32px;*/
 	border: 1px solid gray;
 	background: #d0d0d0;
 	color: gray;
@@ -860,30 +835,19 @@ a.back-to-top {
 	background: #80d0ff;
 	margin: 3px;
 	color: #0080ff;
-	/*border-style: solid dashed;*/
 }
 
 .itemBookingPeriod.available.booked.unbookable {
 	background: #80d0ff;
 	cursor: pointer;
 	color: black;
-	/*border-style: solid;*/
 }
-
-/*.itemBookingPeriod.available.booked.unbookable.left {
-	border-style: solid dashed solid solid;
-}
-
-.itemBookingPeriod.available.booked.unbookable.right {
-	border-style: solid solid solid dashed;
-}*/
 
 .itemBookingPeriod.available.booked.unbookable:hover {
 	background: #90e0ff;
 }
 
 /* the calendar version */
-
 .calendarBooking .prevMonthButton,
 .calendarBooking .nextMonthButton {
 	cursor: pointer;
@@ -1012,7 +976,6 @@ table.calendarSessionsTable thead {
 }
 
 /* available but not bookable now */
-
 .calendarBooking  td.periodStart.available {
 	background-image: url("images/calendar/periodStart_available.png");
 }
@@ -1036,7 +999,6 @@ table.calendarSessionsTable thead {
 }
 
 /* available and bookable */
-
 .calendarBooking  td.periodStart.available.bookable {
 	background-image: url("images/calendar/periodStart_bookable.png");
 }
@@ -1061,7 +1023,6 @@ table.calendarSessionsTable thead {
 
 
 /* booked */
-
 .calendarBooking  td.periodStart.booked {
 	background-image: url("images/calendar/periodStart_booked.png");
 }
@@ -1087,7 +1048,6 @@ table.calendarSessionsTable thead {
 	background-image: url("images/calendar/periodStartEnd_prevBookedBooked.png");
 }
 
-
 .square1 {
 	border: 2px solid #444;/*#ffa0a0;*/
 	background-color:rgba(255, 102, 0,0.7);/*#ffd0d0;*/
@@ -1096,14 +1056,12 @@ table.calendarSessionsTable thead {
 }
 .square2 {
 	border: 2px solid #444;/*#a0a0ff;*/
-	/*background-color:rgba(255, 102, 0,0.7);/*#d0d0ff;*/
 	background-color:#ff6600;
 	margin: 10px 0px 10px 0px;
 	padding: 5px;
 }
 .square3 {
-	border: 2px solid #444; /*#a0ffa0;
-	/*background: #d0ffd0;*/
+	border: 2px solid #444; /*#a0ffa0;*/
 	background-color:#ff6600;
 	margin: 20px 0px 20px 0px;
 	padding: 8px;
@@ -1130,7 +1088,6 @@ table.calendarSessionsTable thead {
 	margin-top: 15px;
     margin-bottom: 15px;
     list-style: none;
-	/*display: -webkit-box;*/
 }
 
 .color-box{
@@ -1217,7 +1174,6 @@ table.calendarSessionsTable thead {
 @media screen and (max-width: 700px){
 	.menu{
 
-
 	}
 	#cart{
 		position: fixed;
@@ -1264,10 +1220,7 @@ table.calendarSessionsTable thead {
 	padding-top:50px;
 }
 .footer{
-    /* background-color: #f60; */
     text-align: center;
-    /* bottom: 20; */
-    /* padding: 5px; */
     border-top: 1px solid #444;
     height: 38px;
     padding: 10;

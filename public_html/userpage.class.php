@@ -1,11 +1,9 @@
 ﻿<?php
-
 	class UserPage extends Page {
 
         private $showUser = null;
 
 		public function handleInput() {
-
             $message = "";
 
             if(isset($_GET['showUser'])) {
@@ -18,9 +16,6 @@
 
                 $liu_id = $_POST['liu_id'];
                 if(!User::isAdmin() && ($liu_id != User::getUser()) ) {
-                    //TODO: Lägg till anmärkning om att användaren försökte hacka.
-                    // nedan är nog ganska bra respons på det..! ? :)
-                    header("Location: http://bd.vg");
                     exit;
                 }
                 $userName = $_POST['name'];
@@ -38,8 +33,6 @@
 
                 if(isset($_POST['setAdmin'])) {
                     if( !User::isAdmin()) {
-                        //Mer otyg.. rapportera!
-                        header("Location: http://bd.vg");
                         exit;
                     }
                 }
@@ -60,8 +53,7 @@
                 $bookingId = $_POST['unbook'];
                 $booking = Booking::getBookingWithPerson($bookingId);
 
-                if($booking['booker_liu_id'] != User::getUser() ) { //and User::getUser() != User::isAdmin()
-                    header("Location: http://bd.vg");
+                if($booking['booker_liu_id'] != User::getUser() ) {
                     exit;
                 }
                 $bookingItems = BookingItem::getBookingItemsForBooking($bookingId);
@@ -71,7 +63,7 @@
                     $fail |= ($pickedUpTime != '');
                 }
                 if($fail) {
-                    $_SESSION['message'] = "Kunde inte avboka, din buse! du har redan hämtat någonting!\n";
+                    $_SESSION['message'] = "Kunde inte avboka, du har redan hämtat någonting!\n";
                 } else {
                     Booking::delete($bookingId);
                     $_SESSION['message'] = "Avbokat\n";
@@ -144,59 +136,57 @@
 		}
 
 		protected function displayContent() {
-
 			$this->displayMenu();
-
 			$this->displayMessage();
+
 			?>
-		<div class="main">
-            <h1>User Management</h1>
-			<?php
-			if (isset($_SESSION['message'])){
-				echo "<p>".nl2br($_SESSION['message'])."</p>\n";
-				$_SESSION['message'] = null;
-			}
-
-            if(User::isAdmin()) {
-                echo("<a href='user.php'>Tillbaka till användarlistan</a><br><br>\n");
-
-            } else {
-                echo("<a href='index.php'>Till bokningen</a><br><br>\n");
-                $this->showUser = User::getUser(); //Effectively redirect to actual user.
-            }
-            if(isset($this->showUser)) {
-                $this->displayUser($this->showUser);
-                $this->displayUserRemarks($this->showUser);
-                $this->displayUserBookings($this->showUser);
-            } else {
-                ?>
-				<hr />
-				<form action="user.php" method="post">
-					<fieldset>
-						<legend>Ny användare</legend>
-						<div class="pure-control-group">
-							<label style="width:8em;" >LiU-ID (xxxyy123)</label>
-							<input type="text" class="form_style" name="liu_id" value="" />
-							<input class="button_style" type="submit" name="createUser" value="Ny användare" />
-						</div>
-					</fieldset>
-				</form>
-                <hr /><br />
-                <?php
-                $this->displayAllUsers();
-            }
-
-				?>
-
+			<div class="main">
+	            <h1>User Management</h1>
 				<?php
-			?>
-		</div>
+				if (isset($_SESSION['message'])){
+					echo "<p>".nl2br($_SESSION['message'])."</p>\n";
+					$_SESSION['message'] = null;
+				}
+
+	            if(User::isAdmin()) {
+	                echo("<a href='user.php'>Tillbaka till användarlistan</a><br><br>\n");
+
+	            } else {
+	                echo("<a href='index.php'>Till bokningen</a><br><br>\n");
+	                $this->showUser = User::getUser(); //Effectively redirect to actual user.
+	            }
+	            if(isset($this->showUser)) {
+	                $this->displayUser($this->showUser);
+	                $this->displayUserRemarks($this->showUser);
+	                $this->displayUserBookings($this->showUser);
+	            } else {
+	                ?>
+					<hr />
+					<form action="user.php" method="post">
+						<fieldset>
+							<legend>Ny användare</legend>
+							<div class="pure-control-group">
+								<label style="width:8em;" >LiU-ID (xxxyy123)</label>
+								<input type="text" class="form_style" name="liu_id" value="" />
+								<input class="button_style" type="submit" name="createUser" value="Ny användare" />
+							</div>
+						</fieldset>
+					</form>
+	                <hr /><br />
+	                <?php
+	                $this->displayAllUsers();
+	            }
+
+					?>
+
+					<?php
+				?>
+			</div>
 			<?php
 		}
 
         private function displayUser($liu_id) {
             //If we are neither that user nor admin, error!
-
             echo("<div class='userSettings'>\n");
             echo("<h2>User Information</h2>\n");
 
@@ -267,9 +257,9 @@
             }?>
 			<script type="text/javascript">
 				var checkboxes = $("input[id='checkboxIDtag']"),
-						submitButt = $("input[id='deleteButton']");
+					submitButt = $("input[id='deleteButton']");
 
-					checkboxes.click(function() {
+				checkboxes.click(function() {
 					submitButt.attr("disabled", !checkboxes.is(":checked"));
 				});
 			</script><?php
@@ -302,10 +292,9 @@
             </form>
             ");
             echo("</div><br \>\n");
+        }
 
-            }
         private function displayUserBookings($liu_id) {
-
             if(User::isAdmin()) {
 				echo("<h2>Bookings</h2>\n");
                 echo("
@@ -323,7 +312,6 @@
                 ");
             }
 
-
             $bookings = Booking::getBookingsByPerson($liu_id);
             foreach($bookings as $booking) {
                 echo("<div class='square2' style='padding:10px;'>");
@@ -339,7 +327,6 @@
 
                 $anythingPickedUp = false;
                 if (count($bookingItems)) {
-
                     echo "<ul>\n";
                     foreach ($bookingItems as $bookingItem) {
 
@@ -428,7 +415,6 @@
             ?>
             </div>
             <?php
-
         }
 	}
 ?>

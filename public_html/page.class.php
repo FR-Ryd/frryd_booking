@@ -1,16 +1,16 @@
 ﻿<?php
 
-	//For now handle language parsing here. In future, refactor to make an init-function in page for this, other stuff and cas.
+	//For now handle language parsing here.
+	// TODO In future, refactor to make an init-function in page for this, other stuff and cas.
 	if (isset($_GET['l'])) {
-		//$_SESSION['language'] = $_GET['l'];
 		Language::setSelectedLanguage($_GET['l']);
 	}
-	
+
 	class Page {
-	
+
 		public function initCAS() {
 			include_once('CAS.php');
-			
+
 			phpCAS::setDebug("derp");
 			phpCAS::client(CAS_VERSION_2_0,'login.liu.se',443,'/cas/');
             //TODO: Fixa certifikat och dyligt.
@@ -18,7 +18,7 @@
 		}
 
 		public function display() {
-		
+
 		?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -54,14 +54,14 @@
 		}
 	</script>
 
-<?php if(User::isAdmin()) { 
+<?php if(User::isAdmin()) {
 // The server only accepts connections of card related things from inside the office,
-// but no need to let the endusers know that. 
+// but no need to let the endusers know that.
 ?>
     <script type="text/javascript" src="cardbox.js"></script>
 <?php } ?>
 
- 
+
  </head>
 <?php
 	flush();
@@ -76,7 +76,7 @@
 				<input type='button' id='CardBoxLiuGet' value='Get by liu id'>
 				<input type='button' id='CardBoxLiuRegister' value='Register with this liu id' disabled >
 				<input type='button' id='CardBoxLiuNew' value='Create new user with supplied liu-id' disabled>
-        </div>		
+        </div>
         <?php } ?>
 		<div class="lang-top" style="float: right;">
 			<?php
@@ -84,37 +84,34 @@
 					<a href="<?php echo($_SERVER['PHP_SELF']."?l=".$language['id']); ?>"> <?php echo($language['name']); ?></a>
 			<?php } ?>
 		</div>
-		<!--<h1><a href="index.php"><?php //echo(Language::text("site_title")); ?></a></h1>-->
-		
-		<div id="logo"> 
+
+		<div id="logo">
 				<a href="index.php">
 					<img src="https://frryd.se/wp-content/uploads/2015/09/logo-farg-trans.png" alt="Fr Ryd Logo">
 				</a>
 		</div>
-		
+
 	</div>
 
 	<?php
-		//kom på ej något annat sätt för att kunna kolla språk från livesearch.php, funkade ej me $GLOBALS elle ngt jag kunde tänka på
-		//så fick bli detta för att kunna få reda på språket
-		$currlang = Language::getSelectedLanguage(); //hämtar info när sparar session language ändras och lägger in den till currlang
-		file_put_contents("currlang", utf8_decode($currlang)); //kan betraktas som ful hax att lägga den i en fil, men men
+		//TODO Fix this bad hackfix for checking language from livesearch.php
+		$currlang = Language::getSelectedLanguage(); //Gets info when session languages changes and adds it to currlang
+		file_put_contents("currlang", utf8_decode($currlang)); //bad hack
 		$this->displayContent();
 	?>
 
  </body>
 </html>
 		<?php
-	}	
-	
+	}
 		public function handleInput() {
 			null;
 		}
-		
+
 		protected function displayContent() {
-			echo "TOMT";
+			null;
 		}
-		
+
 		protected function displayMenu() {
 			?>
 			<div class="menu">
@@ -127,9 +124,8 @@
 					<a href="user.php">Användare</a>
 					<a href="booking.php">Bokningar</a>
 					<a href="languages.php">Språk</a>
-					<!--<a href="email.php">Epost</a>-->
 					<?php
-					
+
 					}
 					if (User::isAuthed()) {
 						echo("<a href='logout.php'>" . Language::text("logout") . "</a>");
@@ -138,13 +134,13 @@
 						echo("<a href='login.php'>Login</a>\n");
 					}
 					?>
-					
+
 					<br class="clear" />
 				</div>
 			</div>
 			<?php
 		}
-		
+
 		protected function displayMessage() {
 			if (isset($_SESSION['message'])){
 				?>
@@ -155,7 +151,7 @@
 				$_SESSION['message'] = null;
 			}
 		}
-	
-	
+
+
 	}
 ?>

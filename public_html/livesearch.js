@@ -35,6 +35,5 @@ $(document).ready(function() {
 		};
 	});
 
-	//TODO highlight/animation on item 2 be able to notice where it is 	
-
+	//TODO highlight/animation on item 2 be able to notice where it is
 });

@@ -21,5 +21,4 @@
     $page->initCAS();
     $page->handleInput();
     $page->display();
-
 ?>

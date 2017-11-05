@@ -1,5 +1,5 @@
 ﻿<?php
-	// TODO: Kolla ledighet när man redigerar bokning
+	// TODO: Check so item is free when editing booking
 
 	class BookingPage extends Page {
 
@@ -55,7 +55,7 @@
                     $_SESSION['message'] .= "Ogiltigt LIU-ID: " . $liu_id;
                     header("Location: booking.php");
                     exit;
-                }
+            	}
 
 
                 User::createUser($liu_id);
@@ -190,7 +190,7 @@
 		}
 
 		protected function displaySpecificBooking() {
-            // redigera bokning
+            // edit booking
             ?>
                 <h1>Bokning <?php echo($this->bookingId); ?></h1>
             <?php
@@ -198,7 +198,7 @@
                 if ($booking = Booking::getBookingWithPerson($this->bookingId) ) {
 
                     if (isset($this->bookingItemID)) {
-                        // redigera enskilt föremål
+                        // edit single item
                         $booker_liu_id = $booking['liu_id'];
                         $bookingName = $booking['name'] != "" ? htmlentities($booking['name'], ENT_COMPAT, "UTF-8") : "(Namnlös)";
                         ?>
@@ -281,7 +281,7 @@
                         ");
 
                     } else {
-                        // redigera hela bokningen
+                        // edit whole booking
 
                         echo(Forms::composeEditBookingForm($this->bookingId));
 
@@ -479,7 +479,6 @@
 					$_SESSION['message'] = null;
 				}
 
-
 				if (isset($this->bookingId)) {
                     $this->displaySpecificBooking();
 
@@ -487,7 +486,7 @@
                     $this->displaySearchResults();
 
 				} else {
-					// Bokningsmeny
+					// Bookings menu
 					?>
 					<h1>Bokningar</h1>
 					<p><i>Här listas alla bokningar, gamla, nya, försenade osv.</i></p>
@@ -583,11 +582,6 @@
                             flush();
 						}
 				}
-				?>
-					<!--<hr />
-					<p><a href="admin.php">Tillbaks till administreringen</a></p>
-				</div>-->
-				<?php
 			}
 		}
 
@@ -607,7 +601,7 @@
                 // Since we want receipts to be printed when we use the "allt utlånat"-functionality, we dont add a picked
                 // -up-time anylonger.
                 $pickupTime = "";
-				$returnedTime = "";				//($todayDateTime->format("Y-m-d") == date("Y-m-d") ? date("Y-m-d H:i:s") : "");
+				$returnedTime = "";
 
 				return "<form action='booking.php$sessionLink' method='post'>
 					<fieldset>
@@ -644,7 +638,6 @@
 
         public function getUserInfo($liu_id) {
             if(!User::isAdmin()) {
-                header("Location: http://bd.vg");
                 exit;
             }
 			header("Content-Type: text/plain; charset=UTF-8");
@@ -665,7 +658,6 @@
 
             $json = json_encode($obj);
             echo($json);
-            //echo("{ \"name\":\"$name\", \"phone\":\"$phone\", \"address\":\"$address\", \"nin\":\"$nin\" }");
             exit;
         }
 
@@ -678,18 +670,13 @@
 				foreach (LendingItem::getItemsForCategory($category['id']) as $item) {
                     $itemId = $item['id'];
                     $selected = ($itemId == $selectedItem) ? " selected='selected'" : "";
-                    //$categoryName = $category['name'];
                     $itemName = $item['name'];
-                    //$nameCombo = "$categoryName: $itemName";
 					$ret = $ret . "<option value='$itemId' $selected>$itemName</option>\n";
                     $quickSearchItems = $quickSearchItems . '"' . $nameCombo . '",';
                 }
             }
             $quickSearchItems = substr($quickSearchItems, 0, -1);
 			$ret = $ret . "</select>\n";
-
-            //"c++", "java", "php", "coldfusion", "javascript", "asp", "ruby"
-
             $ret = $ret . "
             <input id='itemQuickSearch'>
             <script>
@@ -760,7 +747,6 @@
 				return "(Okänt datum)";
 			}
 		}
-
 
 		private function shortWeekday ($dayNum) {
             $days = array(

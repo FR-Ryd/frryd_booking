@@ -1,5 +1,3 @@
-
-
 $(document).ready(function () {
     var queueRequest;
     var sendRequest;
@@ -7,7 +5,6 @@ $(document).ready(function () {
     var funcs = {};
 
     var previousCard = "";
-
 
     funcs.queueRequest = function() {
         setTimeout(funcs.sendRequest, requestDelay);
@@ -54,7 +51,6 @@ $(document).ready(function () {
         $("#CardBoxName").click(function(){
             document.location = "user.php?showUser=" + data.liuId;
         });
-        //$("#CardBoxName").show();
     };
 
     funcs.displayRegister = function(data) {
@@ -74,7 +70,7 @@ $(document).ready(function () {
         //Send request for data for user with liu-id
         var liuId = $("#CardBoxLiuId").val();
         if(liuId == "") return;
-        //alert(liuId);
+
         $.ajax({
             method: "GET",
             url: "/cardbox.php",
@@ -91,7 +87,6 @@ $(document).ready(function () {
                     $("#CardBoxLiuRegister").attr('disabled', 'disabled');
                     $("#CardBoxName").val("");
                 } else {
-                    //alert(data.name);
                     $("#CardBoxName").val(data.name);
                     $("#CardBoxLiuRegister").attr('disabled', false);
                     //$("#CardBoxLiuRegister").show();
@@ -116,9 +111,6 @@ $(document).ready(function () {
         //var name = $("#CardBoxName").val();
         document.location = "/cardbox.php?new&card=" + previousCard + "&liuId="+liuId + "&name=" + name;
     });
-
-
-
-
+    
     funcs.sendRequest();
 });

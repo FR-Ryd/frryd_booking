@@ -6,7 +6,7 @@
 		exit;
 	}
 	session_start();
-	
+
 	function __autoload($className) {
 		if (is_file(strtolower($className).".class.php")) {
 			require_once(strtolower($className).".class.php");
@@ -15,23 +15,16 @@
 			exit;
 		}
 	}
-// includes
-	
-	// Main controller
-	// if input// handle input
-	
-		// handle input
-	// else
-		//display default index page
-		$page = new BookingPage();
-		$page->initCAS();
-        if( isset($_GET['ajax']) &&
-            isset($_GET['liu_id'])) {
-            $liu_id = $_GET['liu_id'];
-            $page->getUserInfo($liu_id);
-        } else {
-            $page->handleInput();
-            $page->display();
-        }
+
+	$page = new BookingPage();
+	$page->initCAS();
+    if( isset($_GET['ajax']) &&
+        isset($_GET['liu_id'])) {
+        $liu_id = $_GET['liu_id'];
+        $page->getUserInfo($liu_id);
+    } else {
+        $page->handleInput();
+        $page->display();
+    }
 
 ?>

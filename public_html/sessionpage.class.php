@@ -1,11 +1,8 @@
 ﻿<?php
-
 	class SessionPage extends Page {
-
 		private $sessionId;
 
         private function printReciept($userId, $BookingItems) {
-
             $nowDate = date("Y-m-d H:i:s");
             $userName = User::getName($userId);
 
@@ -57,7 +54,6 @@
         }
 
 		public function handleInput() {
-
 			if (User::isAdmin()) {
 				if (isset($_GET['session'])) {
 					$this->sessionId = $_GET['session'];
@@ -85,7 +81,7 @@
 					header("Location: session.php");
 					exit;
 				} elseif (isset($_POST['update_comment'])) {
-					// Uppdatera kommentar
+					// Update comment
                     $bookingItemId = $_POST['booking_item_id'];
 					$comment = $_POST['comment'];
                     BookingItem::updateComment($bookingItemId, $comment);
@@ -93,7 +89,7 @@
 					header("Location: session.php?session=".$this->sessionId);
 					exit;
 				} elseif (isset($_POST['confirm_pickup'])) {
-					// Sätt föremål som bekräftade utlämnade
+					// Set items as confirmed picked up
                     $bookingItemId = $_POST['booking_item_id'];
 					$picked_up_time = date("Y-m-d H:i:s");
 					$comment = $_POST['comment'];
@@ -104,7 +100,7 @@
 					header("Location: session.php?session=".$this->sessionId);
 					exit;
 				} elseif (isset($_POST['confirm_pickup_all_session'])) {
-					// Sätt alla föremål vid detta pass för en bokning som bekräftade utlämnade
+					// Set all items of this session for one booking as confirmed picked up
                     $bookingId = $_POST['booking_id'];
                     $userId = Booking::getBooking($bookingId);
                     $userId = $userId['booker_liu_id'];
@@ -153,7 +149,7 @@
 					header("Location: booking.php?booking=" . $bookingId);
 					exit;
 				} elseif (isset($_POST['confirm_return'])) {
-					// Sätt föremål som bekräftade återlämnade
+					// Set items as confirmed returned
                     $bookingItemId = $_POST['booking_item_id'];
 					$returned_time = date("Y-m-d H:i:s");
 					$comment = $_POST['comment'];
@@ -163,7 +159,7 @@
 					header("Location: session.php?session=".$this->sessionId);
 					exit;
 				} elseif (isset($_POST['confirm_return_all'])) {
-					// Sätt alla föremål vid detta pass för en bokning som bekräftade återlämnade
+					// Set all items at this session for one booking as confirmed returned
                     $bookingId = $_POST['booking_id'];
                     $sessionId = $this->sessionId;
                     $bookingPickupItems = BookingItem::getBookingBookingItemsForReturnSession($sessionId, $bookingId);
@@ -182,7 +178,7 @@
 					$message = Language::text("email_reminder_overdue", $language)."\n\n";
 					$setting = Setting::getSetting("email_from_address");
 					$fromAddress = $setting['value'];
-					$address = "joewakeed@gmail.com"; //user address for testing else use useremail
+					$address = "it@frryd.se"; //user address for testing else use useremail
 					$useremail = $user_liu_id."@student.liu.se";
 					$headers = "From: ".Language::text("site_title", $language)." <".$fromAddress.">\r\n";
 					$headers .= "Reply-To: ".$fromAddress."\r\n";
@@ -208,15 +204,14 @@
 			<?php
 
 				if (isset($this->sessionId)) {
-					// Vi har valt ett pass
-					// Visa info om detta pass
+					// A session has been chosen
+					// Show info about this session
 					?>
 					<div class="lendingSession">
 					<?php
 
                     $session = Session::getSessionById($this->sessionId);
 					if ($session) {
-
 						$sessionDate = new DateTime($session['date']);
 
 						?>
@@ -225,11 +220,11 @@
 								<h3 class="toggleButton">Ny bokning</h3>
 								<div class="toggleContent">
 									<?php
-										//$this->displayAddBookingForm($this->sessionId);
 										echo(Forms::composeAddBookingForm($this->sessionId));
 									?>
 								</div>
-							</div>						<div class="summary">
+							</div>
+							<div class="summary">
 							<div class="colorInfo">
 								<h2>Color Codes</h2>
 								<ul>
@@ -257,7 +252,7 @@
 						<div class="summary">
 							<h2>Detta har ni att se fram emot detta pass!</h2>
 							<?php
-							// Räkna antalet bokade föremål och bokningar detta pass
+							//Count amount of booked items and bookings this session
                             $pickupBookingItems = BookingItem::getBookingItemsForPickupSession($this->sessionId);
 							$numPickupBookingItems = count($pickupBookingItems);
 							if ($numPickupBookingItems) { ?>
@@ -277,7 +272,7 @@
                                 }
                             }
 
-							// Lista föremålen vid detta pass:
+							//List items this session
 							?>
 								<ul>
 
@@ -288,10 +283,8 @@
 									</li>
 									<?php } ?>
 								</ul>
-							<?php /*}*/ ?>
 							<?php
-							// Räkna återlämningsföremålen vid detta pass:
-
+							//Count returning items this session
 							$numReturnBookingItems = BookingItem::getNumBookingItemsForReturnSession($this->sessionId);
 							if ($numReturnBookingItems) { ?>
 								<p>Sammanlagt <?php echo($numReturnBookingItems); ?> föremål bokade ska lämnas åter detta pass.</p>
@@ -301,12 +294,8 @@
 
 						</div>
 
-						<!--<p>
-							<a href="session.php">Tillbaks till passlistan</a>
-						</p>
-						<hr />-->
 						<?php
-							// Utlämningar
+							// Pickups
 							// =========================================================================================
 						?>
 						<div class="summary square2" style="border:2px solid #444;">
@@ -315,30 +304,29 @@
 								<i>Här listas bokningar för föremål som bokats för att hämtas ut detta pass.</i>
 							</p>
 						</div>
-					<?php	// Lista bokningarna vid detta pass
+					<?php	// List bookings this session
 						$pickupBookings = BookingItem::getBookingsForPickupSession($this->sessionId);
 						if (count($pickupBookings)) {
 
 							foreach ($pickupBookings as $bookingId => $bookingItems) {
-								//$booking = Booking::getBooking($bookingItem['booking']);
 								$booking = Booking::getBookingWithPerson($bookingId);
                                 $bookerName = $booking['name'];
                                 $liuID = $booking['liu_id'];
 								$remarks = User::getRemarks($liuID);
                                 if($bookerName != "") {
-                                    //$bookerName = htmlentities($bookerName);
+
                                 } else {
                                     $bookerName = "(Namnlös)";
                                 }
                                 echo("
 								<div class='pick-up'>
 									<a href='/user.php?showUser=$liuID' ><h3>$bookerName ($liuID)</h3></a>
-                                    "); //<h3>$bookingId,  $bookerName</h3>
+                                    ");
 									foreach($remarks as $remark) {
-									$thisremarkID = $remark['id'];
-									$date = $remark['date'];
-									$comment = $remark['comment'];
-									echo("<p style='padding:5px; background-color:#ff6600;border: 1px solid #444;max-width:400px;'><i style='font-size: 11px;'>Anmärkning skapad: $date</i><br \>$comment<br \><i style='font-size: 10px;'>(för att administrera en anmärkning, besök användarens profil)</i></p>\n");
+										$thisremarkID = $remark['id'];
+										$date = $remark['date'];
+										$comment = $remark['comment'];
+										echo("<p style='padding:5px; background-color:#ff6600;border: 1px solid #444;max-width:400px;'><i style='font-size: 11px;'>Anmärkning skapad: $date</i><br \>$comment<br \><i style='font-size: 10px;'>(för att administrera en anmärkning, besök användarens profil)</i></p>\n");
 									}
                                     foreach ($bookingItems as $bookingItem) {
                                         $this->displayBookingItem($bookingItem);
@@ -359,23 +347,8 @@
 							<p style="padding-left:40px;padding-top:20px;padding-bottom:20px;">Inga bokningar detta pass</p>
 							<?php
 						}
-                        /*
-						?>
-							<div class="square3 togglable">
-								<h3 class="toggleButton">Ny bokning</h3>
-								<div class="toggleContent">
-									<?php
-										//$this->displayAddBookingForm($this->sessionId);
-                                        echo(Forms::composeAddBookingForm($this->sessionId));
-									?>
-								</div>
-							</div>
-							<hr />
-						<?php
-                        */
 
-
-						// Föremål som ska återlämnas:
+						// Items to be returned
 						// =========================================================================================
 						?>
 						<div class="summary square2" style="border:2px solid #444;">
@@ -397,14 +370,14 @@
 								$liuID = $booking['liu_id'];
 								$remarks = User::getRemarks($liuID);
                                 if($bookerName != "") {
-                                    //$bookerName = htmlentities($bookerName);
+
                                 } else {
                                     $bookerName = "(Namnlös)";
                                 }
                                 echo("
 								<div class='return'>
 									<a href='/user.php?showUser=$liuID' ><h3>$bookerName ($liuID)</h3></a>
-                                    "); //<h3>$bookingId,  $bookerName</h3>
+                                    ");
 									foreach($remarks as $remark) {
 									$thisremarkID = $remark['id'];
 									$date = $remark['date'];
@@ -435,7 +408,7 @@
 							<hr />
 						<?php
 
-				// Allt utlånat
+				// Everything lended out
 				// =========================================================================================
 
 						?>
@@ -448,7 +421,7 @@
 
 						</div>
 							<?php
-						// Hitta bokningar för föremål som ej har återlämnats
+						// Find bookings for items not returned
 						$notReturnedBookings = BookingItem::getBookingsNotReturnedSession();
 						if (count($notReturnedBookings)) {
 							foreach ($notReturnedBookings as $bookingId => $bookingItems) {
@@ -457,14 +430,14 @@
                                 $liuID = $booking['liu_id'];
 								$remarks = User::getRemarks($liuID);
                                 if($bookerName != "") {
-                                    //$bookerName = htmlentities($bookerName);
+
                                 } else {
                                     $bookerName = "(Namnlös)";
                                 }
                                 echo("
 								<div class='pick-up'>
 									<a href='/user.php?showUser=$liuID' ><h3>$bookerName ($liuID)</h3></a>
-                                    "); //<h3>$bookingId,  $bookerName</h3>
+                                    ");
 								foreach($remarks as $remark) {
 									$thisremarkID = $remark['id'];
 									$date = $remark['date'];
@@ -505,11 +478,10 @@
 				</p>
 				<?php
 
-				} else { // inget pass valt
+			} else { // no session chosen
 					echo "<h1>Pass</h1>\n";
 
-					// Kalender-varianten:
-
+					// Calender version:
 					?>
 			<p>
 				<i>
@@ -526,14 +498,9 @@
 			</div>
 			</div>
 					<?php
-					//SLut kalender-varianten
+					//End og calendar-version
 				}
 				?>
-				<!--<hr />
-
-				<p>
-					<a href="admin.php">Till administreringen</a>
-				</p>-->
 
 			</div>
 				<?php
@@ -603,7 +570,7 @@
 					</tr>
 					<tr>
 						<?php
-							// skriv ut veckodagsrubriker
+							// print weekday headings
 							for ($w = 1; $w <= 7; $w++) {
 								?>
 								<th>
@@ -616,20 +583,19 @@
 				</thead>
 				<tbody>
 					<?php
-						// skriv ut kalendern
+						// print calendar
 
-						// loopa så länge calTime-månaden är time-månaden eller månaden innan time-månaden
-						// dvs caltime->m == time->m || caltime->m % 12 == time->m - 1
-						// månaden innan time-månaden är time->m - 1
+						//Loop as long as the calTime-month is
+						//the time-month or the month before the time-month
+						// caltime->m == time->m || caltime->m % 12 == time->m - 1
+						// the month before the time-month is time->m - 1
 
-						// reset stuff
+						// reset
 						// counter for each session
 						$j = 0;
 
-
 						for ($i = 0; ($calTime->format("m") == $time->format("m")
 										|| ($calTime->format("m") % 12) + 1 == $time->format("m")
-										// || $calTime < $maxTime) maxTime odefinerad i hela projektet.
                                         ); $i++) { // weeks
 							?>
 						<tr>
@@ -646,16 +612,14 @@
 									$tdClass .= " other-month";
 								}
 
-								// Hitta pass som är idag
+								// Find session that is today
 								$session = Session::getSessionByDate($calTime->format("Y-m-d"));
 								if ($session) {
-
-									// hittade ett pass idag
+									// found a session today
 									$tdClass .= " lending_session";
 									$sessionDate = true;
 
-									// Hämta info om denna period/session
-
+									// Get info about this period/session
 									if ($pickupBookingItems = BookingItem::getBookingItemsForPickupSession($session['id'])) {
 										$title .= " (".count($pickupBookingItems)." bokade)";
 										$tdClass .= " booked";
@@ -665,12 +629,10 @@
 									$sessionDate = false;
 								}
 
-
 								echo("<td ");
+									//TODO figure out the following comment:
                                     //Since $item is very undefined here and i don't know what it is supposed to do, i'll
                                     //leave this commented until we figure out how it's supposed to be.
-                                    //$derp = $item['id'] + " " + $calTime->format("Y-m-d");
-                                    //echo("id='ks_datepicker_date_$derp'");
                                 echo("class='$tdClass' title='$title' >\n");
 								echo("<input type='hidden' class='date' name='date' value='" . $calTime->format("Y-m-d") . "' />\n");
 								echo("<span title='$title'>\n");
@@ -690,15 +652,12 @@
 							?>
 						</tr>
 						<?php
-							}
+						}
 						?>
 				</tbody>
 			</table>
 			<?php
 		}
-
-
-
 
 		private function displayBookingItem($bookingItem) {
             $lendingItem = LendingItem::getItem($bookingItem['item']);
@@ -758,24 +717,23 @@
 				$booking = Booking::getBookingWithPerson($bookingId);
 				$liuID = $booking['liu_id'];
 				if ($bookingItem['picked_up_time'] != "") {
-					// Utlämnad
+					// Picked up
                     $pickedUpTime = $bookingItem['picked_up_time'];
                     $theDate = date("j/n H:i", strtotime($pickedUpTime));
 					$header .= "<b>&#10003; UTLÄMNAD $theDate</b>";
 
 					if ($bookingItem['returned_time'] != "") {
-						// Utlämnad och återlämnad
-                        $returnedTime = $bookingItem['returned_time'];
+						// Picked up and returned
+						$returnedTime = $bookingItem['returned_time'];
                         $theDate = date("j/n H:i", strtotime($returnedTime));
                         $tail .= "<b>&#10003; ÅTERLÄMNAD $theDate</b>";
 
 					} else {
-						// Utlämnad, ej återlämnad
+						// Picked up, not returned
 
 						$header .= "<br />";
                         $returnSessionDate = $returnSession['date'];
                         $currentSessionDate = $currentSession['date'];
-                        //echo(strtotime($returnSessionDate) . "<br>" . strtotime($currentSessionDate));
 						if (strtotime($returnSessionDate) < strtotime($currentSessionDate)) {
 							$header .= "<b>FÖRSENAD!</b><br \><input type='hidden' name='email-liuid' value='$liuID'/><input style='margin-bottom:5px;' id=$liuID type='submit' name='email-delayed-user' class='button_style' value='Email Late User ($liuID)' />";
 						}

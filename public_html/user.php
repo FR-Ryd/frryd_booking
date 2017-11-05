@@ -15,17 +15,9 @@
 			exit;
 		}
 	}
-// includes
 
-	// Main controller
-	// if input// handle input
-
-		// handle input
-	// else
-		//display default index page
-		$page = new UserPage();
-		$page->initCAS();
-		$page->handleInput();
-		$page->display();
-
+	$page = new UserPage();
+	$page->initCAS();
+	$page->handleInput();
+	$page->display();
 ?>
