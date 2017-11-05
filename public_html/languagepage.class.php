@@ -8,6 +8,7 @@
 
 			if (!User::isAdmin()) {
                 header("Location: index.php");
+				exit;
             }
 
             if (isset($_GET['language'])) {

@@ -118,13 +118,16 @@
 				<div class="menu-navi">
 					<a href="index.php"><?php echo(Language::text("booking_menu_title")); ?></a>
 					<a href="user.php?showUser=<?php $currUser=User::getUser(); echo($currUser); ?>">Profile</a>
-					<?php if (User::isAdmin()) { ?>
-					<a href="session.php">Pass</a>
-					<a href="item.php">Föremål</a>
-					<a href="user.php">Användare</a>
-					<a href="booking.php">Bokningar</a>
-					<a href="languages.php">Språk</a>
 					<?php
+					if (User::isAdmin()) {
+						//TODO translate admin menu options
+					?>
+						<a href="session.php">Pass</a>
+						<a href="item.php">Föremål</a>
+						<a href="user.php">Användare</a>
+						<a href="booking.php">Bokningar</a>
+						<a href="languages.php">Språk</a>
+						<?php
 
 					}
 					if (User::isAuthed()) {

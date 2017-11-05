@@ -75,7 +75,6 @@
 
             if (!User::isAdmin()) {
 				$_SESSION['message'] = "Du är inte admin\n";
-                header("Location: index.php");
                 exit;
             }
 
