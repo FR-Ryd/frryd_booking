@@ -9,10 +9,10 @@
 		<div class='live_search'>
 				<input type='text' class='livesearchquery' id='livesearchid' autocomplete="off" placeholder='Search (BETA)'>
 				<input type="image" class="livesearchbutton" src="images/toolbar_find.png" alt="Search">
-				--><ul id="livesearchresults"></ul>
+				<ul id="livesearchresults"></ul>
         </div>
 
-	<div class="main">
+		<div class="main">
 
 		<div id="cart" style="">
 			<form id="cartForm" action="confirm.php" method="post">
@@ -31,25 +31,6 @@
 		</div>
 
 		<div class="right_cont_info">
-			<div class="opening_hours">
-				<div id="poll">
-					<h3 class="pollheader">What do your think about the new Search feature?</h3>
-						<form class="pollform">
-							<label style="display:block;">
-								<input type="radio" class="pollradio" name="vote" value="0" onclick="getVote(this.value)"/>
-								Great
-							</label>
-							<label>
-								<input type="radio" class="pollradio" name="vote" value="1" onclick="getVote(this.value)"/>
-								So & So
-							</label>
-							<label>
-								<input type="radio" class="pollradio" name="vote" value="2" onclick="getVote(this.value)"/>
-								Bad
-							</label>
-						</form>
-				</div>
-			</div>
 			<div class="opening_hours">
 				<h2>Opening Hours</h2>
 
