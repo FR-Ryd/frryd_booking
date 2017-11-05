@@ -11,8 +11,9 @@ SQL_MODE must not include the options NO_ZERO_DATE or NO_ZERO_IN_DATE.
 
 Procedure:
 
-    Set up your web server to serve pages from the booking directory.
-    Add the line "extension=pdo_mysql.so" to relevant php.ini files.
-    Visit the __create_db.php page (e.g. http://localhost/frryd-booking/__create_db.php)
-    Check the WIPE EVERYTHING box and press the Yes button to create the necessary tables in the database.
-    The system should now be functional.
+Set up your web server to serve pages from the booking directory.
+Add the line "extension=pdo_mysql.so" to relevant php.ini files.
+Visit the __create_db.php page (e.g. http://localhost/frryd-booking/__create_db.php)
+Check the WIPE EVERYTHING box and press the Yes button to create the necessary tables in the database.
+Remove the __create_db.php file from the server to make sure normal users can't wipe the database.
+The system should now be functional.

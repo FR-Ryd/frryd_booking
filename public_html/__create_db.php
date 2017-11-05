@@ -1,4 +1,9 @@
 <?php
+
+	/*
+		IMPORTANT! Remove this file from live server aftert deployment
+	*/
+
 	function __autoload($className) {
 		if (is_file(strtolower($className).".class.php")) {
 			require_once(strtolower($className).".class.php");
@@ -39,7 +44,6 @@ if (isset($_POST['confirm'])) {
        language INTEGER,
        hash VARCHAR(64)
     );";
-
     # id is the unique id of the booking.
     # booker is the person who made the booking, either in person or on the internet
     # getter is the person who made the actual pickup.
@@ -48,6 +52,7 @@ if (isset($_POST['confirm'])) {
     ##
     # Entries in booking_items refer to one of these bookings. To get a list of items booked,
     # select all with booking_items.booking = bookings.id
+
     $createPersons = "CREATE TABLE persons
     (
         liu_id VARCHAR(64) UNIQUE PRIMARY KEY,
@@ -118,7 +123,6 @@ if (isset($_POST['confirm'])) {
     );";
     # date is obvious.
     # return_num i dont yet know
-    #
 
 
     $createTranslations = "CREATE TABLE translations (
@@ -127,10 +131,8 @@ if (isset($_POST['confirm'])) {
         value VARCHAR(20000)
     );";
     # Translation lookup table.
-    # name(the key) is for example cal_apr, language is a language id, and the result is "april" :p
-
-
-
+    # name(the key) is for example cal_apr,
+	#language is a language id, and the result is "april"
 
     $createSettings = "CREATE TABLE settings (
         name VARCHAR(64) UNIQUE,
@@ -143,6 +145,7 @@ if (isset($_POST['confirm'])) {
         comment VARCHAR(512),
         date DATETIME
     );";
+	#Remarks stores remarks that has been assigned to users
 
 	$refresh_semester = isset($_POST['refresh_semester']);
 
@@ -228,7 +231,6 @@ if (isset($_POST['confirm'])) {
         $db->execute($createSettings, "createSettings:<br>");
         $db->execute($createItemCategories, "createItemCategories:<br>");
         $db->execute($createItemCategoriesTranslations, "createItemCategoriesTranslations:<br>");
-        //$db->execute("DROP TABLE sessions", "dropSessions:<br>");
         $db->execute($createSessions, "createSessions:<br>");
 
 
@@ -239,6 +241,7 @@ if (isset($_POST['confirm'])) {
         $db->execute("INSERT INTO settings (name, value) VALUES ('email_from_address', 'intendent@frryd.se');", "createDefaultSetting4:<br>");
         $db->execute("INSERT INTO settings (name, value) VALUES ('site_url', 'http://booking.frryd.se/');", "createDefaultSetting5:<br>");
     }
+
 
     if($persons || $adminReset) {
         $db->execute("INSERT INTO persons (liu_id, admin) VALUES ('joewa430', '1') ON DUPLICATE KEY UPDATE admin='1';", "createAdmin:<br>");
@@ -270,18 +273,18 @@ WARNING!<br>
 This will attempt to (re)create the database tables!<br>
 Are you sure you want to do this?<br>
 <form action="?" method="post">
-Reset the bookings and sessions only, clear the database for a new semester
-<input type='checkbox' class='accept_eula' name='refresh_semester' /><br>
-<hr>
-bookings/booking_items: <input type='checkbox' class='accept_eula' name='bookings' /><br>
-persons: <input type='checkbox' class='accept_eula' name='persons' /><br>
-remarks: <input type='checkbox' class='accept_eula' name='remarks' /><br>
-languages: <input type='checkbox' class='accept_eula' name='languages' /><br>
-items: <input type='checkbox' class='accept_eula' name='items' /><br>
-reset admin: <input type='checkbox' class='accept_eula' name='adminreset' /><br>
-WIPE EVERYTHING!!: <input type='checkbox' class='accept_eula' name='boom' /><br>
+	Reset the bookings and sessions only, clear the database for a new semester
+	<input type='checkbox' class='accept_eula' name='refresh_semester' /><br>
+	<hr>
+	bookings/booking_items: <input type='checkbox' class='accept_eula' name='bookings' /><br>
+	persons: <input type='checkbox' class='accept_eula' name='persons' /><br>
+	remarks: <input type='checkbox' class='accept_eula' name='remarks' /><br>
+	languages: <input type='checkbox' class='accept_eula' name='languages' /><br>
+	items: <input type='checkbox' class='accept_eula' name='items' /><br>
+	reset admin: <input type='checkbox' class='accept_eula' name='adminreset' /><br>
+	WIPE EVERYTHING!!: <input type='checkbox' class='accept_eula' name='boom' /><br>
 
-<input type="submit" name="confirm" value="Yes! I'm damn sure!" />
+	<input type="submit" name="confirm" value="Yes! I'm damn sure!" />
 </form>
 <a href="?">No, i'm not.. I'll quietly navigate away from here now then....</a><br>
 <br>

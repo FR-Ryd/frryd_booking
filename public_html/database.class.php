@@ -121,7 +121,6 @@ class Database {
 	    $error_free = $query->execute();
 	} else {
 	    $error_free = $query->execute($parameters);
-        print_r($parameters);
 	}
 	if (!$error_free) {
 	    $error_message = $error;
