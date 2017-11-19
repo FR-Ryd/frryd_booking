@@ -12,7 +12,7 @@
 			include_once('CAS.php');
 
 			phpCAS::setDebug("derp");
-			phpCAS::client(CAS_VERSION_2_0,'login.liu.se',443,'/cas/');
+			phpCAS::client(CAS_VERSION_2_0,'login.it.liu.se',443,'/cas/');
             //TODO: Fixa certifikat och dyligt.
             phpCAS::setNoCasServerValidation();
 		}

@@ -102,7 +102,7 @@
 							}
 						}
 						$message .= Language::text("book_thank_you")."\n\n".Language::text("you_have_booked")."\n"  // tack för din bokning
-								.$messageBookingItem."\n".Language::text("confirm_sum_deposit").": ".$sum_emaildeposition." SEK\n\n"."See you on Wednesday/Sunday!\n"; // X X-föremål mellan X/X och X/X
+								.$messageBookingItem."\n".Language::text("confirm_sum_deposit").": ".$sum_emaildeposition." SEK\n\n"."See you on Sunday!\n"; // X X-föremål mellan X/X och X/X
 
 						if ($numItemsBooked < $numAvailable) {
 							$message .= ($numAvailable - $numItemsBooked)." ".Language::text("error_num_items_not_booked");  // X föremål ej bokade

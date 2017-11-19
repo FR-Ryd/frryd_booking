@@ -2113,7 +2113,7 @@ class CASClient
 		$err_msg = '';
 
 		$res = TRUE;
-		
+
 		// initialize the CURL session
 		$ch = curl_init($url);
 
@@ -2125,7 +2125,7 @@ class CASClient
 				curl_setopt($ch, $key, $value);
 			}
 		}
-
+		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
 		if ($this->_cas_server_cert == '' && $this->_cas_server_ca_cert == '' && !$this->_no_cas_server_validation) {
 			phpCAS::error('one of the methods phpCAS::setCasServerCert(), phpCAS::setCasServerCACert() or phpCAS::setNoCasServerValidation() must be called.');
 		}
