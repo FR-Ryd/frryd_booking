@@ -11,7 +11,7 @@
 		public function initCAS() {
 			include_once('CAS.php');
 
-			phpCAS::setDebug("derp");
+			phpCAS::setDebug("CAS_DEBUG.log");
 			phpCAS::client(CAS_VERSION_2_0,'login.it.liu.se',443,'/cas/');
             //TODO: Fixa certifikat och dyligt.
             phpCAS::setNoCasServerValidation();
@@ -99,7 +99,7 @@
 					}
 					if (User::isAuthed()) {
 						echo("<a href='logout.php'>" . Language::text("logout") . "</a>");
-						echo "(Inloggad som " . User::getUser().")";
+						echo("(" . Language::text("logged_in_as") . User::getUser().")");
 					} else {
 						echo("<a href='login.php'>Login</a>\n");
 					}
