@@ -14,7 +14,7 @@
 						&& isset($_POST['max_lending_items']) && is_numeric($_POST['max_lending_items'])) {
 						null; // OK
 					} else {
-						$this->message .= "Felaktigt ifyllt formulär.";
+						$this->message .= Language::text("form_error");
 						$_SESSION['message'] = $this->message;
 
 						header("Location: item.php");
@@ -30,7 +30,7 @@
 								'max_lending_items' => $_POST['max_lending_items']
 								);
 					LendingItem::create($newItem);
-                    $_SESSION['message'] .= "Föremål skapat!\n";
+                    $_SESSION['message'] .= Language::text("item_Created")."!\n";
 
 					header("Location: item.php");
 					exit;
@@ -39,7 +39,7 @@
 
 					$newCategoryName = $_POST['name'];
 					LendingItemCategory::create($newCategoryName);
-                    $_SESSION['message'] .= "Kategori skapad\n";
+                    $_SESSION['message'] .= Language::text("category_created")."\n";
 
 					header("Location: item.php");
 					exit;
@@ -51,7 +51,7 @@
 					$name = $_POST['name'];
 
 					ItemCategoryTranslation::create($category, $language, $name);
-                    $_SESSION['message'] .= "Översättning tillagd\n";
+                    $_SESSION['message'] .= Language::text("translation_added")."\n";
 
 					header("Location: item.php");
 					exit;
@@ -61,7 +61,7 @@
                     $id = $_POST['item_category_translation_id'];
 
 					ItemCategoryTranslation::update($id, $newTranslation);
-                    $_SESSION['message'] .= "Översättning uppdaterad\n";
+                    $_SESSION['message'] .= Language::text("translation_added")."\n";
 
 					header("Location: item.php");
 					exit;
@@ -73,7 +73,7 @@
                     $description = $_POST['description'];
 
 					ItemTranslation::create($item, $language, $name, $description, $emailText);
-                    $_SESSION['message'] .= "Översättning tillagd\n";
+                    $_SESSION['message'] .= Language::text("translation_added")."\n";
 
 					header("Location: item.php");
 					exit;
@@ -84,7 +84,7 @@
                     $id = $_POST['item_translation_id'];
 
 					ItemTranslation::update($id, $name, $description, $emailText);
-                    $_SESSION['message'] .= "Översättning uppdaterad\n";
+                    $_SESSION['message'] .= Language::text("translation_added")."\n";
 
 					header("Location: item.php");
 					exit;
@@ -97,7 +97,7 @@
 						&& isset($_POST['max_lending_items']) && is_numeric($_POST['max_lending_items'])) {
 						null; // OK
 					} else {
-						$this->message .= "Felaktigt ifyllt formulär.";
+						$this->message .= Language::text("form_error");
 						$_SESSION['message'] = $this->message;
 
 						header("Location: item.php");
@@ -114,7 +114,7 @@
 							);
 
 						if (LendingItem::update($_POST['lending_item_id'], $newItem)) {
-							$_SESSION['message'] .= "Föremål uppdaterat\n";
+							$_SESSION['message'] .= Language::text("item_created")."\n";
 						}
 
 					$file = $_FILES['image'];
@@ -128,9 +128,9 @@
 								&& Image::create_miniature($file['tmp_name'], $ext, 60, "img/".$_POST['lending_item_id']."_mini.jpg"));
 
 						if ($success) {
-							$_SESSION['message'] .= "Bild uppladdad\n";
+							$_SESSION['message'] .= Language::text("pic_uploaded")."\n";
 						} else {
-							$_SESSION['message'] .= "Bild ej uppladdad\n";
+							$_SESSION['message'] .= Language::text("pic_error")."\n";
 						}
 					} elseif (isset( $_POST['delete_image']) && ($_POST['delete_image'] == 1)) {
 						$success = true;
@@ -138,9 +138,9 @@
 						$success = $success && @unlink("img/".$_POST['lending_item_id'].".jpg");
 						$success = $success && @unlink("img/".$_POST['lending_item_id']."_mini.jpg");
 						if ($success) {
-							$_SESSION['message'] .= "Bild borttagen\n";
+							$_SESSION['message'] .= Language::text("pic_removed")."\n";
 						} else {
-							$_SESSION['message'] .= "Bild ej borttagen\n";
+							$_SESSION['message'] .= Language::text("pic_error")."\n";
 						}
 					}
 
@@ -148,7 +148,7 @@
 					exit;
 				} elseif (isset($_POST['delete_lending_item'])) {
 					if (LendingItem::delete($_POST['lending_item_id'])) {
-						$_SESSION['message'] .= "Föremål borttaget";
+						$_SESSION['message'] .= Language::text("item_removed");
 					}
 
 					header("Location: item.php");
@@ -156,7 +156,7 @@
 				} elseif (isset($_POST['delete_lending_item_category'])) {
 
 					if (LendingItemCategory::delete($_POST['lending_item_category_id'])) {
-						$_SESSION['message'] .= "Kategori borttagen";
+						$_SESSION['message'] .= Language::text("category_removed");
 					}
 					header("Location: item.php");
 					exit;
@@ -172,7 +172,7 @@
 
 			if (User::isAdmin()) { ?>
 				<div class="main">
-					<h1>Föremål</h1>
+					<h1><?php echo(Language::text("items_menu_title")); ?></h1>
 					<?php $this->displayAddCategoryForm(); ?>
 				<?php
 				foreach (LendingItemCategory::getCategories() as $category) {
@@ -210,57 +210,57 @@
 									<fieldset style="padding: 0;">
 										<input type="hidden" name="lending_item_id" value="<?php echo($item['id']); ?>" />
 										<p>
-											<b>Redigera föremålet nedan;</b>
+											<b><?php echo(Language::text("edit_item")); ?>:</b>
 										</p>
 
 										<div class="pure-control-group">
-											<label style="width: 6em;"  for="Bildfil">Bildfil</label>
+											<label style="width: 6em;"  for="Bildfil"><?php echo(Language::text("picture")); ?></label>
 											<input class="button_style" style="padding:5;" type="file" name="image" class="button_style" />
 										</div>
 
 										<div class="pure-control-group">
-											<label style="width: 6em;"  for="Internt Namn">Internt Namn</label>
+											<label style="width: 6em;"  for="Internt Namn"><?php echo(Language::text("internal_name")); ?></label>
 											<input class="form_style" type="text" name="name" value="<?php echo($item['name']); ?>" />
 										</div>
 
 										<div class="pure-control-group">
-											<label style="width: 6em;"  for="Antal">Antal</label>
-											<input class="form_style" type="text" name="num_items" value="<?php echo($item['num_items']); ?>" size="3" /> st
+											<label style="width: 6em;"  for="Antal"><?php echo(Language::text("amount")); ?></label>
+											<input class="form_style" type="text" name="num_items" value="<?php echo($item['num_items']); ?>" size="3" />
 										</div>
 
 										<div class="pure-control-group">
-											<label style="width: 6em;"  for="Max att låna">Max att låna</label>
-											<input class="form_style" type="text" name="max_lending_items" value="<?php echo($item['max_lending_items']); ?>" size="3" /> st (0 = obegränsat)
+											<label style="width: 6em;"  for="Max att låna"><?php echo(Language::text("max_to_lend")); ?></label>
+											<input class="form_style" type="text" name="max_lending_items" value="<?php echo($item['max_lending_items']); ?>" size="3" />  <?php echo(Language::text("max_lend_info")); ?>
 										</div>
 
 										<div class="pure-control-group">
-											<label style="width: 6em;"  for="Maxlånetid">Maxlånetid</label>
-											<input class="form_style" type="text" name="max_lending_periods" value="<?php echo($item['max_lending_periods']); ?>" size="3" /> perioder (halva veckor)
+											<label style="width: 6em;"  for="Maxlånetid"><?php echo(Language::text("max_time")); ?></label>
+											<input class="form_style" type="text" name="max_lending_periods" value="<?php echo($item['max_lending_periods']); ?>" size="3" /> <?php echo(Language::text("max_time_info")); ?>
 										</div>
 
 										<div class="pure-control-group">
-											<label style="width: 6em;"  for="Deposition">Deposition</label>
+											<label style="width: 6em;"  for="Deposition"><?php echo(Language::text("deposition")); ?></label>
 											<input class="form_style" type="text" name="deposit" value="<?php echo($item['deposit']); ?>" size="5" /> kr
 										</div>
 
 										<div class="pure-control-group">
-											<label style="width: 6em;"  for="Avgift">Avgift</label>
+											<label style="width: 6em;"  for="Avgift"><?php echo(Language::text("fee")); ?></label>
 											<input class="form_style" type="text" name="fee" value="<?php echo($item['fee']); ?>" size="5" /> kr
 										</div>
 
 										<div class="pure-control-group">
-											<label style="width: 6em;"  for="Ta bort bild">Ta bort bild</label>
+											<label style="width: 6em;"  for="Ta bort bild"><?php echo(Language::text("remove_pic")); ?></label>
 												<input type="checkbox" name="delete_image" value="1" />
 										</div>
 										<br />
 										<div class="pure-control-group">
-											<input class="button_style" type="submit" name="update_lending_item" value="Uppdatera" />
-											<input class="button_style" type="submit" name="delete_lending_item" value="Ta bort föremål" />
+											<input class="button_style" type="submit" name="update_lending_item" value="<?php echo(Language::text("update")); ?>" />
+											<input class="button_style" type="submit" name="delete_lending_item" value="<?php echo(Language::text("remove_item")); ?>" />
 										</div>
 									</fieldset>
 								</form>
 								<div class="togglable">
-									<p class="toggleButton"><b>Översättningar</b></p>
+									<p class="toggleButton"><b><?php echo(Language::text("translations")); ?></b></p>
 									<div class="toggleContent"><?php
 
 									foreach (Language::getLanguages() as $language) { ?>
@@ -268,23 +268,23 @@
 											<fieldset class="box">
 												<?php if ($translation = ItemTranslation::getTranslation($item['id'], $language['id'])) { ?>
 													<input type="hidden" name="item_translation_id" value="<?php echo($translation['id']); ?>" />
-													<legend>Redigera språk <?php echo($language['name']); ?></legend>
-													Namn: <input type="text" name="name" value="<?php echo($translation['name']); ?>" /><br />
-													Beskrivning:<br />
+													<legend><?php echo(Language::text("edit_language")); ?> <?php echo($language['name']); ?></legend>
+													<?php echo(Language::text("name")); ?>: <input type="text" name="name" value="<?php echo($translation['name']); ?>" /><br />
+													<?php echo(Language::text("description")); ?>:<br />
                                                     <textarea name="description" rows="3" cols="42"><?php echo($translation['description']); ?></textarea><br />
 													Email-text:<br />
                                                     <textarea name="emailText" rows="3" cols="42"><?php echo($translation['email_text']); ?></textarea><br />
-													<input type="submit" class="button_style" name="update_item_translation" value="Uppdatera" />
+													<input type="submit" class="button_style" name="update_item_translation" value="<?php echo(Language::text("update")); ?>" />
 												<?php } else { ?>
 													<input type="hidden" name="item_id" value="<?php echo($item['id']); ?>" />
 													<input type="hidden" name="language_id" value="<?php echo($language['id']); ?>" />
-													<legend>Lägg till översättning till språk <?php echo($language['name']); ?></legend>
-													Namn: <input type="text" name="name" value="" /><br />
-													Beskrivning:<br />
+													<legend><?php echo(Language::text("add_translation")); ?> <?php echo($language['name']); ?></legend>
+													<?php echo(Language::text("name")); ?>: <input type="text" name="name" value="" /><br />
+													<?php echo(Language::text("description")); ?>:<br />
                                                     <textarea name="description" rows="3" cols="42"></textarea><br />
 													Email-text:<br />
                                                     <textarea name="emailText" rows="3" cols="42"></textarea><br />
-													<input type="submit" class="button_style" name="create_item_translation" value="Skapa" />
+													<input type="submit" class="button_style" name="create_item_translation" value="<?php echo(Language::text("create")); ?>" />
 												<?php } ?>
 											</fieldset>
 										</form>
@@ -298,7 +298,7 @@
 					} // for each item
 					?>
 					<div class="bookingFormItem" style="background-color: #ff6600;">
-						<h4 class="itemHeading">Lägg till ett nytt föremål i <b style="color:#0080ff"><?php echo(Language::itemCategory($category['id'])); ?></b></h4>
+						<h4 class="itemHeading"><?php echo(Language::text("add_item_to")); ?> <b style="color:#0080ff"><?php echo(Language::itemCategory($category['id'])); ?></b></h4>
 						<div class="itemContent">
 						 <?php
 							$this->displayAddItemForm($category['id']);
@@ -306,7 +306,7 @@
 						</div>
 					</div>
 					<div class="togglable">
-						<p class="toggleButton"><b>Översätt kategorin <b style="color:#ff6600"><?php echo(Language::itemCategory($category['id'])); ?></b></b></p>
+						<p class="toggleButton"><b><?php echo(Language::text("translate_category")); ?> <b style="color:#ff6600"><?php echo(Language::itemCategory($category['id'])); ?></b></b></p>
 						<div class="toggleContent">
 						<?php
 						foreach (Language::getLanguages() as $language) { ?>
@@ -316,15 +316,15 @@
                                     $translation = ItemCategoryTranslation::getTranslation($category['id'], $language['id']);
                                     if ($translation) { ?>
 										<input type="hidden" name="item_category_translation_id" value="<?php echo($translation['id']); ?>" />
-										<legend>Redigera språk <?php echo($language['name']); ?></legend>
-										Namn: <input type="text" name="name" value="<?php echo($translation['name']); ?>" /><br />
-										<input type="submit" class="button_style" name="update_item_category_translation" value="Uppdatera" />
+										<legend><?php echo(Language::text("edit_language")); ?> <?php echo($language['name']); ?></legend>
+										<?php echo(Language::text("name")); ?>: <input type="text" name="name" value="<?php echo($translation['name']); ?>" /><br />
+										<input type="submit" class="button_style" name="update_item_category_translation" value="<?php echo(Language::text("update")); ?>" />
 									<?php } else { ?>
 										<input type="hidden" name="category_id" value="<?php echo($category['id']); ?>" />
 										<input type="hidden" name="language_id" value="<?php echo($language['id']); ?>" />
-										<legend>Lägg till översättning till språk <?php echo($language['name']); ?></legend>
-										Namn: <input type="text" name="name" value="" /><br />
-										<input type="submit" class="button_style" name="create_item_category_translation" value="Skapa" />
+										<legend><?php echo(Language::text("add_translation")); ?> <?php echo($language['name']); ?></legend>
+										<?php echo(Language::text("name")); ?>: <input type="text" name="name" value="" /><br />
+										<input type="submit" class="button_style" name="create_item_category_translation" value="<?php echo(Language::text("create")); ?>" />
 									<?php } ?>
 								</fieldset>
 							</form>
@@ -342,33 +342,33 @@
 			<form action="item.php" method="post">
 				<fieldset>
 						<input type="hidden" name="lending_item_category_id" value="<?php echo($categoryID); ?>" />
-						<legend>Fyll i föremålet information nedan;</legend>
+						<legend><?php echo(Language::text("edit_item")); ?>:</legend>
 					<div class="pure-control-group">
-						<label style="width: 6em;"  for="Internt namn ">Internt namn</label>
+						<label style="width: 6em;"  for="Internt namn "><?php echo(Language::text("internal_name")); ?></label>
 						<input type="text" class="form_style" name="name" value="" />
 					</div>
 					<div class="pure-control-group">
-						<label style="width: 6em;"  for="Antal">Antal</label>
+						<label style="width: 6em;"  for="Antal"><?php echo(Language::text("amount")); ?></label>
 						<input type="text" class="form_style" name="num_items" value="1" /> st
 					</div>
 					<div class="pure-control-group">
-						<label style="width: 6em;"  for="Max att låna">Max att låna</label>
-						<input type="text" class="form_style" name="max_lending_items" value="0" /> st (0 = obegränsat)
+						<label style="width: 6em;"  for="Max att låna"><?php echo(Language::text("max_to_lend")); ?></label>
+						<input type="text" class="form_style" name="max_lending_items" value="0" /> <?php echo(Language::text("max_lend_info")); ?>
 					</div>
 					<div class="pure-control-group">
-						<label style="width: 6em;"  for="Maxlånetid">Maxlånetid</label>
-						<input type="text" class="form_style" name="max_lending_periods" value="4" /> perioder (halva veckor)
+						<label style="width: 6em;"  for="Maxlånetid"><?php echo(Language::text("max_time")); ?></label>
+						<input type="text" class="form_style" name="max_lending_periods" value="4" /> <?php echo(Language::text("max_time_info")); ?>
 					</div>
 					<div class="pure-control-group">
-						<label style="width: 6em;"  for="Deposition">Deposition</label>
+						<label style="width: 6em;"  for="Deposition"><?php echo(Language::text("deposition")); ?></label>
 						<input type="text" class="form_style" name="deposit" value="" /> kr
 					</div>
 					<div class="pure-control-group">
-						<label style="width: 6em;"  for="Avgift">Avgift</label>
+						<label style="width: 6em;"  for="Avgift"><?php echo(Language::text("fee")); ?></label>
 						<input type="text" class="form_style" name="fee" value="" /> kr
 					</div>
 
-					<input type="submit" class="button_style" name="create_lending_item" value="Skapa" />
+					<input type="submit" class="button_style" name="create_lending_item" value="<?php echo(Language::text("create")); ?>" />
 				</fieldset>
 			</form>
 			<?php
@@ -379,10 +379,10 @@
 			<hr />
 			<form action="item.php" method="post">
 				<fieldset>
-					<legend>Lägg till kategori</legend>
+					<legend><?php echo(Language::text("add_category")); ?></legend>
 					<div class="pure-control-group">
-						<label style="width:6em;">Internt namn</label><input class="form_style" type="text" name="name" value="" />
-						<input type="submit" class="button_style" name="create_lending_item_category" value="Skapa" />
+						<label style="width:6em;"><?php echo(Language::text("internal_name")); ?></label><input class="form_style" type="text" name="name" value="" />
+						<input type="submit" class="button_style" name="create_lending_item_category" value="<?php echo(Language::text("create")); ?>" />
 						</div>
 				</fieldset>
 			</form>
@@ -395,7 +395,7 @@
 			<form action="item.php" method="post">
 				<fieldset>
 					<input type="hidden" name="lending_item_category_id" value="<?php echo($categoryID); ?>" />
-					<input type="submit" class="button_style" name="delete_lending_item_category" value="Ta bort kategori" />
+					<input type="submit" class="button_style" name="delete_lending_item_category" value="<?php echo(Language::text("remove_category")); ?>" />
 				</fieldset>
 			</form>
 			<?php

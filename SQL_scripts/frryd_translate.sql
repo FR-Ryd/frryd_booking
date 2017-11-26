@@ -109,9 +109,6 @@ INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("created",2,"ska
 INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("session_remove_error",1,"You can not remove this session when there exists booking to or from it.\n Remove or change them first.\n");
 INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("session_remove_error",2,"Du kan inte ta bort detta pass då det finns bokningar till eller från detta.\n Ta bort eller ändra dem först.\n");
 
-
------------------ ADDED ----------------
-
 -- Translations for user page
 INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("unbooked",1,"Unbooked");
 INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("unbooked",2,"Avbokat");
@@ -172,3 +169,99 @@ INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("nothing_booked"
 
 INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("unbook",1,"Unbook");
 INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("unbook",2,"Avboka");
+
+----------------- ADDED ----------------
+
+-- Text for items page
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("form_error",1,"Error in the form submitted!");
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("form_error",2,"Det finns ett fel i formuläret!");
+
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("item_created",1,"Item Created");
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("item_created",2,"Föremål Skapat");
+
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("category_created",1,"Category Created");
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("category_created",2,"Kategori Skapad");
+
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("translation_added",1,"Translation added");
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("translation_added",2,"Översättning tillagd");
+
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("pic_uploaded",1,"Picture Uploaded");
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("pic_uploaded",2,"Bild Uppladdad");
+
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("pic_removed",1,"Picture Removed");
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("pic_removed",2,"Bild Borttagen");
+
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("pic_error",1,"Picture not found");
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("pic_error",2,"Bilden hittades inte");
+
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("item_removed",1,"Item Removed");
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("item_removed",2,"Föremål borttaget");
+
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("category_removed",1,"Category Removed");
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("category_removed",2,"Kategori borttagen");
+
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("add_category",1,"Add category");
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("add_category",2,"Lägg till kategori");
+
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("internal_name",1,"Internal name");
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("internal_name",2,"Internt namn");
+
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("create",1,"Create");
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("create",2,"Skapa");
+
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("remove_category",1,"Remove category");
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("remove_category",2,"Ta bort kategori");
+
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("edit_item",1,"Edit Item");
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("edit_item",2,"Redigera Föremål");
+
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("picture",1,"Picture");
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("picture",2,"Bild");
+
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("amount",1,"Amount");
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("amount",2,"Antal");
+
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("max_to_lend",1,"Max lending amount");
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("max_to_lend",2,"Max att låna");
+
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("max_lend_info",1,"(0 = unlimited)");
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("max_lend_info",2,"(0 = obegränsat)");
+
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("max_time",1,"Max lending time");
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("max_time",2,"Maxlånetid");
+
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("max_time_info",1,"periods (half weeks)");
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("max_time_info",2,"perioder (halva veckor)");
+
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("deposition",1,"Deposition");
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("deposition",2,"Deposition");
+
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("fee",1,"Fee");
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("fee",2,"Avgift");
+
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("remove_pic",1,"Remove Picture");
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("remove_pic",2,"Ta Bort Bild");
+
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("remove_item",1,"Remove Item");
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("remove_item",2,"Ta bort föremål");
+
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("translations",1,"Translations");
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("translations",2,"Översättningar");
+
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("edit_language",1,"Edit language");
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("edit_language",2,"Redigera språk");
+
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("name",1,"Name");
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("name",2,"Namn");
+
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("description",1,"Description");
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("description",2,"Beskrivning");
+
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("add_item_to",1,"Add new item to");
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("add_item_to",2,"Lägg till ett nytt föremål till");
+
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("translate_category",1,"Translate Category");
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("translate_category",2,"Översätt Kategori");
+
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("add_translation",1,"Add translation");
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("add_translation",2,"Lägg till översättning");
