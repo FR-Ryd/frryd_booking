@@ -34,31 +34,12 @@
 		  <script type="text/javascript" src="jquery-ui.js"></script>
 		  <script type="text/javascript" src="ui.js"></script>
 		  <script type="text/javascript" src="livesearch.js"></script>
-
-		<?php if(User::isAdmin()) {
-		// The server only accepts connections of card related things from inside the office,
-		// but no need to let the endusers know that.
-		?>
-		    <script type="text/javascript" src="cardbox.js"></script>
-		<?php } ?>
-
-
 		 </head>
 		<?php
 			flush();
 		?>
 		 <body>
 			<div id="site-top">
-		        <?php if(User::isAdmin()) { ?>
-		        <div id='CardBox'>
-						<input type='text' id='CardBoxCard' value='Card number' disabled>
-						<input type='text' id='CardBoxName' value='User name' readonly>
-						<input type='text' id='CardBoxLiuId' value='Liu id' disabled>
-						<input type='button' id='CardBoxLiuGet' value='Get by liu id'>
-						<input type='button' id='CardBoxLiuRegister' value='Register with this liu id' disabled >
-						<input type='button' id='CardBoxLiuNew' value='Create new user with supplied liu-id' disabled>
-		        </div>
-		        <?php } ?>
 				<div class="lang-top" style="float: right;">
 					<?php
 					foreach (Language::getLanguages() as $language) { ?>
