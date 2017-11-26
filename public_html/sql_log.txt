@@ -1,1 +1,13 @@
-INSERT INTO sessions (date) VALUES (:newSessionDate);
+UPDATE booking_items SET
+					item = :itemId,
+					pickup_session = :pickupSessionId,
+					return_session = :returnSessionId,
+					num_items = :numItems,
+					comment = :comment,
+					picked_up_time = :pickedUpTime,
+					returned_time = :returnedTime
+					WHERE id = :bookingItemId;
+UPDATE booking_items SET picked_up_time = :time WHERE id = :bookingItemId;
+UPDATE booking_items SET returned_time = :time WHERE id = :bookingItemId;
+DELETE FROM booking_items WHERE booking = :bookingId;
+DELETE FROM bookings WHERE id = :bookingId;

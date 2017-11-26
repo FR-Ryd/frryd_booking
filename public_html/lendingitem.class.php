@@ -74,5 +74,14 @@
 					":max_lending_items" => $max_lending_items,
 					":itemID" => $itemID));
 		}
+
+		public static function getItemName($itemID) {
+			$db = Database::getDb();
+			$langID = Language::getSelectedLanguage();
+
+			$db->query("SELECT * FROM item_translations WHERE item = :itemID AND language = :language;",
+				array(":itemID" => $itemID, ":language" => $langID));
+			return $db->getRow()["name"];
+		}
 	}
 ?>

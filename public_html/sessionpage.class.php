@@ -63,11 +63,10 @@
 					if (count(BookingItem::getBookingItemsForPickupSession($_POST['session_id'])) == 0
 						&& count(BookingItem::getBookingItemsForReturnSession($_POST['session_id'])) == 0) {
 						if (Session::delete($_POST['session_id'])) {
-							$_SESSION['message'] .= "Session borttagen";
+							$_SESSION['message'] .= Language::text("sessions_menu_title") . " " . Language::text("removed");
 						}
 					} else {
-						$_SESSION['message'] .= "Du kan inte ta bort detta pass då det finns bokningar till eller från detta.\n"
-							."Ta bort eller ändra dem först.\n";
+						$_SESSION['message'] .= Language::text("session_remove_error");
 						header("Location: session.php?session=".$_POST['session_id']);
 						exit;
 					}
@@ -77,7 +76,7 @@
 
 					$newSessionDate = $_POST['date'];
 					Session::create($newSessionDate);
-                    $_SESSION['message'] .= "Session skapad ".$_POST['date'];
+                    $_SESSION['message'] .= Language::text("sessions_menu_title")." ".Language::text("created").$_POST['date'];
 					header("Location: session.php");
 					exit;
 				} elseif (isset($_POST['update_comment'])) {
@@ -85,7 +84,7 @@
                     $bookingItemId = $_POST['booking_item_id'];
 					$comment = $_POST['comment'];
                     BookingItem::updateComment($bookingItemId, $comment);
-                    $_SESSION['message'] .= $itemID." Uppdaterad\n";
+                    $_SESSION['message'] .= " ".$itemID.Language::text("update")." \n";
 					header("Location: session.php?session=".$this->sessionId);
 					exit;
 				} elseif (isset($_POST['confirm_pickup'])) {
@@ -96,7 +95,7 @@
                     BookingItem::updateComment($bookingItemId, $comment);
                     BookingItem::updatePickedUp($bookingItemId, $picked_up_time);
 
-                    $_SESSION['message'] .= $itemID." utlämnad\n";
+                    $_SESSION['message'] .= " ".$itemID.Language::text("lended_out")." \n";
 					header("Location: session.php?session=".$this->sessionId);
 					exit;
 				} elseif (isset($_POST['confirm_pickup_all_session'])) {
@@ -113,7 +112,7 @@
                         $bookedItem = BookingItem::getBookingItem($bookingItemId);
                         if($bookedItem['picked_up_time'] == "") {
                             BookingItem::updatePickedUp($bookingItemId, $picked_up_time);
-                            $_SESSION['message'] .= $bookingItemId . " utlämnad\n";
+                            $_SESSION['message'] .= $bookingItemId . " ".Language::text("lended_out")." \n";
                             $newPickedUp[] = $bookingPickupItem;
                         } else {
                             $_SESSION['message'] .= $bookingItemId . " redan utlämnad. Ignoreras.\n";
@@ -137,7 +136,7 @@
                         $bookedItem = BookingItem::getBookingItem($bookingItemId);
                         if($bookedItem['picked_up_time'] == "") {
                             BookingItem::updatePickedUp($bookingItemId, $picked_up_time);
-                            $_SESSION['message'] .= $bookingItemId . " utlämnad\n";
+                            $_SESSION['message'] .= $bookingItemId ." ".Language::text("lended_out") ." \n";
                             $newPickedUp[] = $bookingPickupItem;
                         } else {
                             $_SESSION['message'] .= $bookingItemId . " redan utlämnad. Ignoreras.\n";
@@ -155,19 +154,19 @@
 					$comment = $_POST['comment'];
                     BookingItem::updateComment($bookingItemId, $comment);
                     BookingItem::updateReturned($bookingItemId, $returned_time);
-                    $_SESSION['message'] .= $itemID . " återlämnad\n";
+                    $_SESSION['message'] .= $itemID . " ".Language::text("returned")." \n";
 					header("Location: session.php?session=".$this->sessionId);
 					exit;
 				} elseif (isset($_POST['confirm_return_all'])) {
 					// Set all items at this session for one booking as confirmed returned
                     $bookingId = $_POST['booking_id'];
                     $sessionId = $this->sessionId;
-                    $bookingPickupItems = BookingItem::getBookingBookingItemsForReturnSession($sessionId, $bookingId);
+                    $bookingPickupItems = BookingItem::getBookingItemsForBooking($bookingId);
                     $returned_time = date("Y-m-d H:i:s");
                     foreach ($bookingPickupItems as $bookingPickupItem) {
                         $bookingItemId = $bookingPickupItem['id'];
                         BookingItem::updateReturned($bookingItemId, $returned_time);
-                        $_SESSION['message'] .= $bookingItemId . " återlämnad\n";
+                        $_SESSION['message'] .= $bookingItemId . " ".Language::text("returned") ." \n";
                     }
 					header("Location: session.php?session=".$sessionId);
 					exit;
@@ -215,9 +214,9 @@
 						$sessionDate = new DateTime($session['date']);
 
 						?>
-						<h1>Pass <?php echo($this->sessionId); ?> (<?php echo($sessionDate->format("j")." ".Util::month($sessionDate->format("m"))." ".$sessionDate->format("Y")); ?>)</h1>
+						<h1><?php echo(Language::text("sessions_menu_title") . " " . $this->sessionId . " (" . $sessionDate->format("j")." ".Util::month($sessionDate->format("m"))." ".$sessionDate->format("Y")) . ")"; ?></h1>
 							<div class="square3 togglable">
-								<h3 class="toggleButton">Ny bokning</h3>
+								<h3 class="toggleButton"><?php echo(Language::text("add_booking")); ?></h3>
 								<div class="toggleContent">
 									<?php
 										echo(Forms::composeAddBookingForm($this->sessionId));
@@ -230,19 +229,19 @@
 								<ul>
 									<li>
 										<div class="input-color">
-											<div class="textbox">Grön &nbsp;(Skall Utlämnas!)</div>
+											<div class="textbox"><?php echo(Language::text("color_info_green")); ?></div>
 											<div class="color-box" style="background-color: #d0ffd0;"></div>
 										</div>
 									</li>
 									<li>
 										<div class="input-color">
-											<div class="textbox">Röd &nbsp;&nbsp;(Skall Återlämnas!)</div>
+											<div class="textbox"><?php echo(Language::text("color_info_red")); ?></div>
 											<div class="color-box" style="background-color: #ffd0d0;"></div>
 										</div>
 									</li>
 									<li>
 										<div class="input-color">
-											<div class="textbox">Gul &nbsp;&nbsp;&nbsp;(Klart! Varan har Återlämnats eller Utlämnats)</div>
+											<div class="textbox"><?php echo(Language::text("color_info_yellow")); ?></div>
 											<div class="color-box" style="background-color: #ffffd0;"></div>
 										</div>
 									</li>
@@ -250,16 +249,14 @@
 							</div>
 						</div>
 						<div class="summary">
-							<h2>Detta har ni att se fram emot detta pass!</h2>
+							<h2><?php echo(Language::text("session_summary")); ?></h2>
 							<?php
 							//Count amount of booked items and bookings this session
                             $pickupBookingItems = BookingItem::getBookingItemsForPickupSession($this->sessionId);
 							$numPickupBookingItems = count($pickupBookingItems);
-							if ($numPickupBookingItems) { ?>
-								<p>Sammanlagt <?php echo($numPickupBookingItems); ?> föremål bokade för utlåmning detta pass.</p>
-							<?php } else { ?>
-								<p>Inga föremål bokade till detta pass.</p>
-							<?php }
+							?>
+								<p><?php echo($numPickupBookingItems . " " . Language::text("items_booked")); ?> </p>
+							<?php
 
 							$itemTypeCount = array();
 							foreach($pickupBookingItems as $item) {
@@ -286,12 +283,8 @@
 							<?php
 							//Count returning items this session
 							$numReturnBookingItems = BookingItem::getNumBookingItemsForReturnSession($this->sessionId);
-							if ($numReturnBookingItems) { ?>
-								<p>Sammanlagt <?php echo($numReturnBookingItems); ?> föremål bokade ska lämnas åter detta pass.</p>
-							<?php } else { ?>
-								<p>Inga föremål ska lämnas åter detta pass.</p>
-							<?php } ?>
-
+							?>
+								<p><?php echo($numReturnBookingItems . " " . Language::text("items_to_return")); ?></p>
 						</div>
 
 						<?php
@@ -299,10 +292,7 @@
 							// =========================================================================================
 						?>
 						<div class="summary square2" style="border:2px solid #444;">
-							<h2 >Utlämningar</h2>
-							<p>
-								<i>Här listas bokningar för föremål som bokats för att hämtas ut detta pass.</i>
-							</p>
+							<?php echo(Language::text("lend_out_box")); ?>
 						</div>
 					<?php	// List bookings this session
 						$pickupBookings = BookingItem::getBookingsForPickupSession($this->sessionId);
@@ -335,16 +325,16 @@
                                   <form action="session.php?session=<?php echo($this->sessionId); ?>" method="post">
                                     <fieldset>
                                       <input type="hidden" name="booking_id" value="<?php echo($booking['id']); ?>" />
-                                      <input type="submit" class="button_style" name="confirm_pickup_all_session" value="Alla utlämnade" />
+                                      <input type="submit" class="button_style" name="confirm_pickup_all_session" value="<?php echo(Language::text("all_lended")); ?>" />
                                     </fieldset>
                                   </form>
-									<a href="booking.php?booking=<?php echo($booking['id']); ?>&session=<?php echo($this->sessionId); ?>">Redigera bokning</a>
+									<a href="booking.php?booking=<?php echo($booking['id']); ?>&session=<?php echo($this->sessionId); ?>"><?php echo(Language::text("edit_booking")); ?></a>
 								</div>
 								<?php
 							}
 						} else {
 							?>
-							<p style="padding-left:40px;padding-top:20px;padding-bottom:20px;">Inga bokningar detta pass</p>
+							<p><?php echo("0 " . Language::text("items_booked")); ?></p>
 							<?php
 						}
 
@@ -352,11 +342,7 @@
 						// =========================================================================================
 						?>
 						<div class="summary square2" style="border:2px solid #444;">
-							<h2>Återlämningar</h2>
-							<p>
-								<i>Här listas bokningar för föremål som bokats för att återlämnas detta pass.</i>
-							</p>
-
+							<?php echo(Language::text("return_box")); ?>
 						</div>
 							<?php
 
@@ -391,16 +377,16 @@
                                   <form action="session.php?session=<?php echo($this->sessionId); ?>" method="post">
                                     <fieldset>
                                       <input type="hidden" name="booking_id" value="<?php echo($booking['id']); ?>" />
-                                      <input type="submit" class="button_style" name="confirm_return_all" value="Alla återlämnade" />
+                                      <input type="submit" class="button_style" name="confirm_return_all" value="<?php echo(Language::text("all_returned")); ?>" />
                                     </fieldset>
                                   </form>
-									<a href="booking.php?booking=<?php echo($booking['id']); ?>&session=<?php echo($this->sessionId); ?>">Redigera bokning</a>
+									<a href="booking.php?booking=<?php echo($booking['id']); ?>&session=<?php echo($this->sessionId); ?>"><?php echo(Language::text("edit_booking")); ?></a>
 								</div>
 								<?php
 							}
 						} else {
 							?>
-							<p>Inga återlämningar detta pass</p>
+							<p><?php echo("0 " . Language::text("items_to_return")); ?></p>
 							<?php
 						}
 
@@ -413,12 +399,7 @@
 
 						?>
 						<div class="summary square2" style="border:2px solid #444;">
-							<h2>Allt utlånat</h2>
-							<p>
-								<i>Här listas allt som lånats ut men inte lämnats tillbaka</i>
-							</p>
-
-
+							<?php echo(Language::text("everything_out_box")); ?>
 						</div>
 							<?php
 						// Find bookings for items not returned
@@ -443,20 +424,25 @@
 									$date = $remark['date'];
 									$comment = $remark['comment'];
 									echo("<p style='padding:5px; background-color:#ff6600;border: 1px solid #444;max-width:400px;'><i style='font-size: 11px;'>Anmärkning skapad: $date</i><br \>$comment<br \><i style='font-size: 10px;'>(för att administrera en anmärkning, besök användarens profil)</i></p>\n");
-									}
+								}
 
                                     foreach ($bookingItems as $bookingItem) {
                                         $this->displayBookingItem($bookingItem);
                                     }
                                     ?>
-
-									<a href="booking.php?booking=<?php echo($booking['id']); ?>&session=<?php echo($this->sessionId); ?>">Redigera bokning</a>
+									<form action="session.php?session=<?php echo($this->sessionId); ?>" method="post">
+                                      <fieldset>
+                                        <input type="hidden" name="booking_id" value="<?php echo($booking['id']); ?>" />
+                                        <input type="submit" class="button_style" name="confirm_return_all" value="<?php echo(Language::text("all_returned")); ?>" />
+                                      </fieldset>
+                                    </form>
+									<a href="booking.php?booking=<?php echo($booking['id']); ?>&session=<?php echo($this->sessionId); ?>"><?php echo(Language::text("edit_booking")); ?></a>
 								</div>
 								<?php
 							}
 						} else {
 							?>
-							<p>Inga föremål är utlåmnade.</p>
+							<p><?php echo(Language::text("no_items_lended")); ?></p>
 							<?php
 						}
 							?>
@@ -465,17 +451,14 @@
 							<form action="session.php?session=<?php echo($this->sessionId); ?>" method="post">
 								<fieldset>
 									<input type="hidden" name="session_id" value="<?php echo($this->sessionId); ?>" />
-									<legend>Ta bort pass</legend>
-									<input type="submit" class="button_style" name="delete_session" value="Ta bort" />
+									<legend><?php echo(Language::text("remove") . " " . Language::text("sessions_menu_title")); ?></legend>
+									<input type="submit" class="button_style" name="delete_session" value="<?php echo(Language::text("remove")); ?>" />
 								</fieldset>
 							</form>
 
 						</div>
 					<?php } else { echo("NO SESSION??"); } ?>
 				<hr />
-				<p>
-					<a href="session.php">Tillbaks till passlistan</a>
-				</p>
 				<?php
 
 			} else { // no session chosen
@@ -659,7 +642,7 @@
 		}
 
 		private function displayBookingItem($bookingItem) {
-            $lendingItem = LendingItem::getItem($bookingItem['item']);
+            $itemName = LendingItem::getItemName($bookingItem['item']);
             $pickupSession = Session::getSessionById($bookingItem['pickup_session']);
             $returnSession = Session::getSessionById($bookingItem['return_session']);
             $currentSession = Session::getSessionById($this->sessionId);
@@ -680,7 +663,6 @@
             $bookingId = $bookingItem['booking'];
             $bookingItemId = $bookingItem['id'];
             $numItems = $bookingItem['num_items'];
-            $itemName = $lendingItem['name'];
             $startSessionLink = $this->sessionLink($pickupSession);
             $returnSessionLink = $this->sessionLink($returnSession);
 
@@ -693,11 +675,11 @@
 
 
 				<b class='toggleButton'>
-					$numItems st
+					$numItems
 					$itemName
 				</b>
-				mellan $startSessionLink
-				och $returnSessionLink
+				".Language::text("between")." $startSessionLink
+				".Language::text("and")." $returnSessionLink
                 ");
 
 				if($bookingItem['picked_up_time'] != "") {
@@ -709,9 +691,8 @@
                 $header = "";
                 $tail = "";
                 $comment = $bookingItem['comment'];
-                $commentArea = "
-						Kommentar:<br \ ><textarea style='vertical-align: top;' name='comment' rows='2' cols='32'>$comment</textarea><br />
-						<input type='submit' name='update_comment' class='button_style' value='Uppdatera kommentar' />
+                $commentArea = Language::text("comment").":<br \ ><textarea style='vertical-align: top;' name='comment' rows='2' cols='32'>$comment</textarea><br />
+						<input type='submit' name='update_comment' class='button_style' value='".Language::text("update")."' />
                         ";
 				$booking = Booking::getBookingWithPerson($bookingId);
 				$liuID = $booking['liu_id'];
@@ -719,13 +700,13 @@
 					// Picked up
                     $pickedUpTime = $bookingItem['picked_up_time'];
                     $theDate = date("j/n H:i", strtotime($pickedUpTime));
-					$header .= "<b>&#10003; UTLÄMNAD $theDate</b>";
+					$header .= "<b>&#10003; ".Language::text("lended_out")." $theDate</b>";
 
 					if ($bookingItem['returned_time'] != "") {
 						// Picked up and returned
 						$returnedTime = $bookingItem['returned_time'];
                         $theDate = date("j/n H:i", strtotime($returnedTime));
-                        $tail .= "<b>&#10003; ÅTERLÄMNAD $theDate</b>";
+                        $tail .= "<b>&#10003; ".Language::text("returned")." $theDate</b>";
 
 					} else {
 						// Picked up, not returned
@@ -734,13 +715,13 @@
                         $returnSessionDate = $returnSession['date'];
                         $currentSessionDate = $currentSession['date'];
 						if (strtotime($returnSessionDate) < strtotime($currentSessionDate)) {
-							$header .= "<b>FÖRSENAD!</b><br \><input type='hidden' name='email-liuid' value='$liuID'/><input style='margin-bottom:5px;' id=$liuID type='submit' name='email-delayed-user' class='button_style' value='Email Late User ($liuID)' />";
+							$header .= "<b>".Language::text("delayed")."!</b><br \><input type='hidden' name='email-liuid' value='$liuID'/><input style='margin-bottom:5px;' id=$liuID type='submit' name='email-delayed-user' class='button_style' value='Email Late User ($liuID)' />";
 						}
-                        $tail .= "<input type='submit' class='button_style' name='confirm_return' value='Återlämnad' />";
+                        $tail .= "<input type='submit' class='button_style' name='confirm_return' value='".Language::text("returned")."' />";
 
                     }
 				} else {
-                    $tail .= "<input type='submit' class='button_style' name='confirm_pickup' value='Utlämnad' />";
+                    $tail .= "<input type='submit' class='button_style' name='confirm_pickup' value='".Language::text("lended_out")."' />";
 				}
                 echo("
                     $header<br>

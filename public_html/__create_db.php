@@ -234,7 +234,6 @@ if (isset($_POST['confirm'])) {
         $db->execute($createSessions, "createSessions:<br>");
 
 
-        $db->execute("INSERT INTO persons (liu_id, admin) VALUES ('joewa430', '1') ON DUPLICATE KEY UPDATE admin='1';", "createAdmin:<br>");
         $db->execute("INSERT INTO settings (name, value) VALUES ('email_reminder_pickup_time', '1');", "createDefaultSetting1:<br>");
         $db->execute("INSERT INTO settings (name, value) VALUES ('email_reminder_return_time', '1');", "createDefaultSetting2:<br>");
         $db->execute("INSERT INTO settings (name, value) VALUES ('email_reminder_overdue_frequency', '3');", "createDefaultSetting3:<br>");

@@ -12,26 +12,26 @@
                 <div class='addUserForm'>
                     <form action='booking.php$sessionLink' method='post'>
                         <fieldset>
-                            <legend>Lägg till bokning</legend>
+                            <legend>".Language::text("add_booking")."</legend>
 
 								<div class='pure-control-group'>
-									<label for='E-post'>E-post</label><input class='form_style' type='text' name='email' id='addUserEmail' placeholder='xxxyy123'/>@student.liu.se
+									<label for='E-post'>".Language::text("confirm_email")."</label><input class='form_style' type='text' name='email' id='addUserEmail' placeholder='xxxyy123'/>@student.liu.se
 									<input type='button' value='Get User Info' class='getUserInfo button_style'><br \>
 								</div>
 								<div class='pure-control-group'>
-									<label for='Namn'>Namn</label><input class='form_style' type='text' name='name' value='' id='addUserName' placeholder='Full Name'/>
+									<label for='Namn'>".Language::text("confirm_name")."</label><input class='form_style' type='text' name='name' value='' id='addUserName' placeholder='Full Name'/>
 								</div>
 								<div class='pure-control-group'>
-									<label for='Personnummer'>Pers.nr.</label><input class='form_style' type='text' name='personnummer'  id='addUserNIN' placeholder='19yymmddxxx'/>
+									<label for='Personnummer'>".Language::text("confirm_personnummer")."</label><input class='form_style' type='text' name='personnummer'  id='addUserNIN' placeholder='19yymmddxxx'/>
 								</div>
 								<div class='pure-control-group'>
-									<label for='Adress'>Adress</label><input class='form_style' name='address'  id='addUserAddress' placeholder='Adress' /> 584 XX, Linköping<br />
+									<label for='Adress'>".Language::text("confirm_address")."</label><input class='form_style' name='address'  id='addUserAddress' placeholder='Adress' /> 584 XX, Linköping<br />
 								</div>
 								<div class='pure-control-group'>
-									<label for='Telefonnummer'>Tel.nr.</label><input class='form_style' name='phone'  id='addUserPhone' placeholder='07xxxxxxxx' /><br />
+									<label for='Telefonnummer'>".Language::text("confirm_phone")."</label><input class='form_style' name='phone'  id='addUserPhone' placeholder='07xxxxxxxx' /><br />
 								</div><br \>
 
-								<input type='submit' name='create_booking' class='button_style' value='Lägg till bokning' />
+								<input type='submit' name='create_booking' class='button_style' value='" . Language::text("add_booking") . "' />
                         </fieldset>
                     </form>
                     <div class='userRemarkSection'>
