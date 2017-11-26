@@ -215,7 +215,7 @@
 						$sessionDate = new DateTime($session['date']);
 
 						?>
-						<h1>Pass <?php echo($this->sessionId); ?> (<?php echo($sessionDate->format("j")." ".$this->month($sessionDate->format("m"))." ".$sessionDate->format("Y")); ?>)</h1>
+						<h1>Pass <?php echo($this->sessionId); ?> (<?php echo($sessionDate->format("j")." ".Util::month($sessionDate->format("m"))." ".$sessionDate->format("Y")); ?>)</h1>
 							<div class="square3 togglable">
 								<h3 class="toggleButton">Ny bokning</h3>
 								<div class="toggleContent">
@@ -479,14 +479,13 @@
 				<?php
 
 			} else { // no session chosen
-					echo "<h1>Pass</h1>\n";
+					echo "<h1>" . Language::text("sessions_menu_title") . "</h1>\n";
 
 					// Calender version:
 					?>
 			<p>
 				<i>
-					Klicka på datumet för en dag med ett pass för att komma till dess pass-meny.<br />
-					Klicka på ett ledigt datum för att lägga till ett pass där.
+					<?php echo(Language::text("session_select_instructions")); ?>
 				</i>
 			</p>
 
@@ -574,7 +573,7 @@
 							for ($w = 1; $w <= 7; $w++) {
 								?>
 								<th>
-									<span title="<?php echo(($w % 7)); ?>"><?php echo($this->shortWeekday($w % 7)); ?></span>
+									<span title="<?php echo(($w % 7)); ?>"><?php echo(Util::shortWeekday($w % 7)); ?></span>
 								</th>
 								<?php
 							}
@@ -761,78 +760,7 @@
 
 		private function sessionLink($session) {
 			$time = new DateTime($session['date']);
-			return "<a href=\"session.php?session=".$session['id']."\">".$time->format("j")." ".$this->month($time->format("m"))."</a>";
-		}
-
-		private function shortWeekday ($dayNum) {
-			switch ($dayNum) {
-				case 1:
-					return "Må";
-				break;
-				case 2:
-					return "Ti";
-				break;
-				case 3:
-					return "On";
-				break;
-				case 4:
-					return "To";
-				break;
-				case 5:
-					return "Fr";
-				break;
-				case 6:
-					return "Lö";
-				break;
-				case 0:
-					return "Sö";
-				break;
-				default:
-					return "N/A";
-			}
-		}
-
-		private function month ($monthNum) {
-			switch ($monthNum) {
-				case 1:
-					return "januari";
-				break;
-				case 2:
-					return "februari";
-				break;
-				case 3:
-					return "mars";
-				break;
-				case 4:
-					return "april";
-				break;
-				case 5:
-					return "maj";
-				break;
-				case 6:
-					return "juni";
-				break;
-				case 7:
-					return "juli";
-				break;
-				case 8:
-					return "augusti";
-				break;
-				case 9:
-					return "september";
-				break;
-				case 10:
-					return "oktober";
-				break;
-				case 11:
-					return "november";
-				break;
-				case 12:
-					return "december";
-				break;
-				default:
-					return "N/A";
-			}
+			return "<a href=\"session.php?session=".$session['id']."\">".$time->format("j")." ".Util::month($time->format("m"))."</a>";
 		}
 	}
 ?>

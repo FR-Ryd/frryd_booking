@@ -1,4 +1,6 @@
 ﻿<?php
+	//Include util functions in all pages
+	include_once('util.class.php');
 
 	//For now handle language parsing here.
 	// TODO In future, refactor to make an init-function in page for this, other stuff and cas.

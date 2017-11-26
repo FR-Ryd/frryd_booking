@@ -43,12 +43,7 @@
 			</div>
 
 			<div class="opening_hours">
-				<h2>Contact us</h2>
-				<p>
-					If you any questions and/or suggesstions for the lending service, then contact us at <a href="mailto:intendent@frryd.se" style="color:white;line-height:1.8em;">intendent@frryd.se</a>
-					<br>
-				</p>
-				If you have any suggestions or improvements for the webpage, then contact us at <a href="mailto:it@frryd.se" style="color:white;line-height:1.8em;">it@frryd.se.</a>
+				<?php echo(Language::text("contact_box"));?>
 			</div>
 		</div>
 
@@ -188,7 +183,6 @@
 
 			?>
 		<?php echo(Language::text("calendar_instruction")); ?>
-
 			<table class="calendarBookingTable">
 				<thead>
 					<tr>
@@ -200,7 +194,7 @@
 								<input type="hidden" class="currentDate" name="currentDate" value="<?php echo($time->format("Y-m-d")); ?>" />
 							</span>
 
-							<?php echo($this->month($time->format("n"))); ?> <?php echo($time->format("Y")); ?>
+							<?php echo(Util::month($time->format("n"))); ?> <?php echo($time->format("Y")); ?>
 
 							<span class="nextMonthButton">
 								&raquo;
@@ -216,7 +210,7 @@
 							for ($w = 1; $w <= 7; $w++) {
 								?>
 								<th>
-									<span title="<?php echo(($w % 7)); ?>"><?php echo($this->shortWeekday($w % 7)); ?></span>
+									<span title="<?php echo(($w % 7)); ?>"><?php echo(Util::shortWeekday($w % 7)); ?></span>
 								</th>
 								<?php
 							}
@@ -378,77 +372,6 @@
 				<?php echo(Language::text("max_lending_time")); ?> <?php echo($item['max_lending_periods']); ?><br />
 			</p>
 			<?php
-		}
-
-		private function shortWeekday ($dayNum) {
-			switch ($dayNum) {
-				case 1:
-					return Language::text("cal_short_mon");
-				break;
-				case 2:
-					return Language::text("cal_short_tue");
-				break;
-				case 3:
-					return Language::text("cal_short_wed");
-				break;
-				case 4:
-					return Language::text("cal_short_thu");
-				break;
-				case 5:
-					return Language::text("cal_short_fri");
-				break;
-				case 6:
-					return Language::text("cal_short_sat");
-				break;
-				case 0:
-					return Language::text("cal_short_sun");
-				break;
-				default:
-					return "N/A";
-			}
-		}
-
-		private function month ($monthNum) {
-			switch ($monthNum) {
-				case 1:
-					return Language::text("cal_jan");
-				break;
-				case 2:
-					return Language::text("cal_feb");
-				break;
-				case 3:
-					return Language::text("cal_mar");
-				break;
-				case 4:
-					return Language::text("cal_apr");
-				break;
-				case 5:
-					return Language::text("cal_may");
-				break;
-				case 6:
-					return Language::text("cal_jun");
-				break;
-				case 7:
-					return Language::text("cal_jul");
-				break;
-				case 8:
-					return Language::text("cal_aug");
-				break;
-				case 9:
-					return Language::text("cal_sep");
-				break;
-				case 10:
-					return Language::text("cal_oct");
-				break;
-				case 11:
-					return Language::text("cal_nov");
-				break;
-				case 12:
-					return Language::text("cal_dec");
-				break;
-				default:
-					return "N/A";
-			}
 		}
 	}
 ?>
