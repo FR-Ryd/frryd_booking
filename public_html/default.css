@@ -520,7 +520,7 @@ ul#livesearchresults li:hover h3, ul#livesearchresults li:hover h4  {
 }
 
 .live_search{
-	z-index: 1000;
+	z-index: 900;
     position: relative;
     background-color: #ff6600;
     font-size: 15px;

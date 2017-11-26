@@ -7,7 +7,7 @@
 			$this->displayMessage();
 ?>
 		<div class='live_search'>
-				<input type='text' class='livesearchquery' id='livesearchid' autocomplete="off" placeholder='Search (BETA)'>
+				<input type='text' class='livesearchquery' id='livesearchid' autocomplete="off" placeholder='Search'>
 				<input type="image" class="livesearchbutton" src="images/toolbar_find.png" alt="Search">
 				<ul id="livesearchresults"></ul>
         </div>
@@ -123,9 +123,7 @@
                                 <a href="#" class="firstLoadButton"><?php echo(nl2br(Language::text("booking_choose_period"))); ?></a>
                             </div>
 							<div class="calendar">
-							<?php
 
-							?>
 							</div>
 							<?php
 

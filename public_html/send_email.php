@@ -80,7 +80,7 @@
 				}
 				if($doSend) {
 					sendMail($emailAddress, $subject, $message, $language);
-}
+				}
 			}
 		}
 	}
