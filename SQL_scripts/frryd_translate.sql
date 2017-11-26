@@ -111,3 +111,64 @@ INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("session_remove_
 
 
 ----------------- ADDED ----------------
+
+-- Translations for user page
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("unbooked",1,"Unbooked");
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("unbooked",2,"Avbokat");
+
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("unbook_error",1,"Could not cancel booking, you have already picked up something!");
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("unbook_error",2,"Kunde inte avboka, du har redan hämtat någonting!");
+
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("user",1,"user");
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("user",2,"användare");
+
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("liuid_error",1,"Invalid LiU ID. XXXXXDDD is accepted, where X is a letter and D is a digit.");
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("liuid_error",2,"Ogiltigt Liu ID. XXXXXDDD accepteras, där X är en bokstav och D en siffra.");
+
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("remark_added",1,"Remark added!");
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("remark_added",2,"Anmärkning tillagd!");
+
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("remark_error",1,"The remark field can not be empty!");
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("remark_error",2,"Anmärknings fältet kan inte vara tom!");
+
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("remark_removed",1,"Chosen remark has been removed");
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("remark_removed",2,"Valda anmärkningarna är borttagna!");
+
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("remark_removed_error",1,"No remark selected");
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("remark_removed_error",2,"Du har inte valt någon anmärkning");
+
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("to",1,"To");
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("to",2,"Till");
+
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("new",1,"new");
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("new",2,"ny");
+
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("user_management",1,"User Management");
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("user_management",2,"Användarhantering");
+
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("user_information",1,"User Information");
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("user_information",2,"Användarinformation");
+
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("update_information",1,"Update Information");
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("update_information",2,"Uppdatera Information");
+
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("delete_user",1,"Delete User");
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("delete_user",2,"Ta bort användare");
+
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("remove_remark",1,"Remove Remark");
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("remove_remark",2,"Ta bort kommentar");
+
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("remarks",1,"Remarks");
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("Remarks",2,"Kommentarer");
+
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("add_remark",1,"Add remark");
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("add_remark",2,"Lägg till kommentar");
+
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("booking",1,"Booking");
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("booking",2,"Bokning");
+
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("nothing_booked",1,"No items booked");
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("nothing_booked",2,"Inga föremål bokade");
+
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("unbook",1,"Unbook");
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("unbook",2,"Avboka");

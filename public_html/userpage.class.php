@@ -44,7 +44,7 @@
                 }
                 User::setAdmin($liu_id, $setAdmin);
 
-				$_SESSION['message'] = "Uppdaterat!";
+				$_SESSION['message'] = Language::text("update");
                 header("Location: user.php?showUser=$liu_id");
                 exit;
             }
@@ -63,10 +63,10 @@
                     $fail |= ($pickedUpTime != '');
                 }
                 if($fail) {
-                    $_SESSION['message'] = "Kunde inte avboka, du har redan hämtat någonting!\n";
+                    $_SESSION['message'] = Language::text("unbook_error")."\n";
                 } else {
                     Booking::delete($bookingId);
-                    $_SESSION['message'] = "Avbokat\n";
+                    $_SESSION['message'] = Language::text("unbooked")."\n";
                 }
                 $liu_id = User::getUser();
                 header("Location: user.php?showUser=$liu_id");
@@ -83,11 +83,11 @@
                 $liu_id = strtolower($liu_id);
                 if(!User::validLiuId($liu_id)) {
 					header("Location: user.php");
-                    $_SESSION['message'] = "Invalid LiU ID. XXXXXDDD is accepted, where X is a letter and D is a digit.";
+                    $_SESSION['message'] = Language::text("liuid_error");
                     exit;
                 }
                 User::createUser($liu_id);
-                $message = "User " . $liu_id . " created!";
+                $message = Language::text("user")." " . $liu_id . Language::text("created") ." !";
                 $this->showUser = $liu_id;
             }
 
@@ -99,10 +99,10 @@
 				if(!empty($_POST['remark'])){
 					$remark = $_POST['remark'];
 					User::addRemark($remark, $liu_id);
-					$_SESSION['message'] = "Anmärkning tillagd!";
+					$_SESSION['message'] = Language::text("remark_added");
 					$this->showUser = $liu_id;
 				}else{
-					$_SESSION['message'] = "Anmärknings fältet kan inte vara tom!";
+					$_SESSION['message'] = Language::text("remark_error");
 					$this->showUser = $liu_id;
 				}
 
@@ -116,10 +116,10 @@
 					foreach($_POST['checkbox'] as $remarkID){
 						User::delRemark($remarkID, $liu_id);
 					}
-					$_SESSION['message'] = "Valda anmärkningarna är borttagna!";
+					$_SESSION['message'] = Language::text("remark_removed");
 					$this->showUser = $liu_id;
 				}else{
-					$_SESSION['message'] = "Du har inte valt någon anmärkning";
+					$_SESSION['message'] = Language::text("remark_removed_error");
 					$this->showUser = $liu_id;
 				}
 			}
@@ -129,7 +129,7 @@
                 }
 				$liu_id = $_POST['liu_id'];
 				User::delUser($remarkID, $liu_id);
-				$_SESSION['message'] = "Användaren är borttagen från systemet!";
+				$_SESSION['message'] = Language::text("user") . Language::text("removed");
 				$this->showUser = $liu_id;
 			}
 		}
@@ -140,7 +140,7 @@
 
 			?>
 			<div class="main">
-	            <h1>User Management</h1>
+	            <h1><?php echo(Language::text("user_management")); ?></h1>
 				<?php
 				if (isset($_SESSION['message'])){
 					echo "<p>".nl2br($_SESSION['message'])."</p>\n";
@@ -148,12 +148,13 @@
 				}
 
 	            if(User::isAdmin()) {
-	                echo("<a href='user.php'>Tillbaka till användarlistan</a><br><br>\n");
+	                echo("<a href='user.php'>".Language::text("to")." ".Language::text("users_menu_title")."</a><br><br>\n");
 
 	            } else {
-	                echo("<a href='index.php'>Till bokningen</a><br><br>\n");
+	                echo("<a href='index.php'>".Language::text("to")." ".Language::text("bookings_menu_title")."</a><br><br>\n");
 	                $this->showUser = User::getUser(); //Effectively redirect to actual user.
 	            }
+
 	            if(isset($this->showUser)) {
 	                $this->displayUser($this->showUser);
 	                $this->displayUserRemarks($this->showUser);
@@ -163,11 +164,11 @@
 					<hr />
 					<form action="user.php" method="post">
 						<fieldset>
-							<legend>Ny användare</legend>
+							<legend><?php echo(Language::text("new")." ".Language::text("user")); ?></legend>
 							<div class="pure-control-group">
 								<label style="width:8em;" >LiU-ID (xxxyy123)</label>
 								<input type="text" class="form_style" name="liu_id" value="" />
-								<input class="button_style" type="submit" name="createUser" value="Ny användare" />
+								<input class="button_style" type="submit" name="createUser" value="<?php echo(Language::text("new")." ".Language::text("user")); ?>" />
 							</div>
 						</fieldset>
 					</form>
@@ -187,7 +188,7 @@
         private function displayUser($liu_id) {
             //If we are neither that user nor admin, error!
             echo("<div class='userSettings'>\n");
-            echo("<h2>User Information</h2>\n");
+            echo("<h2>".Language::text("user_information")."</h2>\n");
 
             $confirm_email = Language::text("confirm_email");
             $confirm_name = Language::text("confirm_name");
@@ -219,18 +220,6 @@
                    </div>
             ");
             if( User::isAdmin()) {
-                echo("
-				<div class='pure-control-group'>
-                    <label for='Card ID'>Card ID</label><input type='hidden' id='userdata_card' name='card' value='$userCard' readonly/>$userCard
-				");
-                if($userCard) {
-                    echo("
-                    <input class='button_style' type='button' value='Unlink card' onclick='$(\"#userdata_card\").val(\"\");'>");
-                } else {
-                    echo("
-                    <input class='button_style' type='button' value='Link to current card' onclick='$(\"#userdata_card\").val($(\"#CardBoxCard\").val());'>");
-                }
-                echo("</div><br />\n");
                 $isAdmin = "";
                 if( User::isAdmin($liu_id)) {
                     $isAdmin = "checked='checked'";
@@ -241,9 +230,9 @@
 								<input type='checkbox' id='squaredOne' style='display:none' class='accept_eula' name='setAdmin' $isAdmin /><label for='squaredOne'></label>
 							</div>
 						</div><br \>");
-				echo("<input style='margin-right:5px;margin-bottom:10px;' class='button_style' type='submit' name='deleteuser' onclick='return confirm(\"Are you sure you want to delete user $liu_id?\")' value='Delete User' disabled='disabled' class='Delete User'/>");
+				echo("<input style='margin-right:5px;margin-bottom:10px;' class='button_style' type='submit' name='deleteuser' onclick='return confirm(\"Are you sure you want to delete user $liu_id?\")' value='".Language::text("delete_user")."' disabled='disabled' class='Delete User'/>");
             }
-            echo("<input class='button_style' type='submit' name='update' value='Update Information' class='updateUser'/>
+            echo("<input class='button_style' type='submit' name='update' value='".Language::text("update_information")."' class='updateUser'/>
                 </fieldset>
             </form>
             </div><br />
@@ -263,11 +252,11 @@
 				});
 			</script><?php
             echo("<div class='userRemarks'>\n");
-            echo("<h2>Remarks</h2>\n");
+            echo("<h2>".Language::text("remarks")."</h2>\n");
 
             $remarks = User::getRemarks($liu_id);
 			echo("<form action='user.php' method='post'>
-					<input class='button_style_remove' type='submit' id='deleteButton' name='delRemark' value='Remove Remark'  / >
+					<input class='button_style_remove' type='submit' id='deleteButton' name='delRemark' value='".Language::text("remove_remark")."'  / >
 			<br \><br \>");
             foreach($remarks as $remark) {
 				$thisremarkID = $remark['id'];
@@ -283,10 +272,10 @@
 				</form>
 				<form style='max-width:300px;' action='user.php' method='post'>
                 <fieldset>
-                    <legend style='padding-top:15px;'>Add new remark below</legend>
+                    <legend style='padding-top:15px;'>".Language::text("add_remark")."</legend>
                     <input type='hidden' name='liu_id' value='$liu_id' />
                     <textarea class='form_style' name='remark' rows='3' cols='32' style='vertical-align: top;'></textarea><br />
-                    <input style='margin-top:10px;' class='button_style' type='submit' name='addRemark' value='Add Remark' />
+                    <input style='margin-top:10px;' class='button_style' type='submit' name='addRemark' value='".Language::text("add_remark")."' />
                 </fieldset>
             </form>
             ");
@@ -295,15 +284,14 @@
 
         private function displayUserBookings($liu_id) {
             if(User::isAdmin()) {
-				echo("<h2>Bookings</h2>\n");
+				echo("<h2>".Language::text("bookings_menu_title")."</h2>\n");
                 echo("
                         <div class='square2'>
-                            <h3 style='padding-left:5px;padding-top:5px;' >New Booking</h3>
                             <div>
                                 <form action='booking.php$sessionLink' method='post'>
                                     <fieldset>
                                         <input type='hidden' name='email' value='$liu_id'/>
-                                        <input type='submit' class='button_style' name='create_booking' value='Add Booking' />
+                                        <input type='submit' class='button_style' name='create_booking' value='".Language::text("add_booking")."' />
                                     </fieldset>
                                 </form>
                             </div>
@@ -318,7 +306,7 @@
                 $bookingId = $booking['id'];
                 $bookingItems = BookingItem::getBookingItemsForBooking($bookingId);
 
-                $bookingText = "Bokning $bookingId";
+                $bookingText = Language::text("booking")." $bookingId";
                 if(User::isAdmin()) {
                     $bookingText = "<a href='booking.php?booking=$bookingId'>$bookingText</a>";
                 }
@@ -330,17 +318,17 @@
                     foreach ($bookingItems as $bookingItem) {
 
                         $numItems = $bookingItem['num_items'];
-                        $itemName = $this->item_name($bookingItem['item']);
+                        $itemName = LendingItem::getItemName($bookingItem['item']);
                         $pickedUpTime = "";
                         if ($bookingItem['picked_up_time'] != "") {
                             $anythingPickedUp = true;
                             $theDate = date("j/n H:i", strtotime($bookingItem['picked_up_time']));
-                            $pickedUpTime = "<b>&#10003; Utlämnad $theDate</b>\n";
+                            $pickedUpTime = "<b>&#10003; ".Language::text("lended_out")." $theDate</b>\n";
                         }
                         $returnedTime = "";
                         if ($bookingItem['returned_time'] != "") {
                             $theDate = date("j/n H:i", strtotime($bookingItem['returned_time']));
-                            $returnedTime = "<b>&#10003; återlämnad $theDate</b>\n";
+                            $returnedTime = "<b>&#10003; ".Language::text("returned")." $theDate</b>\n";
                         }
 
                         $sessionPickupId = $bookingItem['pickup_session'];
@@ -356,15 +344,15 @@
                             $itemId = $bookingItem['id'];
                             $sessionPickup = "<a href='session.php?session=$sessionPickupId'>$sessionPickup</a>";
                             $sessionReturn = "<a href='session.php?session=$sessionReturnId'>$sessionReturn</a>";
-                            $editThisThing = " <a href='booking.php?booking=$bookingId&item=$itemId'>Redigera den här prylen</a>";
+                            $editThisThing = " <a href='booking.php?booking=$bookingId&item=$itemId'>".Language::text("edit_booking")."</a>";
                         }
 
                         echo("
                         <li>
-                            $numItems st
+                            $numItems
                             <b> $itemName</b>
-                            mellan $sessionPickup
-                            och $sessionReturn
+                            ".Language::text("between")." $sessionPickup
+                            ".Language::text("and")." $sessionReturn
                             $pickedUpTime
                             $returnedTime
                             $editThisThing
@@ -375,11 +363,11 @@
                     if(!$anythingPickedUp) {
                         echo("<form action='user.php' method='post'>
                                 <input type='hidden' name='unbook' value='$bookingId'>
-                                <input type='submit' class='button_style' value='Avboka'>
+                                <input type='submit' class='button_style' value='".Language::text("unbook")."'>
                              </form>");
                     }
                 } else {
-                    echo "<p>Inga föremål bokade</p>";
+                    echo "<p>".Language::text("nothing_booked")."</p>";
                 }
                 echo("</div>");
             }
@@ -392,10 +380,9 @@
 
         private function displayAllUsers() {
             ?>
-            <h2>Befintliga användare</h2>
             <div class='userListing'>
             <?php
-            $all_users = User::getAllUsersOrderbyAdmin();				//changed to sort it so admins are at the top of user list
+            $all_users = User::getAllUsersOrderbyAdmin();//changed to sort it so admins are at the top of user list
             foreach($all_users as $user) {
                 $liu_id = $user['liu_id'];
                 $userName = $user['name'];
