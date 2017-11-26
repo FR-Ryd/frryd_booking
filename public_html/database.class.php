@@ -58,7 +58,7 @@ class Database {
     	}
     	if (!$error_free) {
     	    $error_message = $this->query_result->errorCode();
-    	    $error_message = $error_message . " " . $this->query_result->errorInfo();
+    	    $error_message = $error_message . " " . $this->query_result->errorInfo()[2];
     	    $error_message = $error_message . ":" . $sql;
     	    die($error_message);
     	}

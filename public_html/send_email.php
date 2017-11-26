@@ -1,5 +1,10 @@
 <?php
-	// TODO: Authority check
+
+	//Only allow localhost (cron job) to send emails
+	if ($_SERVER['SERVER_ADDR'] != $_SERVER['REMOTE_ADDR']){
+		http_response_code(400);
+		exit;
+  	}
 
 	function error($errorStr) {
 		echo "<script type=\"text/javascript\">\n alert(\"".$errorStr."\");\n</script>\n";
@@ -135,7 +140,7 @@
 			$subject = '=?UTF-8?B?'.base64_encode($subject).'?=';
 
 			mail(
-				$address = "it@frryd.se";, //"viktorviktor@gmail.com",
+				$address, //"viktorviktor@gmail.com",
 				$subject,
 				$message,
 				"From: ".Language::text("site_title", $language)." <".$fromAddress.">\r\n"
