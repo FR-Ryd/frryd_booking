@@ -170,8 +170,6 @@ INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("nothing_booked"
 INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("unbook",1,"Unbook");
 INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("unbook",2,"Avboka");
 
------------------ ADDED ----------------
-
 -- Text for items page
 INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("form_error",1,"Error in the form submitted!");
 INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("form_error",2,"Det finns ett fel i formuläret!");
@@ -265,3 +263,23 @@ INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("translate_categ
 
 INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("add_translation",1,"Add translation");
 INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("add_translation",2,"Lägg till översättning");
+----------------- ADDED ----------------
+
+-- Translations for bookings page
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("booking_removed",1,"Booking Removed");
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("add_translation",2,"Bokning borttagen");
+
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("booking_created",1,"Booking created");
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("booking_created",2,"Bokning skapad");
+
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("booking_updated",1,"Booking updated");
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("booking_updated",2,"Bokning skapad");
+
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("book_error",1,"The change could not be performed. There is not enough items free.");
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("book_error",2,"Det gick inte att genomföra förändringen. Fullbokat för det valda antalet föremål av den typen för den valda tiden.");
+
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("item",1,"Item");
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("item",2,"Föremål");
+
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("booked_by",1,"booked by");
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("booked_by",2,"bokad av");

@@ -18,7 +18,7 @@
                 $remark = $_POST['remark'];
                 User::addRemark($remark, $liu_id);
 
-                $message = "Anmärkning tillagd!";
+                $message = Language::text("remark_added");
                 $bookingId = $_POST['booking_id'];
                 $sessionLink = "";
                 if(isset($_GET['session'])) {
@@ -39,7 +39,7 @@
             if (isset($_POST['delete_booking'])) {
                 $bookingId = $_POST['booking_id'];
                 Booking::delete($bookingId);
-                $_SESSION['message'] .= "Bokning borttagen";
+                $_SESSION['message'] .= Language::text("booking_removed");
 
                 if (isset($_GET['session'])) {
                     $session = $_GET['session'];
@@ -52,7 +52,7 @@
                 $liu_id = $_POST['email'];
                 $liu_id = strtolower($liu_id);
                 if(!User::validLiuId($liu_id)) {
-                    $_SESSION['message'] .= "Ogiltigt LIU-ID: " . $liu_id;
+                    $_SESSION['message'] .= Language::text("liuid_error") . " : " . $liu_id;
                     header("Location: booking.php");
                     exit;
             	}
@@ -89,7 +89,7 @@
 
                 $bookingId = Booking::create($liu_id, $time, $language, $hash);
 
-                $_SESSION['message'] .= "Bokning skapad";
+                $_SESSION['message'] .= Language::text("booking_created");
                 $sessionLink = "";
                 if(isset($_GET['session'])) {
                     $session = $_GET['session'];
@@ -107,7 +107,7 @@
 
                 User::updateUser($liu_id, $name, $nin, $address, $phone);
 
-                $_SESSION['message'] .= "Bokning uppdaterad";
+                $_SESSION['message'] .= Language::text("booking_updated");
 
                 $bookingId = $_POST['booking_id'];
                 $sessionLink = "";
@@ -121,7 +121,7 @@
 
                 $bookingItemId = $_POST['booking_item_id'];
                 BookingItem::delete($bookingItemId);
-                $_SESSION['message'] .= "Föremål borttaget från bokning";
+                $_SESSION['message'] .= Language::text("item_removed");
                 $bookingId = $_POST['booking_id'];
                 header("Location: booking.php?booking=" . $bookingId . (isset($_GET['session']) ? "&session=".$_GET['session'] : ""));
                 exit;
@@ -133,7 +133,7 @@
                     && isset($_POST['booking_item_id']) && is_numeric($_POST['booking_item_id'])) {
                     null; // OK
                 } else {
-                    $_SESSION['message'] .= "Felaktigt ifyllt formulär.";
+                    $_SESSION['message'] .= Language::text("form_error");
 
                     header("Location: booking.php?booking=".$_POST['booking_id']."&item=".$_POST['booking_item_id'].(isset($_GET['session']) ? "&session=".$_GET['session'] : ""));
                     exit;
@@ -152,9 +152,9 @@
                     $returnedTime = $_POST['returned_time'];
 
                     BookingItem::update($bookingItemId, $itemId, $pickupSessionId, $returnSessionId, $numItems, $comment, $pickedUpTime, $returnedTime);
-                    $_SESSION['message'] .= "Uppdaterat";
+                    $_SESSION['message'] .= Language::text("booking_updated");
                 } else {
-                    $_SESSION['message'] .= "Det gick inte att genomföra förändringen. Troligast var det fullbokat för det valda antalet föremål av den typen för den valda tiden.";
+                    $_SESSION['message'] .= Language::text("book_error");
                     $bookingId = $_POST['booking_id'];
                     header('Location: booking.php?booking=' . $bookingId . "&item=" . $bookingItemId);
                     exit;
@@ -179,9 +179,9 @@
 
                     $bookingItemID = BookingItem::create($newBookingItem);
                     BookingItem::create($bookingId, $itemId, $pickupSessionId, $returnSessionId, $numItems, $comment, $pickedUpTime, $returnedTime);
-                    $_SESSION['message'] .= "Tillagt\n";
+                    $_SESSION['message'] .= Language::text("booking_updated")."\n";
                 } else {
-                    $_SESSION['message'] .= "Det gick inte att genomföra förändringen. Troligast var det fullbokat för det valda antalet föremål av den typen för den valda tiden.\n";
+                    $_SESSION['message'] .= Language::text("book_error")."\n";
                 }
                 header("Location: booking.php?booking=".$_POST['booking_id'].(isset($_GET['session']) ? "&session=".$_GET['session'] : ""));
                     //.($bookingItemID != "" ? "&item=".$bookingItemID : ""));
@@ -192,7 +192,7 @@
 		protected function displaySpecificBooking() {
             // edit booking
             ?>
-                <h1>Bokning <?php echo($this->bookingId); ?></h1>
+                <h1><?php echo(Language::text("booking") . " " . $this->bookingId); ?></h1>
             <?php
 
                 if ($booking = Booking::getBookingWithPerson($this->bookingId) ) {
@@ -202,21 +202,21 @@
                         $booker_liu_id = $booking['liu_id'];
                         $bookingName = $booking['name'] != "" ? htmlentities($booking['name'], ENT_COMPAT, "UTF-8") : "(Namnlös)";
                         ?>
-                        <br \><h2>Föremål <?php echo($this->bookingItemID); ?>, bokad av <a href='user.php?showUser=<?php echo($booker_liu_id); ?>'> <?php echo($bookingName); ?></a></h2>
+                        <br \><h2><?php echo(Language::text("item")." ".$this->bookingItemID); ?>, <?php echo(Language::text("booked_by")); ?> <a href='user.php?showUser=<?php echo($booker_liu_id); ?>'> <?php echo($bookingName); ?></a></h2>
                         <?php
                         echo("<div class='square2'>");
                         if ($bookingItem = BookingItem::getBookingItem($this->bookingItemID)) {
                             $numItems = $bookingItem['num_items'];
                             $itemId = $bookingItem['item'];
-                            $itemName = $this->item_name($itemId);
+                            $itemName = LendingItem::getItemName($itemId);
                             $pickupSessionLink = $this->session_link($bookingItem['pickup_session']);
                             $returnSessionLink = $this->session_link($bookingItem['return_session']);
                             echo("
                             <p>
-                                $numItems st
+                                $numItems
                                 <b>$itemName</b>
-                                mellan $pickupSessionLink
-                                och $returnSessionLink
+                                ".Language::text("between")." $pickupSessionLink
+                                ".Language::text("and")." $returnSessionLink
                             </p>
                             ");
 
