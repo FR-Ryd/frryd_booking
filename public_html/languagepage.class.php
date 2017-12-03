@@ -38,18 +38,18 @@
                 }
                 Language::multipleTextUpdate($updateTranslations);
                 Language::multipleTextCreate($newTranslations);
-                $_SESSION['message'] .= "Språk uppdaterat";
+                $_SESSION['message'] .= Language::text("language_updated");
                 header("Location: languages.php?language=".$_POST['language']);
                 exit;
             } elseif (isset($_POST['create_language']) && $_POST['name'] != "") {
                 $newLanguage = $_POST['name'];
                 $languageID = Language::create($newLanguage);
-                $_SESSION['message'] .= "Språk tillagt";
+                $_SESSION['message'] .= Language::text("language_added");
                 header("Location: languages.php?language=".$languageID);
                 exit;
             } elseif (isset($_POST['delete_language'])) {
                 if (Language::delete($_POST['language'])) {
-                    $_SESSION['message'] .= "Språk borttaget";
+                    $_SESSION['message'] .= Language::text("language_removed");
                 }
                 header("Location: languages.php");
                 exit;
@@ -62,14 +62,14 @@
 			$this->displayMessage();
 			if (User::isAdmin()) {?>
 				<div class="main">
-					<h1>Administrera språk</h1>
+					<h1><?php echo(Language::text("language_menu_title")); ?></h1>
 
 			<?php if (isset($this->language)) {
 
 				if ($language = Language::getLanguage($this->language)) {
 					?>
 
-						<h2>Språk <?php echo($language['name']); ?> </h2>
+						<h2><?php echo(Language::text("language_menu_title")." ".$language['name']); ?> </h2>
 						<form action="languages.php" method="post">
 							<fieldset>
 								<input type="hidden" name="language" value="<?php echo($this->language); ?>" />
@@ -91,19 +91,18 @@
                         ?>
 							<br />
 						<?php } ?>
-								<input type="submit" name="update_language" value="Uppdatera" />
-								<input type="submit" name="delete_language" value="Ta bort språk" />
+								<input type="submit" name="update_language" value="<?php echo(Language::text("update")); ?>" />
+								<input type="submit" name="delete_language" value="<?php echo(Language::text("remove_language")); ?>" />
 							</fieldset>
 						</form>
 					<?php } ?>
 				<hr />
-				<a href="languages.php">Tillbaks till språklistan</a>
 			<?php } else { ?>
 				<form action="languages.php" method="get">
 					<fieldset>
-						<legend>Redigera språk</legend>
+						<legend><?php echo(Language::text("edit_language")); ?></legend>
 						<div class="pure-control-group">
-							<label>Välj språk</label>
+							<label><?php echo(Language::text("choose_language")); ?></label>
 						<select class="form_style" name="language">
 				<?php
 
@@ -111,17 +110,17 @@
 							<option class="form_style" value="<?php echo($language['id']); ?>"><?php echo($language['name']); ?></option>
 					<?php } ?>
 						</select>
-						<input type="submit" name="edit_language" class="button_style" value="Redigera språk" />
+						<input type="submit" name="edit_language" class="button_style" value="<?php echo(Language::text("edit_language")); ?>" />
 						</div>
 					</fieldset>
 				</form>
 				<form action="languages.php" method="post">
 					<fieldset>
-						<legend>Nytt språk</legend>
+						<legend><?php echo(Language::text("new_language")); ?></legend>
 						<div class="pure-control-group">
-							<label>Namn</label>
+							<label><?php echo(Language::text("name")); ?></label>
 							<input class="form_style" type="text" name="name" value="" />
-							<input type="submit" class="button_style" name="create_language" value="Lägg till språket" />
+							<input type="submit" class="button_style" name="create_language" value="<?php echo(Language::text("new_language")); ?>" />
 						</div>
 					</fieldset>
 				</form>

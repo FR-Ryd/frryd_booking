@@ -337,4 +337,21 @@ INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("new_remark",2,"
 INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("edit",1,"Edit");
 INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("edit",2,"Redigera");
 
------------------ ADDED ----------------
+-- Translations for the language page
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("language_updated",1,"Language updated");
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("language_updated",2,"Språk uppdaterat");
+
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("language_added",1,"Language added");
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("language_added",2,"Språk uppdaterat");
+
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("language_removed",1,"Language removed");
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("language_removed",2,"Språk borttaget");
+
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("remove_language",1,"Remove language");
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("remove_language",2,"Ta bort språk");
+
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("choose_language",1,"Choose language");
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("choose_language",2,"Välj språk");
+
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("new_language",1,"New language");
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("new_language",2,"Nytt språk");
