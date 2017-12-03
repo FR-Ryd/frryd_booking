@@ -236,31 +236,31 @@
                                 <fieldset>
                                     <input type='hidden' name='booking_id' value='$thisBookingId' />
                                     <input type='hidden' name='booking_item_id' value='$thisBookingItemId' />
-                                    <legend>Redigera Föremål</legend>
+                                    <legend>".Language::text("edit_item")."</legend>
 									<div class='pure-control-group'>
-										<label for='Föremål'>Föremål</label>$itemSelector <br />
+										<label for='Föremål'>".Language::text("item")."</label>$itemSelector <br />
 									</div>
 									<div class='pure-control-group'>
-										<label for='Antal'>Antal</label><input class='form_style' type='text' name='num_items' value='$numItems' /> st<br />
+										<label for='Antal'>".Language::text("amount")."</label><input class='form_style' type='text' name='num_items' value='$numItems' /> <br />
 									</div>
 									<div class='pure-control-group'>
-										<label for='Utlämning'>Utlämning</label>$pickupSessionSelect <br />
+										<label for='Utlämning'>".Language::text("pick_up")."</label>$pickupSessionSelect <br />
 									</div>
 									<div class='pure-control-group'>
-										<label for='Återlämning'>Återlämning</label>$returnSessionSelect <br />
+										<label for='Återlämning'>".Language::text("return")."</label>$returnSessionSelect <br />
 									</div>
 									<div class='pure-control-group'>
-										<label for='Utlämnad'>Utlämnad</label><input class='form_style' type='text' name='picked_up_time' value='$bookingPickupTime' /> åååå-MM-DD [hh:mm:ss] / tomt<br />
+										<label for='Utlämnad'>".Language::text("lended_out")."</label><input class='form_style' type='text' name='picked_up_time' value='$bookingPickupTime' /> YYYY-MM-DD [hh:mm:ss] / -<br />
 									</div>
 									<div class='pure-control-group'>
-										<label for='Återlämnad'>Återlämnad</label><input class='form_style' type='text' name='returned_time' value='$bookingReturnTime' /> åååå-MM-DD [hh:mm:ss] / tomt<br />
+										<label for='Återlämnad'>".Language::text("returned")."</label><input class='form_style' type='text' name='returned_time' value='$bookingReturnTime' /> YYYY-MM-DD [hh:mm:ss] / -<br />
 									</div>
 									<div class='pure-control-group'>
-										<label for='Kommentar'>Kommentar</label><textarea class='form_style' style='vertical-align: top;' name='comment' rows='2' cols='32'>$comment</textarea><br /><br \>
+										<label for='Kommentar'>".Language::text("comment")."</label><textarea class='form_style' style='vertical-align: top;' name='comment' rows='2' cols='32'>$comment</textarea><br /><br \>
 									</div>
 
-                                    <input type='submit' name='update_booking_item' class='button_style' value='Uppdatera' />
-                                    <input type='submit' name='delete_booking_item' class='button_style' value='Ta bort' />
+                                    <input type='submit' name='update_booking_item' class='button_style' value='".Language::text("update")."' />
+                                    <input type='submit' name='delete_booking_item' class='button_style' value='".Language::text("remove")."' />
                                 </fieldset>
                             </form>
                             ");
@@ -276,7 +276,7 @@
                         $link = $bookingId . $sessionStuff;
                         echo("
                         <p><a href='?booking=$link'>
-                          Tillbaks till bokningen
+                          ".Language::text("back_to_booking")."
                         </a></p>
                         ");
 
@@ -287,43 +287,43 @@
 
 						echo("<div class='square2'>");
                         echo("
-                        <p><b>Bokningar:</b></p>\n");
+                        <p><b>".Language::text("bookings_menu_title").":</b></p>\n");
 
                         $bookingItems = BookingItem::getBookingItemsForBooking($this->bookingId);
                         if (count($bookingItems)) {
                             foreach ($bookingItems as $bookingItem) {
 
                             $numItems = $bookingItem['num_items'];
-                                $itemName = $this->item_name($bookingItem['item']);
+                                $itemName = LendingItem::getItemName($bookingItem['item']);
                                 $pickupSessionLink = $this->session_link($bookingItem['pickup_session']);
                                 $returnSessionLink = $this->session_link($bookingItem['return_session']);
                                 $pickedUpTime = "";
                                 if ($bookingItem['picked_up_time'] != "") {
                                     $theDate = date("j/n H:i", strtotime($bookingItem['picked_up_time']));
-                                    $pickedUpTime = "<b>&#10003; Utlämnad $theDate</b>";
+                                    $pickedUpTime = "<b>&#10003; ".Language::text("lended_out")." $theDate</b>";
                                 }
                                 $returnedTime = "";
                                 if ($bookingItem['returned_time'] != "") {
                                     $theDate = date("j/n H:i", strtotime($bookingItem['returned_time']));
-                                    $returnedTime = "<b>&#10003; återlämnad $theDate</b>";
+                                    $returnedTime = "<b>&#10003; ".Language::text("returned")." $theDate</b>";
                                 }
                                 $bookingId = $this->bookingId;
                                 $itemId = $bookingItem['id'];
                                 $sessionLink = (isset($_GET['session']) ? "&amp;session=".$_GET['session'] : "");
                                 echo("
                                 <div class='square2'>
-                                    $numItems st
+                                    $numItems
                                     <b>$itemName</b>
-                                    mellan $pickupSessionLink
-                                    och $returnSessionLink
+                                    ".Language::text("between")." $pickupSessionLink
+                                    ".Language::text("and")." $returnSessionLink
                                     $pickedUpTime
                                     $returnedTime<br><br>
-                                    <a href='?booking=$bookingId&amp;item=$itemId$sessionLink' >Redigera</a>
+                                    <a href='?booking=$bookingId&amp;item=$itemId$sessionLink' >".Language::text("edit_item")."</a>
                                 </div>
                                 ");
                             }
                         } else {
-                            echo("<p>Inga föremål bokade</p>\n");
+                            echo("<p>".Language::text("nothing_booked")."</p>\n");
                         }
 						echo("</div>");
 
@@ -332,7 +332,7 @@
                         echo("
 
                         <div class='square2 togglable'>
-                            <p class='toggleButton' class='button_style' ><b>Lägg till föremål</b></p>
+                            <p class='toggleButton' class='button_style' ><b>".Language::text("add_item")."</b></p>
                             <div class='toggleContent'>
                                 $addItemForm
                             </div>
@@ -346,7 +346,7 @@
                           <form action='session.php' method='post'>
                             <fieldset>
                               <input type='hidden' name='booking_id' value='$bookingId' />
-                              <input type='submit' name='confirm_pickup_all_booking' class='button_style' value='Alla utlämnade' />
+                              <input type='submit' name='confirm_pickup_all_booking' class='button_style' value='".Language::text("all_lended")."' />
                             </fieldset>
                           </form>
                         ";
@@ -356,8 +356,8 @@
                         <form action='booking.php$sessionLink' method='post'>
                             <fieldset>
                                 <input type='hidden' name='booking_id' value='$bookingId'' />
-                                <legend>Ta bort Bokning $bookingId</legend>
-                                <input type='submit' name='delete_booking' class='button_style' value='Ta bort' />
+                                <legend>".Language::text("remove_booking")." $bookingId</legend>
+                                <input type='submit' name='delete_booking' class='button_style' value='".Language::text("remove_booking")."' />
                             </fieldset>
                         </form>
                         ");
@@ -369,17 +369,14 @@
             } ?>
 
             <?php if (isset($_GET['session'])) { ?>
-            <p><a href="session.php?session=<?php echo($_GET['session']); ?>">Tillbaks till passet</a></p>
-            <?php } ?>
-
-            <p><a href="booking.php">Tillbaks till bokningslistan</a></p>
-            <?php
+            <p><a href="session.php?session=<?php echo($_GET['session']); ?>"><?php echo(Language::text("back_to_session")); ?></a></p>
+            <?php }
         }
 
         protected function displaySearchResults() {
             ?>
-            <h1>Bokningar Sök</h1>
-            <p><i>Sökresultat</i></p>
+            <h1><?php echo(Language::text("bookings_search")); ?></h1>
+            <p><i><?php echo(Language::text("search_results")); ?></i></p>
 
             <div class="square2">
                 <form action="booking.php" method="get">
@@ -427,26 +424,26 @@
                         echo "<ul>\n";
                         foreach ($bookingItems as $bookingItem) {
                             $numItems = $bookingItem['num_items'];
-                            $itemName = $this->item_name($bookingItem['item']);
+                            $itemName = LendingItem::getItemName($bookingItem['item']);
                             $sessionLinkPickup = $this->session_link($bookingItem['pickup_session']);
                             $sessionLinkReturn = $this->session_link($bookingItem['return_session']);
                             $pickedUpTime = "";
                             if ($bookingItem['picked_up_time'] != "") {
                                 $theDate = date("j/n H:i", strtotime($bookingItem['picked_up_time']));
-                                $pickedUpTime = "<b>&#10003; Utlämnad $theDate</b>\n";
+                                $pickedUpTime = "<b>&#10003; ".Language::text("lended_out")." $theDate</b>\n";
                             }
                             $returnedTime = "";
                             if ($bookingItem['returned_time'] != "") {
                                 $theDate = date("j/n H:i", strtotime($bookingItem['returned_time']));
-                                $returnedTime = "<b>&#10003; återlämnad $theDate</b>\n";
+                                $returnedTime = "<b>&#10003; ".Language::text("returned")." $theDate</b>\n";
                             }
 
                             echo("
                             <li>
-                                $numItems st
+                                $numItems
                                 <b> $itemName</b>
-                                mellan $sessionLinkPickup
-                                och $sessionLinkReturn
+                                ".Language::text("between")." $sessionLinkPickup
+                                ".Language::text("and")." $sessionLinkReturn
                                 $pickedUpTime
                                 $returnedTime
                             </li>
@@ -454,12 +451,12 @@
                         }
                         echo("</ul>\n");
                     } else {
-                        echo "<p>Inga föremål bokade</p>";
+                        echo "<p>".Language::text("nothing_booked")."</p>";
                     }
-                    echo("<a href='booking.php?booking=$bookingId'>Redigera bokningen</a>");?></div><?php
+                    echo("<a href='booking.php?booking=$bookingId'>".Language::text("edit_booking")."</a>");?></div><?php
                 }
             } else {
-                echo "<p>Hittade inga bokningar på sökfrågan \"".$_GET['q']."\"</p>";
+                echo "<p>".Language::text("no_bookings_on_search")." \"".$_GET['q']."\"</p>";
 				echo "</div>";
             }
         }
@@ -486,11 +483,11 @@
 				} else {
 					// Bookings menu
 					?>
-					<h1>Bokningar</h1>
-					<p><i>Här listas alla bokningar, gamla, nya, försenade osv.</i></p>
+					<h1><?php echo(Language::text("bookings_menu_title")); ?></h1>
+					<p><i><?php echo(Language::text("bookings_desc")); ?></i></p>
 
 					<div class="square2 togglable">
-						<h3 class="toggleButton">Ny bokning</h3>
+						<h3 class="toggleButton"><?php echo(Language::text("new_booking")); ?></h3>
 						<div class="toggleContent">
 							<?php
 								echo(Forms::composeAddBookingForm("booking.php"));
@@ -501,7 +498,7 @@
 					<div class="square2">
 						<form action="booking.php" method="get">
 							<fieldset>
-								<legend>Sök</legend>
+								<legend><?php echo(Language::text("search")); ?></legend>
 								<select name="k">
                                 <?php
                                     $k = null;
@@ -516,17 +513,17 @@
                                     $setItem = ($k == "item_name") ? "selected" : "";
                                     $setComment = ($k == "comment") ? "selected" : "";
                                     echo("
-									<option value='name' $setName>Namn</option>
+									<option value='name' $setName>".Language::text("name")."</option>
 									<option value='address' $setAddress>Adress</option>
-									<option value='email' $setEmail>Epost</option>
-									<option value='pickup_session' $setPickup>Uthämtningsdatum YYYY-mm-dd</option>
-									<option value='return_session' $setReturn>återlämningsdatum YYYY-mm-dd</option>
-									<option value='item_name' $setItem>Föremål</option>
-									<option value='comment' $setComment>Kommentar</option>\n");
+									<option value='email' $setEmail>Email</option>
+									<option value='pickup_session' $setPickup>".Language::text("pick_up_date_desc")."</option>
+									<option value='return_session' $setReturn>".Language::text("return_date_desc")."</option>
+									<option value='item_name' $setItem>".Language::text("item")."</option>
+									<option value='comment' $setComment>".Language::text("comment")."</option>\n");
                                 ?>
 								</select>
 								<input type="text" name="q" value="" />
-								<input type="submit" name="search" value="Sök" />
+								<input type="submit" name="search" value="<?php echo(Language::text("search")); ?>" />
 							</fieldset>
 						</form>
 					</div><br \>
@@ -545,26 +542,26 @@
 								foreach ($bookingItems as $bookingItem) {
 
                                     $numItems = $bookingItem['num_items'];
-                                    $itemName = $this->item_name($bookingItem['item']);
+                                    $itemName = LendingItem::getItemName($bookingItem['item']);
                                     $sessionLinkPickup = $this->session_link($bookingItem['pickup_session']);
                                     $sessionLinkReturn = $this->session_link($bookingItem['return_session']);
                                     $pickedUpTime = "";
                                     if ($bookingItem['picked_up_time'] != "") {
                                         $theDate = date("j/n H:i", strtotime($bookingItem['picked_up_time']));
-                                        $pickedUpTime = "<b>&#10003; Utlämnad $theDate</b>\n";
+                                        $pickedUpTime = "<b>&#10003; ".Language::text("lended_out")." $theDate</b>\n";
                                     }
                                     $returnedTime = "";
                                     if ($bookingItem['returned_time'] != "") {
                                         $theDate = date("j/n H:i", strtotime($bookingItem['returned_time']));
-                                        $returnedTime = "<b>&#10003; återlämnad $theDate</b>\n";
+                                        $returnedTime = "<b>&#10003; ".Language::text("returned")." $theDate</b>\n";
 									}
 
                                     echo("
 									<li>
-										$numItems st
+										$numItems
 										<b> $itemName</b>
-										mellan $sessionLinkPickup
-										och $sessionLinkReturn
+										".Language::text("between")." $sessionLinkPickup
+										".Language::text("and")." $sessionLinkReturn
                                         $pickedUpTime
                                         $returnedTime
                                     </li>
@@ -572,10 +569,10 @@
 								}
 								echo("</ul>\n");
 							} else {
-								echo "<p>Inga föremål bokade</p>";
+								echo "<p>".Language::text("nothing_booked")."</p>";
 							}
 
-                            echo("<a href='booking.php?booking=$bookingId'>Redigera bokning</a>\n");
+                            echo("<a href='booking.php?booking=$bookingId'>".Language::text("edit_booking")."</a>\n");
 							echo("</div>");
                             flush();
 						}
@@ -606,27 +603,27 @@
 						<input type='hidden' name='booking_id' value='$bookingId' />
 						<!--<legend>Redigera</legend>-->
 						<div class='pure-control-group'>
-							<label for='Föremål'>Föremål</label>$itemSelector <br />
+							<label for='Föremål'>".Language::text("item")."</label>$itemSelector <br />
 					   </div>
 						<div class='pure-control-group'>
-							<label for='Antal'>Antal</label><input class='form_style' type='text' name='num_items' value='1' /> st <br />
+							<label for='Antal'>".Language::text("amount")."</label><input class='form_style' type='text' name='num_items' value='1' />  <br />
 					   </div>
 						<div class='pure-control-group'>
-							<label for='Utlämning'>Utlämning</label>$pickupSelector <br />
+							<label for='Utlämning'>".Language::text("pick_up")."</label>$pickupSelector <br />
 					   </div>
 						<div class='pure-control-group'>
-							<label for='Återlämning'>Återlämning</label>$returnSelector <br /><br />
+							<label for='Återlämning'>".Language::text("return")."</label>$returnSelector <br /><br />
 					   </div>
 						<div class='pure-control-group'>
-							<label for='Utlämnad'>Utlämnad</label><input class='form_style' type='text' name='picked_up_time' value='$pickupTime' /> åååå-MM-DD [hh:mm:ss] / tomt <br />
+							<label for='Utlämnad'>".Language::text("lended_out")."</label><input class='form_style' type='text' name='picked_up_time' value='$pickupTime' /> YYYY-MM-DD [hh:mm:ss] / - <br />
 					   </div>
 						<div class='pure-control-group'>
-							<label for='Återlämnad'>Återlämnad</label><input class='form_style' type='text' name='returned_time' value='' /> åååå-MM-DD [hh:mm:ss] / tomt <br />
+							<label for='Återlämnad'>".Language::text("returned")."</label><input class='form_style' type='text' name='returned_time' value='' /> YYYY-MM-DD [hh:mm:ss] / - <br />
 					   </div>
 						<div class='pure-control-group'>
-							<label for='Kommentar'>Kommentar</label><textarea class='form_style' style='vertical-align: top;' name='comment' rows='2' cols='32'></textarea> <br />
+							<label for='Kommentar'>".Language::text("comment")."</label><textarea class='form_style' style='vertical-align: top;' name='comment' rows='2' cols='32'></textarea> <br />
 					   </div>
-						<input type='submit' name='add_booking_item' class='button_style'  value='Lägg till' />
+						<input type='submit' name='add_booking_item' class='button_style'  value='".Language::text("add_item")."' />
 					</fieldset>
 				</form>";
 
@@ -668,7 +665,7 @@
 				foreach (LendingItem::getItemsForCategory($category['id']) as $item) {
                     $itemId = $item['id'];
                     $selected = ($itemId == $selectedItem) ? " selected='selected'" : "";
-                    $itemName = $item['name'];
+                    $itemName = Language::itemName($itemId);
 					$ret = $ret . "<option value='$itemId' $selected>$itemName</option>\n";
                     $quickSearchItems = $quickSearchItems . '"' . $nameCombo . '",';
                 }
@@ -723,11 +720,6 @@
 			return $ret . "</select>\n";
 		}
 
-		private function item_name($itemID) {
-			$item = LendingItem::getItem($itemID);
-			return $item['name'];
-		}
-
 		private function session_date($sessionID) {
 			if ($session = Session::getSession($sessionID)) {
 				return $session['date'];
@@ -739,7 +731,7 @@
 		private function session_link($sessionId) {
 			if ($session = Session::getSessionById($sessionId)) {
 				$time = new DateTime($session['date']);
-                $text = $time->format("j") . " " . $this->month($time->format("m")); // <-woah how derpy.
+                $text = $time->format("j") . " " . Util::month($time->format("m"));
 				return "<a href='session.php?session=$sessionId'>$text</a>";
 			} else {
 				return "(Okänt datum)";
@@ -762,28 +754,5 @@
             }
             return "N/A";
 		}
-
-		private function month ($monthNum) {
-            $months = array(
-                1 => "januari",
-                2 => "februari",
-                3 => "mars",
-                4 => "april",
-                5 => "maj",
-                6 => "juni",
-                7 => "juli",
-                8 => "augusti",
-                9 => "september",
-                10 => "oktober",
-                11 => "november",
-                12 => "december"
-            );
-            $monthNum = intval($monthNum);
-            if(isset($months[$monthNum])) {
-                return $months[$monthNum];
-            }
-            return "N/A";
-		}
-
 	}
 ?>

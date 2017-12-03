@@ -263,7 +263,6 @@ INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("translate_categ
 
 INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("add_translation",1,"Add translation");
 INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("add_translation",2,"Lägg till översättning");
------------------ ADDED ----------------
 
 -- Translations for bookings page
 INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("booking_removed",1,"Booking Removed");
@@ -283,3 +282,59 @@ INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("item",2,"Förem
 
 INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("booked_by",1,"booked by");
 INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("booked_by",2,"bokad av");
+
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("pick_up",1,"Pick up");
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("pick_up",2,"Utlämning");
+
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("return",1,"Return");
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("return",2,"Återlämning");
+
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("back_to_booking",1,"Back to the booking");
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("back_to_booking",2,"Tillbaks till bokningen");
+
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("add_item",1,"Add item");
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("add_item",2,"Lägg till föremål");
+
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("remove_booking",1,"Remove booking");
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("remove_booking",2,"Ta bort bokning");
+
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("back_to_session",1,"Back to the session");
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("back_to_session",2,"Tillbaks till passet");
+
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("bookings_search",1,"Bookings search");
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("bookings_search",2,"Bokningar sök");
+
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("search_results",1,"Search results");
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("search_results",2,"Sökresultat");
+
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("no_bookings_on_search",1,"No bookings found on search");
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("no_bookings_on_search",2,"Hittade inga bokningar på sökfrågan");
+
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("bookings_desc",1,"Here all boookings are listed, old, new, late etc.");
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("bookings_desc",2,"Här listas alla bokningar, gamla, nya, försenade osv.");
+
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("new_booking",1,"New booking");
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("new_booking",2,"Ny bokning");
+
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("search",1,"Search");
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("search",2,"Sök");
+
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("pick_up_date_desc",1,"Pick up date YYYY-mm-dd");
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("pick_up_date_desc",2,"Uthämtningsdatum YYYY-mm-dd");
+
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("return_date_desc",1,"Return date YYYY-mm-dd");
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("return_date_desc",2,"Återlämningsdatum YYYY-mm-dd");
+
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("edit_user",1,"Edit user");
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("edit_user",2,"Redigera användare");
+
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("remarks",1,"Remarks");
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("remarks",2,"Anmärkningar");
+
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("new_remark",1,"New remark");
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("new_remark",2,"Ny anmärkning");
+
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("edit",1,"Edit");
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("edit",2,"Redigera");
+
+----------------- ADDED ----------------

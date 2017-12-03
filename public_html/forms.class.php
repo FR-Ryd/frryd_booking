@@ -58,21 +58,21 @@
             <h2><a href='user.php?showUser=$booker_liu_id'> $bookingName</a></h2>
             <div class='square2' style='padding-top:15px;padding-left:15px;'>
 				<div class='pure-control-group'>
-					<label for='Personnummer'><b>Pers.nr.</b></label><input class='form_style' type='hidden' name='personnummer' value='$bookingNIN' />$bookingNIN <br />
+					<label for='Personnummer'><b>".Language::text("confirm_personnummer").".</b></label><input class='form_style' type='hidden' name='personnummer' value='$bookingNIN' />$bookingNIN <br />
 				</div>
 				<div class='pure-control-group'>
-					<label for='Adress'><b>Adress</b></label><input class='form_style' type='hidden' name='address' value='$bookingAddress' />$bookingAddress, 584 XX, Linköping <br />
+					<label for='Adress'><b>".Language::text("confirm_address")."</b></label><input class='form_style' type='hidden' name='address' value='$bookingAddress' />$bookingAddress, 584 XX, Linköping <br />
 				</div>
 				<div class='pure-control-group'>
-					<label for='Telefonnummer'><b>Tel.nr.</b></label><input class='form_style' name='phone' type='hidden' value='$bookingPhone' />$bookingPhone<br />
+					<label for='Telefonnummer'><b>".Language::text("confirm_phone")."</b></label><input class='form_style' name='phone' type='hidden' value='$bookingPhone' />$bookingPhone<br />
 				</div>
 				<div class='pure-control-group'>
-					<label for='E-post'><b>E-post</b></label><input class='form_style' type='hidden' name='email' value='$bookingMail' />$bookingMail@student.liu.se <br />
+					<label for='E-post'><b>".Language::text("confirm_email")."</b></label><input class='form_style' type='hidden' name='email' value='$bookingMail' />$bookingMail@student.liu.se <br />
 				</div><br \>
 			");
             echo("
                 <div class='togglable'>
-                    <p class='toggleButton'><b>Redigera</b></p>
+                    <p class='toggleButton'><b>".Language::text("edit")."</b></p>
                     <div class='toggleContent'>
                     ");
 
@@ -82,24 +82,24 @@
                         <form action='booking.php$sessionLink' method='post'>
                             <fieldset>
                                 <input type='hidden' name='booking_id' value='$bookingId' />
-                                <legend>Redigera användare</legend>
+                                <legend>".Language::text("edit_user")."</legend>
 								<div class='pure-control-group'>
-									<label for='Namn'>Namn</label><input class='form_style' type='text' name='name' value='$bookingName'  placeholder='Full Name' /> <br />
+									<label for='Namn'>".Language::text("confirm_name")."</label><input class='form_style' type='text' name='name' value='$bookingName'  placeholder='Full Name' /> <br />
 								</div>
 								<div class='pure-control-group'>
-									<label for='Personnummer'>Pers.nr.</label><input class='form_style' type='text' name='personnummer' value='$bookingNIN' placeholder='19yymmddxxx' /> <br />
+									<label for='Personnummer'>".Language::text("confirm_personnummer")."</label><input class='form_style' type='text' name='personnummer' value='$bookingNIN' placeholder='19yymmddxxx' /> <br />
 								</div>
 								<div class='pure-control-group'>
-									<label for='Adress'>Adress</label><input class='form_style' type='text' name='address' value='$bookingAddress' placeholder='Adress' /> 584 XX, Linköping <br />
+									<label for='Adress'>".Language::text("confirm_address")."</label><input class='form_style' type='text' name='address' value='$bookingAddress' placeholder='Adress' /> 584 XX, Linköping <br />
 								</div>
 								<div class='pure-control-group'>
-									<label for='Telefonnummer'>Tel.nr.</label><input class='form_style' name='phone' value='$bookingPhone'' placeholder='07xxxxxxxx'/><br />
+									<label for='Telefonnummer'>".Language::text("confirm_phone")."</label><input class='form_style' name='phone' value='$bookingPhone'' placeholder='07xxxxxxxx'/><br />
 								</div>
 								<div class='pure-control-group'>
-									<label for='E-post'>E-post</label><input class='form_style' type='text' name='email' value='$bookingMail' placeholder='E-post' />@student.liu.se <br />
+									<label for='E-post'>".Language::text("confirm_email")."</label><input class='form_style' type='text' name='email' value='$bookingMail' placeholder='E-post' />@student.liu.se <br />
 								</div><br \>
 
-                                <input type='submit' name='update_booking' class='button_style' value='Uppdatera' />
+                                <input type='submit' name='update_booking' class='button_style' value='".Language::text("update")."' />
                             </fieldset>
                         </form>");
 
@@ -108,7 +108,7 @@
                 </div>");
             if(count($remarks)) {
                 echo("<div class='userRemarks'>\n");
-                echo("<h2>Anmärkningar</h2>\n");
+                echo("<h2>".Language::text("remarks")."</h2>\n");
 
                 foreach($remarks as $remark) {
                     $date = $remark['date'];
@@ -123,11 +123,11 @@
             echo ("
             <form action='booking.php' method='post' style='max-width:200px'>
                 <fieldset>
-                    <legend>Ny anmärkning</legend>
+                    <legend>".Language::text("new_remark")."</legend>
                     <input type='hidden' name='liu_id' value='$booker_liu_id' />
                     <input type='hidden' name='booking_id' value='$bookingId' />
                     <textarea name='remark' rows='3' cols='32' style='vertical-align: top;'></textarea>
-                    <input type='submit' name='addRemark' style='margin-top:10px;' class='button_style'  value='Ny anmärkning' />
+                    <input type='submit' name='addRemark' style='margin-top:10px;' class='button_style'  value='".Language::text("new_remark")."' />
                 </fieldset>
             </form>
             ");
