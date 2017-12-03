@@ -289,7 +289,6 @@
 						}
 
 						//Finds periods starting today and end in the future
-						//TODO check so it's not returnsession
 						$sessions = Session::getPeriodsStarting($calTime->format("Y-m-d"));
 
                         //Has next time and time after that.

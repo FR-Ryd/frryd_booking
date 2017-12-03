@@ -1,6 +1,4 @@
 <?php
-	//TODO check so item is free when editing booking
-
 	class LogoutPage extends Page {
 
 		public function handleInput() {

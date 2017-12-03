@@ -612,7 +612,7 @@
 								}
 
 								echo("<td ");
-									//TODO figure out the following comment:
+									//TODO Look through this and handle whem breaking out calendar creation into function
                                     //Since $item is very undefined here and i don't know what it is supposed to do, i'll
                                     //leave this commented until we figure out how it's supposed to be.
                                 echo("class='$tdClass' title='$title' >\n");

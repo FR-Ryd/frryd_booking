@@ -1,6 +1,4 @@
 ﻿<?php
-	//TODO check so item is free when editing booking
-
 	class LanguagePage extends Page {
 		private $language;
 

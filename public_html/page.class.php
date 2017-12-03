@@ -3,7 +3,6 @@
 	include_once('util.class.php');
 
 	//For now handle language parsing here.
-	// TODO In future, refactor to make an init-function in page for this, other stuff and cas.
 	if (isset($_GET['l'])) {
 		Language::setSelectedLanguage($_GET['l']);
 	}
@@ -15,7 +14,6 @@
 
 			phpCAS::setDebug("CAS_DEBUG.log");
 			phpCAS::client(CAS_VERSION_2_0,'login.it.liu.se',443,'/cas/');
-            //TODO: Fixa certifikat och dyligt.
             phpCAS::setNoCasServerValidation();
 		}
 

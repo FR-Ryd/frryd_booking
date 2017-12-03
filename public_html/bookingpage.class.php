@@ -1,6 +1,4 @@
 ﻿<?php
-	// TODO: Check so item is free when editing booking
-
 	class BookingPage extends Page {
 
 		private $bookingId;
