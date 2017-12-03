@@ -25,8 +25,8 @@
 		  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
 		  <title><?php echo(Language::text("site_title")); ?></title>
-		  <link rel="stylesheet" href="jquery-ui.css">
-		  <link rel="stylesheet" type="text/css" href="default.css" />
+		  <link rel="stylesheet" href="css/jquery-ui.css">
+		  <link rel="stylesheet" type="text/css" href="css/default.css" />
 			<link rel="icon" type="image/x-icon" href="images/favicon.ico">
 		  <script type="text/javascript" src="js/jquery-1.8.2.js"></script>
 		  <script type="text/javascript" src="js/jquery-ui.js"></script>

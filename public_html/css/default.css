@@ -585,7 +585,7 @@ a.back-to-top {
 	z-index: 999;
 	right: 20px;
 	bottom: 40%;
-	background: #ff6600 url("images/up-arrow.png") no-repeat center 43%;
+	background: #ff6600 url("../images/up-arrow.png") no-repeat center 43%;
 	-webkit-border-radius: 30px;
 	-moz-border-radius: 30px;
 	border-radius: 30px;
@@ -755,11 +755,11 @@ a.back-to-top {
 
 /* toggling of headings: */
 .bookingFormItem .itemHeading:before {
-	content: url("images/expand.gif");
+	content: url("../images/expand.gif");
 	margin-right: 5px;
 }
 .bookingFormItem .itemHeading.expanded:before {
-	content: url("images/contract.gif");
+	content: url("../images/contract.gif");
 }
 
 .bookingFormItem .itemContent {
@@ -777,11 +777,11 @@ a.back-to-top {
 	cursor: pointer;
 }
 .toggleButton:before {
-	content: url("images/expand.gif");
+	content: url("../images/expand.gif");
 	margin-right: 5px;
 }
 .toggleButton.expanded:before {
-	content: url("images/contract.gif");
+	content: url("../images/contract.gif");
 }
 .toggleContent {
 	margin-left: 20px;
@@ -945,107 +945,107 @@ table.calendarSessionsTable thead {
 
 /* not available (full) */
 .calendarBooking  td.periodStart {
-	background-image: url("images/calendar/periodStart.png");
+	background-image: url("../images/calendar/periodStart.png");
 }
 .calendarBooking  td.periodMiddle {
-	background-image: url("images/calendar/periodMiddle.png");
+	background-image: url("../images/calendar/periodMiddle.png");
 }
 .calendarBooking  td.periodEnd {
-	background-image: url("images/calendar/periodEnd.png");
+	background-image: url("../images/calendar/periodEnd.png");
 }
 .calendarBooking  td.periodEnd.prevAvailable {
-	background-image: url("images/calendar/periodEnd_available.png");
+	background-image: url("../images/calendar/periodEnd_available.png");
 }
 .calendarBooking  td.periodEnd.prevAvailable.prevBookable {
-	background-image: url("images/calendar/periodEnd_bookable.png");
+	background-image: url("../images/calendar/periodEnd_bookable.png");
 }
 .calendarBooking  td.periodEnd.prevAvailable.prevBooked {
-	background-image: url("images/calendar/periodEnd_booked.png");
+	background-image: url("../images/calendar/periodEnd_booked.png");
 }
 .calendarBooking  td.periodStart.periodEnd {
-	background-image: url("images/calendar/periodStartEnd.png");
+	background-image: url("../images/calendar/periodStartEnd.png");
 }
 .calendarBooking  td.periodStart.periodEnd.prevAvailable {
-	background-image: url("images/calendar/periodStartEnd_prevAvailable.png");
+	background-image: url("../images/calendar/periodStartEnd_prevAvailable.png");
 }
 .calendarBooking  td.periodStart.periodEnd.prevAvailable.prevBookable {
-	background-image: url("images/calendar/periodStartEnd_prevBookable.png");
+	background-image: url("../images/calendar/periodStartEnd_prevBookable.png");
 }
 .calendarBooking  td.periodStart.periodEnd.prevAvailable.prevBooked {
-	background-image: url("images/calendar/periodStartEnd_prevBooked.png");
+	background-image: url("../images/calendar/periodStartEnd_prevBooked.png");
 }
 
 /* available but not bookable now */
 .calendarBooking  td.periodStart.available {
-	background-image: url("images/calendar/periodStart_available.png");
+	background-image: url("../images/calendar/periodStart_available.png");
 }
 .calendarBooking  td.periodMiddle.available {
-	background-image: url("images/calendar/periodMiddle_available.png");
+	background-image: url("../images/calendar/periodMiddle_available.png");
 }
 .calendarBooking  td.periodEnd.available {
-	background-image: url("images/calendar/periodEnd_available.png");
+	background-image: url("../images/calendar/periodEnd_available.png");
 }
 .calendarBooking  td.periodStart.periodEnd.available {
-	background-image: url("images/calendar/periodStartEnd_available.png");
+	background-image: url("../images/calendar/periodStartEnd_available.png");
 }
 .calendarBooking  td.periodStart.periodEnd.available.prevAvailable {
-	background-image: url("images/calendar/periodStartEnd_available_prevAvailable.png");
+	background-image: url("../images/calendar/periodStartEnd_available_prevAvailable.png");
 }
 .calendarBooking  td.periodStart.periodEnd.available.prevAvailable.prevBookable {
-	background-image: url("images/calendar/periodStartEnd_available_prevBookable.png");
+	background-image: url("../images/calendar/periodStartEnd_available_prevBookable.png");
 }
 .calendarBooking  td.periodStart.periodEnd.available.prevAvailable.prevBookable.prevBooked {
-	background-image: url("images/calendar/periodStartEnd_available_prevBooked.png");
+	background-image: url("../images/calendar/periodStartEnd_available_prevBooked.png");
 }
 
 /* available and bookable */
 .calendarBooking  td.periodStart.available.bookable {
-	background-image: url("images/calendar/periodStart_bookable.png");
+	background-image: url("../images/calendar/periodStart_bookable.png");
 }
 .calendarBooking  td.periodMiddle.available.bookable {
-	background-image: url("images/calendar/periodMiddle_bookable.png");
+	background-image: url("../images/calendar/periodMiddle_bookable.png");
 }
 .calendarBooking  td.periodEnd.available.bookable {
-	background-image: url("images/calendar/periodEnd_bookable.png");
+	background-image: url("../images/calendar/periodEnd_bookable.png");
 }
 .calendarBooking  td.periodStart.periodEnd.available.bookable {
-	background-image: url("images/calendar/periodStartEnd_bookable.png");
+	background-image: url("../images/calendar/periodStartEnd_bookable.png");
 }
 .calendarBooking  td.periodStart.periodEnd.available.bookable.prevAvailable {
-	background-image: url("images/calendar/periodStartEnd_bookable_prevAvailable.png");
+	background-image: url("../images/calendar/periodStartEnd_bookable_prevAvailable.png");
 }
 .calendarBooking  td.periodStart.periodEnd.available.bookable.prevAvailable.prevBookable {
-	background-image: url("images/calendar/periodStartEnd_bookable_prevBookable.png");
+	background-image: url("../images/calendar/periodStartEnd_bookable_prevBookable.png");
 }
 .calendarBooking  td.periodStart.periodEnd.available.bookable.prevAvailable.prevBookable.prevBooked {
-	background-image: url("images/calendar/periodStartEnd_bookable_prevBooked.png");
+	background-image: url("../images/calendar/periodStartEnd_bookable_prevBooked.png");
 }
 
 
 /* booked */
 .calendarBooking  td.periodStart.booked {
-	background-image: url("images/calendar/periodStart_booked.png");
+	background-image: url("../images/calendar/periodStart_booked.png");
 }
 .calendarBooking  td.periodMiddle.booked {
-	background-image: url("images/calendar/periodMiddle_booked.png");
+	background-image: url("../images/calendar/periodMiddle_booked.png");
 }
 .calendarBooking  td.periodEnd.booked {
-	background-image: url("images/calendar/periodEnd_booked.png");
+	background-image: url("../images/calendar/periodEnd_booked.png");
 }
 .calendarBooking  td.periodStart.periodEnd.booked {
-	background-image: url("images/calendar/periodStartEnd_booked.png");
+	background-image: url("../images/calendar/periodStartEnd_booked.png");
 }
 .calendarBooking  td.periodStart.periodEnd.booked.prevAvailable {
-	background-image: url("images/calendar/periodStartEnd_booked_prevAvailable.png");
+	background-image: url("../images/calendar/periodStartEnd_booked_prevAvailable.png");
 }
 .calendarBooking  td.periodStart.periodEnd.booked.prevAvailable.prevBookable {
-	background-image: url("images/calendar/periodStartEnd_booked_prevBookable.png");
+	background-image: url("../images/calendar/periodStartEnd_booked_prevBookable.png");
 }
 .calendarBooking  td.periodStart.periodEnd.available.bookable.prevBooked {
-	background-image: url("images/calendar/periodStartEnd_prevBooked.png");
+	background-image: url("../images/calendar/periodStartEnd_prevBooked.png");
 }
 .calendarBooking  td.periodStart.periodEnd.prevAvailable.prevBookable.prevBooked.booked {
-	background-image: url("images/calendar/periodStartEnd_prevBookedBooked.png");
+	background-image: url("../images/calendar/periodStartEnd_prevBookedBooked.png");
 }
 
 .square1 {

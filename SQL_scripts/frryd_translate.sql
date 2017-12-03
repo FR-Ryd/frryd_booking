@@ -266,7 +266,7 @@ INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("add_translation
 
 -- Translations for bookings page
 INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("booking_removed",1,"Booking Removed");
-INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("add_translation",2,"Bokning borttagen");
+INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("booking_removed",2,"Bokning borttagen");
 
 INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("booking_created",1,"Booking created");
 INSERT INTO `translations`(`name`, `language`, `value`) VALUES ("booking_created",2,"Bokning skapad");
