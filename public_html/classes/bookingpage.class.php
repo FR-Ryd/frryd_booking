@@ -665,6 +665,7 @@
                     $selected = ($itemId == $selectedItem) ? " selected='selected'" : "";
                     $itemName = Language::itemName($itemId);
 					$ret = $ret . "<option value='$itemId' $selected>$itemName</option>\n";
+					$nameCombo = ""; //FIXME fix search functionality
                     $quickSearchItems = $quickSearchItems . '"' . $nameCombo . '",';
                 }
             }

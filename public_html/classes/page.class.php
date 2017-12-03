@@ -1,6 +1,4 @@
 ﻿<?php
-	//Include util functions in all pages
-	include_once('util.class.php');
 
 	//For now handle language parsing here.
 	if (isset($_GET['l'])) {

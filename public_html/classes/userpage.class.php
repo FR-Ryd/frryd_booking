@@ -288,7 +288,7 @@
                 echo("
                         <div class='square2'>
                             <div>
-                                <form action='booking.php$sessionLink' method='post'>
+                                <form action='booking.php' method='post'>
                                     <fieldset>
                                         <input type='hidden' name='email' value='$liu_id'/>
                                         <input type='submit' class='button_style' name='create_booking' value='".Language::text("add_booking")."' />
