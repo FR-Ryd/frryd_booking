@@ -28,10 +28,10 @@
 		  <link rel="stylesheet" href="jquery-ui.css">
 		  <link rel="stylesheet" type="text/css" href="default.css" />
 			<link rel="icon" type="image/x-icon" href="images/favicon.ico">
-		  <script type="text/javascript" src="jquery-1.8.2.js"></script>
-		  <script type="text/javascript" src="jquery-ui.js"></script>
-		  <script type="text/javascript" src="ui.js"></script>
-		  <script type="text/javascript" src="livesearch.js"></script>
+		  <script type="text/javascript" src="js/jquery-1.8.2.js"></script>
+		  <script type="text/javascript" src="js/jquery-ui.js"></script>
+		  <script type="text/javascript" src="js/ui.js"></script>
+		  <script type="text/javascript" src="js/livesearch.js"></script>
 		 </head>
 		<?php
 			flush();
