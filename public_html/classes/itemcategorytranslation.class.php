@@ -1,6 +1,24 @@
 <?php
 	class ItemCategoryTranslation {
 
+		private static $categoryTranslations = array();
+
+		//Update the translations array with all needed translations for the current language
+		public static function updateCategoryTranslations(){
+			$selectedLang = Language::getSelectedLanguage();
+
+			$db = Database::getDb();
+
+			//Text translations
+			$db->query("SELECT * FROM item_categories_translations WHERE (language = :language);",
+				array(":language" => $selectedLang));
+
+			self::$categoryTranslations = array();
+			foreach($db->getAllRows() as $row){
+				self::$categoryTranslations[$row["category"]] = $row;
+			}
+		}
+
 		public static function update($itemTranslationID, $newTranslation) {
             $db = Database::getDb();
 		    $db->execute("UPDATE item_categories_translations SET name = :newTranslation WHERE (id = :itemTranslationID);",
@@ -8,12 +26,17 @@
 		}
 
 		public static function getTranslation($categoryID, $language) {
-            $db = Database::getDb();
-		    $db->query("SELECT * FROM item_categories_translations WHERE (category = :categoryID) && (language = :language);",
-				array(":categoryID" => $categoryID, ":language" => $language));
+			if($language == Language::getSelectedLanguage() && isset(self::$categoryTranslations[$categoryID])){
+				return self::$categoryTranslations[$categoryID];
+			}
+			else{
+				$db = Database::getDb();
+			    $db->query("SELECT * FROM item_categories_translations WHERE (category = :categoryID) && (language = :language);",
+					array(":categoryID" => $categoryID, ":language" => $language));
 
-            $row = $db->getRow();
-            return $row;
+	            $row = $db->getRow();
+	            return $row;
+			}
 		}
 
 		public static function create($category, $language, $name) {

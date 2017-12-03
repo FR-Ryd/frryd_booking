@@ -1,6 +1,21 @@
 <?php
 	class ItemTranslation {
 
+		private static $itemTranslations = array();
+
+		public static function updateItemTranslations(){
+			$db = Database::getDb();
+			$language = Language::getSelectedLanguage();
+
+			$db->query("SELECT * FROM item_translations WHERE (language = :language);",
+			   array(":language" => $language));
+
+		   self::$itemTranslations = array();
+		   foreach($db->getAllRows() as $row){
+			   self::$itemTranslations[$row["item"]] = $row;
+		   }
+		}
+
 		public function update($itemTranslationID, $name, $description, $emailText) {
             $db = Database::getDb();
 		    $db->execute("UPDATE item_translations SET
@@ -12,12 +27,18 @@
 		}
 
 		public static function getTranslation($itemId, $language) {
-            $db = Database::getDb();
-		    $db->query("SELECT * FROM item_translations WHERE (item = :itemId) && (language = :language);",
-				array(":itemId" => $itemId, ":language" => $language));
+			if($language == Language::getSelectedLanguage() && isset(self::$itemTranslations[$itemId])){
+				return self::$itemTranslations[$itemId];
+			}
+			else{
+				//Fine to do a db request for non-default translations
+				$db = Database::getDb();
+			    $db->query("SELECT * FROM item_translations WHERE (item = :itemId) && (language = :language);",
+					array(":itemId" => $itemId, ":language" => $language));
 
-            $row = $db->getRow();
-            return $row;
+	            $row = $db->getRow();
+	            return $row;
+			}
 		}
 
 		public static function create($item, $language, $name, $description, $emailText) {
@@ -33,8 +54,6 @@
 		}
 
 		public static function deleteLanguage($language) {
-            DERP(); //???
-
 			$db = self::getDb();
 			if ($db->readAll()) {
 				$db->not("language", $languageID);

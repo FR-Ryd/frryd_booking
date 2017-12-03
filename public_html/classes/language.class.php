@@ -2,6 +2,37 @@
 	class Language {
 		private static $defaultLanguage = 1;
 
+		//Arrays of all text translations
+		private static $translations = array();
+
+		public static function getSelectedLanguage() {
+			if (isset($_SESSION['language'])) {
+				return $_SESSION['language'];
+			} else {
+				return self::$defaultLanguage;
+			}
+		}
+
+		//Update the translations array with all needed translations for the current language
+		public static function updateTranslationList(){
+			$selectedLang = self::getSelectedLanguage();
+
+			$db = Database::getDb();
+
+			//Text translations
+			$db->query("SELECT translations.name,translations.value FROM translations WHERE (language = :language)",
+				array(":language" => $selectedLang));
+
+			self::$translations = array();
+			foreach($db->getAllRows() as $row){
+				self::$translations[$row["name"]] = $row["value"];
+			}
+
+			//Update translations for items and categories as well
+			ItemTranslation::updateItemTranslations();
+			ItemCategoryTranslation::updateCategoryTranslations();
+		}
+
 		public static function create($newLanguage) {
 			$db = Database::getDb();
 			$db->execute("INSERT INTO languages (name) VALUES(:newLanguage)",
@@ -10,8 +41,6 @@
 		}
 
 		public static function delete($languageID) {
-            MAKETHISCRASH(); //???
-
 			$db = self::getDb();
 			if ($db->readAll()) {
 				if (ItemCategoryTranslation::deleteLanguage($languageID)
@@ -38,21 +67,11 @@
             return $db->getRow();
 		}
 
-
-
-	    public static function getSelectedLanguage() {
-			if (isset($_SESSION['language'])) {
-				return $_SESSION['language'];
-			} else {
-				return self::$defaultLanguage;
-			}
-		}
-
 		public static function setSelectedLanguage($language) {
 			$_SESSION['language'] = $language;
 		}
 
-        //Tries to look up a translation for a text with a given languge.
+        // Tries to look up a translation for a text with a given languge.
         // If not found and not default language, tries default language.
         // If still not found, gives a hint to what is wrong.
         public static function text($key, $language = null) {
@@ -60,16 +79,16 @@
 				$language = self::getSelectedLanguage();
 			}
 
-            $translation = self::tryText($key, $language);
+			if($language == self::getSelectedLanguage() && isset(self::$translations[$key])){
+				return self::$translations[$key];
+			}
+
+            $translation = self::tryText($key, self::$defaultLanguage);
+
             if($translation != null) {
                 return $translation;
             }
-
-			if ($language != self::$defaultLanguage) {
-				// if selected language is not defualt language but fails,
-				//try to get translation using default language
-				return self::text($key, self::$defaultLanguage);
-			} else {
+			else{
 				return "(Unspecified text from key " . $key . ")";
 			}
 		}

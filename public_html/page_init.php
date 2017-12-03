@@ -18,4 +18,12 @@
             exit;
         }
     }
+
+    //Check if language is set
+    if (isset($_GET['l'])) {
+        Language::setSelectedLanguage($_GET['l']);
+    }
+
+    //Load the translations
+    Language::updateTranslationList();
 ?>

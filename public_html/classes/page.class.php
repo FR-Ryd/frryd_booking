@@ -1,10 +1,4 @@
 ﻿<?php
-
-	//For now handle language parsing here.
-	if (isset($_GET['l'])) {
-		Language::setSelectedLanguage($_GET['l']);
-	}
-
 	class Page {
 
 		public function initCAS() {
