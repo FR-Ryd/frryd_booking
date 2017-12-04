@@ -74,76 +74,78 @@
 			// For each category
 			$categoryID = $category['id'];
 			?>
-			<h2 class="rubrikBooking"><?php echo(Language::itemCategory($category['id'])); ?></h2>
-			<?php
-			$category_items = LendingItem::getItemsForCategory($categoryID);
-			foreach ($category_items as $item) {
-				// For each item
+			<div class="categoryContainer">
+				<h2 class="rubrikBooking"><img class="categoryExpandImg" src="../images/expand.gif" /><img class="categoryContractImg" src="../images/contract.gif" /><?php echo(Language::itemCategory($category['id'])); ?></h2>
+				<div class="categoryItemHolder">
+				<?php
+				$category_items = LendingItem::getItemsForCategory($categoryID);
+				foreach ($category_items as $item) {
+					// For each item
 
-				?>
-				<div class='bookingFormItem'>
-					<input type='hidden' class='bookingItemID' name='item' value='<?php echo($item['id']); ?>' />
-					<input type='hidden' class='maxLendingPeriods' name='item' value='<?php echo($item['max_lending_periods']); ?>' />
+					?>
+					<div class='bookingFormItem'>
+						<input type='hidden' class='bookingItemID' name='item' value='<?php echo($item['id']); ?>' />
+						<input type='hidden' class='maxLendingPeriods' name='item' value='<?php echo($item['max_lending_periods']); ?>' />
 
-					<h4 class='itemHeading' id='<?php echo(Language::itemName($item['id'])); ?>'><?php echo(Language::itemName($item['id'])); ?></h4>
-					<div class='itemContent' >
-						<p>
+						<p class="itemImage">
 							<?php if (file_exists("img/".$item['id'].".jpg")) { ?>
 								<img src="img/<?php echo($item['id']); ?>.jpg" alt="<?php echo($item['name']); ?>" />
 							<?php }else{ ?>
 								<img src="img/404img.png" alt="Image not found" />
 							<?php } ?>
 						</p>
+						<h4 class='itemHeading' id='<?php echo(Language::itemName($item['id'])); ?>'><?php echo(Language::itemName($item['id'])); ?></h4>
+						<div class='itemContent' >
+								<div>
+								<p>
+									<?php echo(nl2br(Language::itemDescription($item['id']))); ?>
+								</p>
+									<?php echo((nl2br(nl2br($item['deposit'] ? Language::text("booking_deposit").": ".$item['deposit']." SEK" : "")))); ?>
+									<?php echo((nl2br($item['fee'] ? Language::text("booking_fee").": ".$item['fee']." SEK" : ""))); ?>
+								</div>
+								<?php
+								// Calendar-version:
+								?>
 
-							<div>
-							<p>
-								<?php echo(nl2br(Language::itemDescription($item['id']))); ?>
-							</p>
-								<?php echo((nl2br(nl2br($item['deposit'] ? Language::text("booking_deposit").": ".$item['deposit']." SEK" : "")))); ?>
-								<?php echo((nl2br($item['fee'] ? Language::text("booking_fee").": ".$item['fee']." SEK" : ""))); ?>
+							<div class="calendarBooking">
+								<?php
+									echo "<input type='hidden' class='bookingItemID' name='item' value='".$item['id']."' />\n";
+									echo "<input type='hidden' class='maxLendingPeriods' name='item' value='".$item['max_lending_periods']."' />\n";
+								?><br />
+	                            <div>
+	                                <a href="#" class="firstLoadButton"><?php echo(nl2br(Language::text("booking_choose_period"))); ?></a>
+	                            </div>
+								<div class="calendar">
+
+								</div>
+								<?php
+
+								if ($item['max_lending_items'] != "0") {
+									$max_lending_items = $item['max_lending_items'];
+								} else {
+									$max_lending_items = $item['num_items'];
+								}
+								?>
+								<br />
+								<?php echo(Language::text("booking_num_items")); ?>:
+								<select name="num_items" class="numItemsSelector">
+									<?php for ($num_items = 1; $num_items <= $max_lending_items; $num_items++) { ?>
+										<option value="<?php echo($num_items); ?>"><?php echo($num_items); ?></option>
+									<?php } ?>
+								</select>
+								<br />
+
 							</div>
-
-
-
-							<?php
-							// Calendar-version:
-							?>
-
-						<div class="calendarBooking">
-							<?php
-								echo "<input type='hidden' class='bookingItemID' name='item' value='".$item['id']."' />\n";
-								echo "<input type='hidden' class='maxLendingPeriods' name='item' value='".$item['max_lending_periods']."' />\n";
-							?><br />
-                            <div>
-                                <a href="#" class="firstLoadButton"><?php echo(nl2br(Language::text("booking_choose_period"))); ?></a>
-                            </div>
-							<div class="calendar">
-
-							</div>
-							<?php
-
-							if ($item['max_lending_items'] != "0") {
-								$max_lending_items = $item['max_lending_items'];
-							} else {
-								$max_lending_items = $item['num_items'];
-							}
-							?>
-							<br />
-							<?php echo(Language::text("booking_num_items")); ?>:
-							<select name="num_items" class="numItemsSelector">
-								<?php for ($num_items = 1; $num_items <= $max_lending_items; $num_items++) { ?>
-									<option value="<?php echo($num_items); ?>"><?php echo($num_items); ?></option>
-								<?php } ?>
-							</select>
-							<br />
-
 						</div>
 					</div>
-				</div>
+					<div class="itemRowSeparator"></div>
+				<?php
 
-			<?php
-
-			}
+				}
+				?>
+			</div>
+		</div>
+		<?php
 		}
 		$time_end = microtime(true);
 		$time = $time_end - $time_start;

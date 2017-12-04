@@ -403,13 +403,36 @@ if (!Array.prototype.indexOf) {
 			var numBooked = 0;
 
 			var content = $(this).children(".itemContent").hide();
-			$(this).children(".itemHeading").css("cursor", "pointer").toggle(function() {
-					$(this).toggleClass("expanded");
-					content.slideDown();
-				}, function() {
-					$(this).toggleClass("expanded");
+
+			var title = $(this).children(".itemHeading");
+
+			var toggled = false;
+			var clickFunc = function(){
+				if(toggled){
+					title.toggleClass("expanded");
 					content.slideUp();
-				});
+					toggled = false;
+				}
+				else{
+					title.toggleClass("expanded");
+					content.slideDown();
+					toggled = true;
+				}
+			}
+
+			var startFunc = function() {
+				title.toggleClass("expanded");
+				content.slideDown();
+			};
+			var endFunc = function() {
+				title.toggleClass("expanded");
+				content.slideUp();
+			};
+
+			title.css("cursor", "pointer").click(clickFunc);
+			$(this).children(".itemImage").css("cursor", "pointer").click(clickFunc);
+			//title.css("cursor", "pointer").toggle(startFunc, endFunc);
+			//$(this).children(".itemImage").css("cursor", "pointer").toggle(startFunc, endFunc);
 
 			var book = function () {
 				//Update the periods look and functionality
@@ -550,6 +573,31 @@ if (!Array.prototype.indexOf) {
 
 })(jQuery);
 
+//Calculate and display/hide empty bras between needed items on the front/booking page
+var displayItemBars = function(){
+	var containerWidth = parseInt($(".item_presentation").css("width"));
+	var itemsInRow = Math.floor(containerWidth/299);
+
+	//If item can't really fit put divider between every one
+	if(itemsInRow == 0){
+		itemsInRow = 1;
+	}
+
+	//Show every itemsInRow:th separator
+	$(".categoryContainer").each(function(catIndex){
+		$(this).children(".categoryItemHolder").children(".itemRowSeparator").each(function(index){
+			//alert(index);
+			if(((index+1) % itemsInRow == 0) && (index != 0)){
+				$(this).show();
+			}
+			else{
+				$(this).hide();
+			}
+		});
+	});
+	//alert("done");
+}
+
 $(document).ready(function () {
 
 	var bookedItems = [];
@@ -601,5 +649,26 @@ $(document).ready(function () {
     });
 
 
+	//Category expanding
+	$(".categoryContainer").each(function(){
+		var itemHolder = $(this).children(".categoryItemHolder");
 
+		
+
+		$(this).children(".rubrikBooking").toggle(function(){
+				$(this).children(".categoryExpandImg").hide();
+				$(this).children(".categoryContractImg").show();
+				itemHolder.slideDown();
+			},function(){
+				$(this).children(".categoryExpandImg").show();
+				$(this).children(".categoryContractImg").hide();
+				$(this).toggleClass("expanded");
+				itemHolder.slideUp();
+			}
+		);
+	});
+
+	//Rebalance bars for items
+	displayItemBars();
+	$(window).on('resize', displayItemBars); //Reorder on resize
 });

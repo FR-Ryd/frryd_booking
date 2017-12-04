@@ -740,6 +740,14 @@ a.back-to-top {
 	margin-right: 5px;
 	margin-bottom: 5px;
 	margin-left: 2px;
+
+	width: 280px;
+	display: block;
+	float: left;
+}
+
+.categoryItemHolder{
+	display: none;
 }
 
 .bookingFormItem:hover {
@@ -751,6 +759,23 @@ a.back-to-top {
     font-size: 1.5em;
     padding: 12px;
     border: 1px solid #444;
+
+	cursor: pointer;
+
+	display: inline-block;
+	width: 100%;
+}
+
+.categoryContractImg{
+	height: 15px;
+	margin-right: 7px;
+
+	display: none;
+}
+
+.categoryExpandImg{
+	height: 15px;
+	margin-right: 7px;
 }
 
 /* toggling of headings: */
@@ -764,6 +789,19 @@ a.back-to-top {
 
 .bookingFormItem .itemContent {
 	display: none;
+}
+
+.expandedItem{
+	height: auto;
+}
+
+.bookingFormItem img{
+	height: 150px;
+	max-width: 270px;
+}
+
+.bookingFormItem p{
+	text-align: center;
 }
 
 .itemContent{
@@ -1227,4 +1265,9 @@ table.calendarSessionsTable thead {
     color: rgb(0, 0, 0);
     line-height: 3;
     vertical-align: middle;
+}
+
+.itemRowSeparator{
+	width: 100%;
+	float: left;
 }
