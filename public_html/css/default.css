@@ -733,6 +733,7 @@ a.back-to-top {
 	border: 2px solid #ffa060;
 }
 
+/* For booking items */
 .bookingFormItem {
 	border: 1px solid #d0d0d0;
 	padding: 5px;
@@ -740,7 +741,9 @@ a.back-to-top {
 	margin-right: 5px;
 	margin-bottom: 5px;
 	margin-left: 2px;
+}
 
+.frontPageItem{
 	width: 280px;
 	display: block;
 	float: left;
@@ -760,10 +763,12 @@ a.back-to-top {
     padding: 12px;
     border: 1px solid #444;
 
-	cursor: pointer;
-
 	display: inline-block;
 	width: 100%;
+}
+
+.categoryContainer{
+	cursor: pointer;
 }
 
 .categoryContractImg{
@@ -795,12 +800,12 @@ a.back-to-top {
 	height: auto;
 }
 
-.bookingFormItem img{
+.frontPageItem img{
 	height: 150px;
 	max-width: 270px;
 }
 
-.bookingFormItem p{
+.frontPageItem p{
 	text-align: center;
 }
 

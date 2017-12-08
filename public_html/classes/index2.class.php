@@ -83,7 +83,7 @@
 					// For each item
 
 					?>
-					<div class='bookingFormItem'>
+					<div class='bookingFormItem frontPageItem'>
 						<input type='hidden' class='bookingItemID' name='item' value='<?php echo($item['id']); ?>' />
 						<input type='hidden' class='maxLendingPeriods' name='item' value='<?php echo($item['max_lending_periods']); ?>' />
 
