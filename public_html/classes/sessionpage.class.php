@@ -76,7 +76,7 @@
 
 					$newSessionDate = $_POST['date'];
 					Session::create($newSessionDate);
-                    $_SESSION['message'] .= Language::text("sessions_menu_title")." ".Language::text("created").$_POST['date'];
+                    $_SESSION['message'] .= Language::text("sessions_menu_title")." ".Language::text("created")." ".$_POST['date'];
 					header("Location: session.php");
 					exit;
 				} elseif (isset($_POST['update_comment'])) {

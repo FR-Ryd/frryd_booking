@@ -67,7 +67,7 @@ if (!Array.prototype.indexOf) {
 				// free dates
 				var date = $(this).find(".date").val();
 
-				if (confirm("Vill du lägga till ett pass här, " + date + "?")) {
+				if (confirm("Do you want to add a session here, " + date + "?")) {
 					var form = $("<form action='session.php' method='post'><input type='hidden' name='date' value='"+date+"' /><input type='hidden' name='create_session' value='yes' /></form>");
 					form.appendTo($("body")).submit();
 				} else {
@@ -653,7 +653,7 @@ $(document).ready(function () {
 	$(".categoryContainer").each(function(){
 		var itemHolder = $(this).children(".categoryItemHolder");
 
-		
+
 
 		$(this).children(".rubrikBooking").toggle(function(){
 				$(this).children(".categoryExpandImg").hide();

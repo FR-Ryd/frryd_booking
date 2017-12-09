@@ -6,11 +6,13 @@
 
 			$this->displayMessage();
 ?>
+		<!--
 		<div class='live_search'>
 				<input type='text' class='livesearchquery' id='livesearchid' autocomplete="off" placeholder='Search'>
 				<input type="image" class="livesearchbutton" src="images/toolbar_find.png" alt="Search">
 				<ul id="livesearchresults"></ul>
         </div>
+		-->
 
 		<div class="main">
 

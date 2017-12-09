@@ -42,7 +42,6 @@
 		}
 
 		public static function getBookingForKey($bookingKey) {
-            CRASH(); //???
 			$db = self::getDb();
 			if ($db->readAll()) {
 				$db->filter("key", $bookingKey);
@@ -77,8 +76,6 @@
 		}
 
 		public function update($bookingID, $newBooking) {
-            CRASH(); //???
-
 			$db = self::getDb();
 			if ($db->readAll()) {
 				$db->replace("id", $bookingID, $newBooking);
@@ -99,8 +96,6 @@
 		}
 
 		public static function search($key, $value) {
-            CRASH(); //???
-
 			$db = self::getDb();
 			if ($db->readAll()) {
 				$db->search($key, $value);
