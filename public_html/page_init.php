@@ -7,6 +7,10 @@
     }
     session_start();
 
+    //FIXME Do not push to live, only for debug
+    //error_reporting(E_WARNING);
+    //ini_set('display_errors', 1);
+
     function __autoload($className) {
         $CLASS_DIR = "classes/";
         $fileName = $CLASS_DIR.strtolower($className).".class.php";

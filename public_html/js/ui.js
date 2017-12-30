@@ -586,7 +586,6 @@ var displayItemBars = function(){
 	//Show every itemsInRow:th separator
 	$(".categoryContainer").each(function(catIndex){
 		$(this).children(".categoryItemHolder").children(".itemRowSeparator").each(function(index){
-			//alert(index);
 			if(((index+1) % itemsInRow == 0) && (index != 0)){
 				$(this).show();
 			}
@@ -652,8 +651,6 @@ $(document).ready(function () {
 	//Category expanding
 	$(".categoryContainer").each(function(){
 		var itemHolder = $(this).children(".categoryItemHolder");
-
-
 
 		$(this).children(".rubrikBooking").toggle(function(){
 				$(this).children(".categoryExpandImg").hide();

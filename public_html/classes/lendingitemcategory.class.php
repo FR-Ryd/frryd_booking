@@ -24,8 +24,6 @@ class LendingItemCategory {
     }
 
     public function update($categoryID, $newCategory) {
-    	BREAK_HERE(); //???
-
     	$db = new Database(self::$dbFileName);
     	if ($db->readAll()) {
     	    $db->replace("id", $categoryID, $newCategory);

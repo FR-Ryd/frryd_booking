@@ -1,13 +1,12 @@
 <?php
 	include_once("page_init.php");
 
+	$page = new StartPage();
+
 	if (isset($_GET['ajax'])) {
-		$page = new Index2();
 		$page->ajax();
 	} else {
-
 		//display default index page
-		$page = new Index2();
 		$page->initCAS();
 
 		$page->display();

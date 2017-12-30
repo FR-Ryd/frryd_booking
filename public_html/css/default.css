@@ -365,9 +365,12 @@ h1, h2, h3, h4 {
 	margin: .3em 0 .5em;
 }
 
-.rubrikBooking form {
+.rubrikBooking form{
     float: right;
-    margin-top: -4.5;
+}
+
+.rubrikBooking fieldset{
+	line-height: 1em;
 }
 
 form fieldset {
@@ -376,7 +379,7 @@ form fieldset {
 	line-height: 2em;
 	margin: 0;
 }
-form fieldset.box {
+.translateBox{
 	border: 1px solid gray;
 	padding: 10px;
 	line-height: 2em;
@@ -741,9 +744,7 @@ a.back-to-top {
 	margin-right: 5px;
 	margin-bottom: 5px;
 	margin-left: 2px;
-}
 
-.frontPageItem{
 	width: 280px;
 	display: block;
 	float: left;
@@ -800,12 +801,12 @@ a.back-to-top {
 	height: auto;
 }
 
-.frontPageItem img{
+.itemPic{
 	height: 150px;
 	max-width: 270px;
 }
 
-.frontPageItem p{
+.bookingFormItem p{
 	text-align: center;
 }
 
@@ -1275,4 +1276,9 @@ table.calendarSessionsTable thead {
 .itemRowSeparator{
 	width: 100%;
 	float: left;
+}
+
+.catTranslation{
+	float: left;
+	width: 100%;
 }

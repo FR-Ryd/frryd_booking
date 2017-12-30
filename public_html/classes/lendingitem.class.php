@@ -83,5 +83,26 @@
 				array(":itemID" => $itemID, ":language" => $langID));
 			return $db->getRow()["name"];
 		}
+
+		public static function getAllItems(){
+			$db = Database::getDb();
+			$db->query("SELECT * FROM items ORDER BY `category`;",
+			    array(":categoryID" => $categoryID));
+            $allItems = $db->getAllRows();
+			$categories = array();
+
+			//Loop implementation based on items already ordered from query
+			$curCat = -1;
+			foreach($allItems as $item){
+				if($item['category'] != $curCat){
+					$curCat = $item['category'];
+					$categories[$curCat] = array();
+				}
+
+				array_push($categories[$curCat], $item);
+			}
+
+			return $categories;
+		}
 	}
 ?>
