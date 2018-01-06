@@ -89,19 +89,6 @@
 						<img class="categoryExpandImg" src="../images/expand.gif" />
 						<img class="categoryContractImg" src="../images/contract.gif" />
 						<?php echo(Language::itemCategory($categoryID)); ?>
-						<?php
-						//Display delete category button
-						if($showSettings){
-							?>
-							<form action="item.php" method="post">
-								<fieldset>
-									<input type="hidden" name="lending_item_category_id" value="<?php echo($categoryID); ?>" />
-									<input type="submit" class="button_style" name="delete_lending_item_category" value="<?php echo(Language::text("remove_category")); ?>" />
-								</fieldset>
-							</form>
-							<?php
-						}
-						?>
 					</h2>
 					<div class="categoryItemHolder">
 					<?php
@@ -144,7 +131,7 @@
 
 											<div class="pure-control-group">
 												<label style="width: 6em;"  for="Bildfil"><?php echo(Language::text("picture")); ?></label>
-												<input class="button_style" style="padding:5;" type="file" name="image" class="button_style" />
+												<input class="button_style" id ="picture_select_btn" type="file" name="image" class="button_style" />
 											</div>
 
 											<div class="pure-control-group">
@@ -338,6 +325,15 @@
 						</form>
 					<?php } ?>
 					</div>
+				</div>
+				<!-- Deletion of category -->
+				<div class="catDeleteBtn">
+					<form action="item.php" method="post">
+						<fieldset>
+							<input type="hidden" name="lending_item_category_id" value="<?php echo($categoryID); ?>" />
+							<input type="submit" class="button_style" name="delete_lending_item_category" value="<?php echo(Language::text("remove_category")); ?>" />
+						</fieldset>
+					</form>
 				</div>
 				<?php
 				}

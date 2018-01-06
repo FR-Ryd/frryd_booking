@@ -644,6 +644,7 @@ a.back-to-top {
 	width: 150px;
 	margin-bottom:30px;
 	padding: 5px;
+	padding-top: 10px;
 	border: 1px solid #444;
 }
 
@@ -1236,7 +1237,6 @@ table.calendarSessionsTable thead {
 		float:left;
 		margin-top: -2px;
 	}
-
 }
 
 @media screen and (max-width: 1098px){
@@ -1279,6 +1279,16 @@ table.calendarSessionsTable thead {
 }
 
 .catTranslation{
+	float: left;
+	width: 100%;
+}
+
+#picture_select_btn{
+	padding-left: 5px;
+	padding-right: 0px;
+}
+
+.catDeleteBtn{
 	float: left;
 	width: 100%;
 }

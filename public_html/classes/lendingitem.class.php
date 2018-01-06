@@ -86,8 +86,7 @@
 
 		public static function getAllItems(){
 			$db = Database::getDb();
-			$db->query("SELECT * FROM items ORDER BY `category`;",
-			    array(":categoryID" => $categoryID));
+			$db->query("SELECT * FROM items ORDER BY `category`;");
             $allItems = $db->getAllRows();
 			$categories = array();
 
@@ -100,6 +99,16 @@
 				}
 
 				array_push($categories[$curCat], $item);
+			}
+
+			//Also add emppty catyegories
+			$db->query("SELECT * FROM item_categories");
+	    	$cats = $db->getAllRows();
+
+			foreach($cats as $cat){
+				if(!array_key_exists($cat['id'], $categories)){
+					$categories[$cat['id']] = array();
+				}
 			}
 
 			return $categories;
