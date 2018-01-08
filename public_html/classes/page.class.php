@@ -49,8 +49,8 @@
 
 			<?php
 				//TODO Fix this bad hackfix for checking language from livesearch.php
-				$currlang = Language::getSelectedLanguage(); //Gets info when session languages changes and adds it to currlang
-				file_put_contents("currlang", utf8_decode($currlang)); //bad hack
+				//$currlang = Language::getSelectedLanguage(); //Gets info when session languages changes and adds it to currlang
+				//file_put_contents("currlang", utf8_decode($currlang)); //bad hack
 
 				//Display content from subclass, which is page that is currently trying to be accessed
 				$this->displayContent();

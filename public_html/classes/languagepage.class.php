@@ -26,12 +26,6 @@
                                 'text' => ($_POST['text_'.$key])
                                 );
                             }
-                    } else {
-                        $newTranslations[] = array(
-                            'key' => $key,
-                            'language' => $language,
-                            'text' => ($_POST['text_'.$key])
-                            );
                     }
                 }
                 Language::multipleTextUpdate($updateTranslations);
@@ -52,6 +46,34 @@
                 header("Location: languages.php");
                 exit;
             }
+			elseif(isset($_POST["new_translation"])){
+				if(isset($_POST["new_key"]) &&
+					isset($_POST["new_value"]) &&
+					$_POST["new_key"] != "" &&
+					$_POST["new_value"] != ""){
+						$language = $_POST['language'];
+						$key = $_POST["new_key"];
+						$value = $_POST["new_value"];
+
+						if(Language::keyExists($key, $language)){
+							$_SESSION['message'] .= Language::text("translate_create_error");
+						}
+						else{
+							$newTranslations = array();
+							$newTranslations[] = array(
+								'key' => $key,
+								'language' => $language,
+								'text' => $value
+							);
+
+							Language::multipleTextCreate($newTranslations);
+						}
+				}
+
+				//Return to edit page
+				header("Location: languages.php?language=".$_POST['language']);
+				exit;
+			}
 		}
 
 		protected function displayContent() {
@@ -69,36 +91,47 @@
 								<fieldset>
 									<input type="hidden" name="language" value="<?php echo($this->language); ?>" />
 									<?php
+									$translations = Language::getTextInCat($this->language);
 
-									foreach (TextKey::getKeys() as $key => $multiline) {
+									$BOX_LIMIT = 30;
+
+									foreach ($translations as $translation_line) {
+										$key = $translation_line["name"];
+										$translation = $translation_line["value"];
+										echo("<hr>");
 			                            echo("<input type='hidden' name='key_ids[]' value='$key' />\n");
-			                            $translation = Language::tryText($key, $this->language);
 
-										if ($translation !== null ) {
-			                                echo("<input type='hidden' name='updated_values_$key'/>\n");
+			                            echo("<input type='hidden' name='updated_values_$key'/>\n");
+			                            echo("<span class='translationTitle'>$key:</span>");
+
+										if(strlen($translation) > $BOX_LIMIT){
+											echo("<textarea name='text_$key' rows='3' cols='40' style='vertical-align: top;'>$translation</textarea>\n");
 										}
-
-			                            echo("<b>$key:</b>\n");
-			                            if($multiline) {
-											echo("<textarea name='text_$key' rows='3' cols='32' style='vertical-align: top;'>$translation</textarea>\n");
-			                                echo("<textarea rows='3' cols='32' disabled>$translation</textarea>\n");
-			                            }
-										else {
+										else{
 											echo("<input type='text' name='text_$key' value='$translation' />\n");
-			                                echo("$translation\n");
 										}
 		                        		?>
-										<br />
 										<?php
 									}
 									?>
+									<hr>
+									<br>
+									<!-- Addding translation-->
+									<b><?php echo(Language::text("add_translation")); ?> </b>
+									<br>
+									<label><?php echo(Language::text("key")); ?> </label>
+									<input type='text' name='new_key'/>
+									<label><?php echo(Language::text("value")); ?> </label>
+									<input type='text' name='new_value'/>
+									<input type="submit" name="new_translation" value="<?php echo(Language::text("add_translation")); ?>" />
+									<br>
+									<br>
 									<input type="submit" name="update_language" value="<?php echo(Language::text("update")); ?>" />
 									<input type="submit" name="delete_language" value="<?php echo(Language::text("remove_language")); ?>" />
 								</fieldset>
 							</form>
 						<?php
 						} ?>
-					<hr />
 				<?php }
 				else { ?>
 					<form action="languages.php" method="get">

@@ -45,6 +45,8 @@
 			ItemTranslation::deleteLanguage($languageID);
 
 			$db = Database::getDb();
+			$db->execute("DELETE FROM translations WHERE language = :langID;",
+			    array(":langID" => $languageID));
 			$db->execute("DELETE FROM languages WHERE id = :langID;",
 			    array(":langID" => $languageID));
 
@@ -139,10 +141,11 @@
                 $value = $row['text'];
                 $language = $row['language'];
 
-
-			$db->execute("INSERT INTO translations (name, language, value) VALUES(:name, :language, :value);",
-			    array(":name" => $name, ":language" => $language, ":value" => $value));
+				$db->execute("INSERT INTO translations (name, language, value) VALUES(:name, :language, :value);",
+				    array(":name" => $name, ":language" => $language, ":value" => $value));
             }
+
+			return true;
         }
 
 
@@ -216,6 +219,16 @@
 			} else {
 				return "";
 			}
+		}
+
+		public static function keyExists($key, $languageID){
+			$db = Database::getDb();
+			$db->query("SELECT * FROM translations WHERE (language = :langID) AND (name = :key)",
+				array(":langID" => $languageID, ":key" => $key));
+
+			$res = $db->getAllRows();
+
+			return (count($res) == 1);
 		}
 	}
 ?>

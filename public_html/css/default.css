@@ -1292,3 +1292,9 @@ table.calendarSessionsTable thead {
 	float: left;
 	width: 100%;
 }
+
+.translationTitle{
+	font-weight: bold;
+	width: 200px;
+	display: inline-block;
+}
