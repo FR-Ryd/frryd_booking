@@ -33,6 +33,7 @@
 
             return $db->getRow();
 		}
+		
 		public static function getBookingWithPerson($bookingId) {
             $db = Database::getDb();
 		    $db->query("SELECT persons.*, bookings.* FROM bookings INNER JOIN persons ON persons.liu_id = bookings.booker_liu_id WHERE bookings.id = :bookingId LIMIT 1",
@@ -82,6 +83,7 @@
 				return $db->replaceAll();
 			}
 		}
+
 		public static function generateKey() {
 			$exists = true;
             $db = Database::getDb();

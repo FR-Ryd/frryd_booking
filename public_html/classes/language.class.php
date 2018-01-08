@@ -41,15 +41,12 @@
 		}
 
 		public static function delete($languageID) {
-			$db = self::getDb();
-			if ($db->readAll()) {
-				if (ItemCategoryTranslation::deleteLanguage($languageID)
-						&& ItemTranslation::deleteLanguage($languageID)
-						&& TextTranslation::deleteLanguage($languageID)) {
-					$db->not("id", $languageID);
-					return $db->replaceAll();
-				}
-			}
+			ItemCategoryTranslation::deleteLanguage($languageID);
+			ItemTranslation::deleteLanguage($languageID);
+
+			$db = Database::getDb();
+			$db->execute("DELETE FROM languages WHERE id = :langID;",
+			    array(":langID" => $languageID));
 
 			return false;
 		}
@@ -111,6 +108,14 @@
 			$text = $translation['value'];
 
             return $text;
+		}
+
+		public static function getTextInCat($languageID){
+			$db = Database::getDb();
+			$db->query("SELECT * FROM translations WHERE (language = :langID)",
+				array(":langID" => $languageID));
+
+			return $db->getAllRows();
 		}
 
         public static function multipleTextUpdate($updated) {

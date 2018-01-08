@@ -51,16 +51,10 @@
 			    array(":categoryID" => $categoryID));
 		}
 
-		public static function deleteLanguage($language) {
-            CRUSH(); //???
-
-			$db = self::getDb();
-			if ($db->readAll()) {
-				$db->not("language", $languageID);
-				return ($db->replaceAll());
-			}
-			return false;
+		public static function deleteLanguage($languageID) {
+			$db = Database::getDb();
+			$db->execute("DELETE FROM item_categories_translations WHERE language = :langID;",
+			    array(":langID" => $languageID));
 		}
-
 	}
 ?>
