@@ -123,15 +123,6 @@
 					$this->showUser = $liu_id;
 				}
 			}
-			if(isset($_POST['deleteuser'])) {
-				if( !User::isAdmin()) {
-					exit;
-                }
-				$liu_id = $_POST['liu_id'];
-				User::delUser($remarkID, $liu_id);
-				$_SESSION['message'] = Language::text("user") . Language::text("removed");
-				$this->showUser = $liu_id;
-			}
 		}
 
 		protected function displayContent() {
@@ -230,7 +221,6 @@
 								<input type='checkbox' id='squaredOne' style='display:none' class='accept_eula' name='setAdmin' $isAdmin /><label for='squaredOne'></label>
 							</div>
 						</div><br \>");
-				echo("<input style='margin-right:5px;margin-bottom:10px;' class='button_style' type='submit' name='deleteuser' onclick='return confirm(\"Are you sure you want to delete user $liu_id?\")' value='".Language::text("delete_user")."' disabled='disabled' class='Delete User'/>");
             }
             echo("<input class='button_style' type='submit' name='update' value='".Language::text("update_information")."' class='updateUser'/>
                 </fieldset>

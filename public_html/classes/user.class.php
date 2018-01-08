@@ -260,9 +260,5 @@
 			array(":remarkID" => $remarkID));
 		}
 
-		public static function delUser($liu_id, $value) {
-			//TODO delete user
-        }
-
 	}
 ?>
