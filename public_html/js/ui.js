@@ -318,7 +318,7 @@ if (!Array.prototype.indexOf) {
 							}
 
                         // If the date is not among the dates we have booked for..
-                        //   bookedPeriods.length < maxPeriods ===> we have not used up all our booking-spree-allowance :P
+                        //   bookedPeriods.length < maxPeriods ===> we have not used up all our booking allowance
                         //   numFree >= numBooked ===> there is more stuff to book
                         //   sortid ===> it lies next to a booked date
                         //       ===> Make things bookable
@@ -431,8 +431,6 @@ if (!Array.prototype.indexOf) {
 
 			title.css("cursor", "pointer").click(clickFunc);
 			$(this).children(".itemImage").css("cursor", "pointer").click(clickFunc);
-			//title.css("cursor", "pointer").toggle(startFunc, endFunc);
-			//$(this).children(".itemImage").css("cursor", "pointer").toggle(startFunc, endFunc);
 
 			var book = function () {
 				//Update the periods look and functionality
@@ -627,7 +625,6 @@ $(document).ready(function () {
 	$(".getUserInfo").click(function() {
         var liu_id = $("#addUserEmail").val();
         var url = config.siteUrl + "booking.php?ajax=1&liu_id="+liu_id;
-        //var loadButton = $(this);
 
         $(".userRemarkSection").empty();
 

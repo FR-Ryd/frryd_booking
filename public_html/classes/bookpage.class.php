@@ -39,8 +39,8 @@
 
 					$isAvailable = array();
 					$numAvailable = 0;
-					// check availability:
 
+					// check availability:
 					foreach ($_POST['booked_items_index'] as $index) {
                         $itemId = $_POST['item_'.$index];
                         $pickupSessionId = $_POST['pickup_session_'.$index];
@@ -140,6 +140,9 @@
 				header("Location: book.php");
 				exit;
 			} elseif (isset($_POST['abort'])) {
+				//Remove chosen items from cart
+				unset($_SESSION['item']);
+
 				header("Location: index.php");
 				exit;
 			} else {

@@ -4,10 +4,17 @@
 	class ConfirmPage extends Page {
 
 		public function handleInput() {
-			// move post data to session
+			// move post data from post (from form) to session
             //  This is to make sure that what we want to book is remembered if we need to go trough cas.
-			foreach($_POST as $name => $value) {
-				$_SESSION[$name] = $value;
+			if($_POST['item']){
+				if(isset($_SESSION['item'])){
+					foreach($_POST['item'] as $newitem){
+						array_push($_SESSION['item'] ,$newitem);
+					}
+				}
+				else{
+					$_SESSION['item'] = $_POST['item'];
+				}
 			}
 
             //Make sure the user is authed properly.
@@ -20,9 +27,9 @@
 			$this->displayMenu();
 			$this->displayMessage();
 			?>
-		<div class="main">
+			<div class="main">
 
-			<h1><?php echo(Language::text("confirm_title")); ?></h1><br \>
+			<h1><?php echo(Language::text("confirm_title")); ?></h1><br/>
 
 			<?php
 
@@ -140,22 +147,23 @@
 						</div>
 					</div>
 					<br />
-					<input class='button_style' type="submit" name="confirm" value="Book" class="confirmBooking"/>
-					<input class='button_style' type="submit" name="abort" value="Cancel" />
+					<input class='button_style' type="submit" name="confirm" value="<?php echo(Language::text("book")); ?>" class="confirmBooking"/>
+					<input class='button_style' type="submit" name="abort" value="<?php echo(Language::text("unbook")); ?>" />
 				</form>
 
 				<?php
 			} else {
 				?>
-				<?php echo(Language::text("error_no_items_selected")); ?><br />
-				<a href='index.php'><?php echo(Language::text("confirm_back_to_booking")); ?></a>
-
+				<?php
+				echo(Language::text("error_no_items_selected")); ?><br />
 				<?php
 			}
 
 
 			?>
-		</div>
+			<br>
+			<a href='index.php'><?php echo(Language::text("confirm_back_to_booking")); ?></a>
+			</div>
 			<?php
 		}
 	}

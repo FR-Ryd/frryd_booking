@@ -6,13 +6,15 @@
 
 			$this->displayMessage();
 ?>
-		<!--
+		<?php
+		/*
 		<div class='live_search'>
 				<input type='text' class='livesearchquery' id='livesearchid' autocomplete="off" placeholder='Search'>
 				<input type="image" class="livesearchbutton" src="images/toolbar_find.png" alt="Search">
 				<ul id="livesearchresults"></ul>
         </div>
-		-->
+		*/
+		?>
 
 		<div class="main">
 
@@ -22,7 +24,19 @@
 					<legend><?php echo(Language::text("cart_title")); ?></legend>
 				</fieldset>
 				<fieldset id="checkoutFieldset">
-					<legend><span class="numSpan">0</span> <?php echo(Language::text("cart_items_booked")); ?></legend>
+					<legend>
+						<span class="numSpan">
+						<?php
+						if(isset($_SESSION['item'])){
+							echo count($_SESSION['item']);
+						}
+						else{
+							echo "0";
+						}
+						?>
+						</span>
+						<?php echo(Language::text("cart_items_booked")); ?>
+					</legend>
 					<input id="checkout2" type="submit" name="book" value="<?php echo(Language::text("cart_checkout")); ?>" />
 				</fieldset>
 			</form>
@@ -299,4 +313,4 @@
 		}
 	}
 ?>
-</div><!-- End item presentation -->
+</div>
