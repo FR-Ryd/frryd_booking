@@ -287,43 +287,26 @@ if (!Array.prototype.indexOf) {
 
 							$(this).addClass("booked").removeClass("bookable");
 
-							//TODO clean up code as described below
-                            //This date is the first and last date, ie.. the only date!
+                            //This date is the first or last date
                             // Make it unbookable
-                            //these if's are bad
-							if (sessionDate == smallest && sessionDate == largest) {
+							if (sessionDate == smallest || sessionDate == largest) {
 								// an already booked session, on both edges
 								$(this).bind("click.unbook", unbookClick);
 								$(this).addClass("unbookable");
 
                             //This is the first booked date
-							} else if (sessionDate == smallest) {
-								// an already booked session, on the left edge
-
-								$(this).bind("click.unbook", unbookClick);
-								$(this).addClass("unbookable");
-
-							} else if (sessionDate == largest) {
-								// an already booked session, on the right edge
-
-								$(this).bind("click.unbook", unbookClick);
-								$(this).addClass("unbookable");
-
 							} else {
 								// an already booked session in the middle
-
                                 //We can't unbook sessions that are in the middle of other booked sessions, which makes sense.
 								$(this).removeClass("unbookable");
-
 							}
 
                         // If the date is not among the dates we have booked for..
                         //   bookedPeriods.length < maxPeriods ===> we have not used up all our booking allowance
                         //   numFree >= numBooked ===> there is more stuff to book
-                        //   sortid ===> it lies next to a booked date
+                        //   nextSessionDate/prevSessionDate ===> it lies next to a booked date
                         //       ===> Make things bookable
 
-                        //TODO: sortID
 						} else if (bookedPeriods.length < maxPeriods && numFree >= numBooked && (prevSessionDate == largest || nextSessionDate == smallest) ) {
 							// an adjacent session
 
@@ -333,7 +316,6 @@ if (!Array.prototype.indexOf) {
                         //Either we have booked as many as we can, we have booked for as long as we can, or this session is too far from our booked sessions.
 						} else {
 							// a distant session
-
 							$(this).removeClass("booked").removeClass("unbookable").removeClass("bookable");
 						}
 
@@ -341,9 +323,6 @@ if (!Array.prototype.indexOf) {
 						if (jQuery.inArray(prevSessionDate, bookedPeriods) != -1) {
 							// the previous is an already booked session
 							$(this).addClass("prevBooked");
-
-                        	//TODO: sortid
-
 						} else if (bookedPeriods.length < maxPeriods && prevFree >= numBooked && (sessionDate == smallest || bookedPeriodNext[prevSessionDate])) {
 							// the previous is an adjacent session
 							$(this).removeClass("prevBooked").addClass("prevBookable");
