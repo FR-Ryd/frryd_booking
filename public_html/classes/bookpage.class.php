@@ -1,8 +1,12 @@
 ﻿<?php
-
 	class BookPage extends Page {
 
 		private $bookedItems;
+
+		private function clearCart(){
+			//Remove chosen items from cart
+			unset($_SESSION['item']);
+		}
 
 		public function handleInput() {
 			$message = "";
@@ -137,16 +141,16 @@
 
 				}
 				$_SESSION['message'] = $message;
+
+				$this->clearCart();
+
 				header("Location: book.php");
 				exit;
 			} elseif (isset($_POST['abort'])) {
-				//Remove chosen items from cart
-				unset($_SESSION['item']);
+				$this->clearCart();
 
 				header("Location: index.php");
 				exit;
-			} else {
-
 			}
 		}
 

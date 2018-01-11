@@ -114,12 +114,6 @@
             return $items;
 		}
 
-        public static function getNumBookingItemsForPickupSession($sessionRank) {
-            CRASH(); //???
-            //Implement this if it seems that we can make a sql-count instead of being smart
-            //and getting both items and doing count() on the result from getBookingItemsForPickupSession
-		}
-
 		public static function getBookingsForPickupSession($sessionId) {
 			$db = Database::getDb();
 			$db->query("SELECT * FROM booking_items WHERE pickup_session = :sessionId ORDER BY picked_up_time;",
@@ -303,6 +297,5 @@
 				}
 			}
 		}
-
 	}
 ?>

@@ -1,6 +1,4 @@
 ﻿<?php
-	// TODO: Dubbelkolla ledighet redan h�r
-
 	class ConfirmPage extends Page {
 
 		public function handleInput() {
@@ -50,7 +48,6 @@
 					$minSession = $maxSession = null;
 					if (isset($postedItem['sessions'])) {
 						if ($item = LendingItem::getItem($postedItem['id'])) {
-                            //TODO: Get deposit amount from database based on item id instead of random parameter passed from browser.
 							$deposit = $item['deposit'];
 							$sum_deposit += $deposit * $postedItem['num'];
 							foreach ($postedItem['sessions'] as $sessionDateInt) {
