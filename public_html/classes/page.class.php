@@ -4,7 +4,7 @@
 		public function initCAS() {
 			include_once('CAS.php');
 
-			phpCAS::setDebug("CAS_DEBUG.log");
+			//phpCAS::setDebug("CAS_DEBUG.log");
 			phpCAS::client(CAS_VERSION_2_0,'login.it.liu.se',443,'/cas/');
             phpCAS::setNoCasServerValidation();
 		}

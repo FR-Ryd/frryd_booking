@@ -113,8 +113,10 @@ class Database {
     	    $parameters = $args[2];
     	}
 
-    	$log_file_name = dirname($_SERVER['SCRIPT_FILENAME']) . "/sql_log.txt";
-    	file_put_contents($log_file_name, $sql . "\n", FILE_APPEND);
+        //Logging for DEBUG of sql
+    	//$log_file_name = dirname($_SERVER['SCRIPT_FILENAME']) . "/sql_log.txt";
+    	//file_put_contents($log_file_name, $sql . "\n", FILE_APPEND);
+
     	$query = self::$dbh->prepare($sql);
     	if ($parameters == false) {
     	    $error_free = $query->execute();
