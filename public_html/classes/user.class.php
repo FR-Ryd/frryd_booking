@@ -44,6 +44,7 @@
 
         //Creates the user if it does not exist already.
         public static function createUser($liu_id) {
+			$liu_id = strip_tags($liu_id);
             if( !self::hasUser($liu_id)) {
                 $db = Database::getDb();
                 $db->execute("INSERT INTO persons (liu_id) VALUES(:liuid);",
@@ -101,6 +102,7 @@
         }
 
         private static function setProperty($which, $value, $liu_id) {
+			$value = strip_tags($value);
 
             if( !self::validProperty($which)) {
                 return;
@@ -165,6 +167,12 @@
         }
 
         public static function updateUser($liu_id, $name, $nin, $address, $phone, $card_id) {
+			$name = strip_tags($name);
+			$nin = strip_tags($nin);
+			$address = strip_tags($address);
+			$phone = strip_tags($phone);
+			$card_id = strip_tags($card_id);
+
             if(isset($card_id)) {
                 $other_liu_user = User::getUserByCard($card_id);
                 if($other_liu_user) {
@@ -242,6 +250,8 @@
         }
 
        public static function addRemark($remark, $liu_id = null) {
+		   $remark = strip_tags($remark);
+
             if($liu_id == null) {
                 $liu_id = self::getUser();
             }
