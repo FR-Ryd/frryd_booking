@@ -328,13 +328,18 @@
 				</div>
 				<!-- Deletion of category -->
 				<div class="catDeleteBtn">
-					<form action="item.php" method="post">
+					<form class="catDelForm" action="item.php" method="post">
 						<fieldset>
 							<input type="hidden" name="lending_item_category_id" value="<?php echo($categoryID); ?>" />
 							<input type="submit" class="button_style" name="delete_lending_item_category" value="<?php echo(Language::text("remove_category")); ?>" />
 						</fieldset>
 					</form>
 				</div>
+				<script>
+					$('.catDelForm').submit(function() {
+					    return confirm("<?php echo(Language::text("confirm_cat_del")); ?>");
+					});
+				</script>
 				<?php
 				}
 			}

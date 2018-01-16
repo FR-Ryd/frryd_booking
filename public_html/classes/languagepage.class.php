@@ -127,9 +127,19 @@
 									<br>
 									<br>
 									<input type="submit" name="update_language" value="<?php echo(Language::text("update")); ?>" />
+								</fieldset>
+							</form>
+							<form action="languages.php" method="post" class="delLangForm">
+								<fieldset>
+									<input type="hidden" name="language" value="<?php echo($this->language); ?>" />
 									<input type="submit" name="delete_language" value="<?php echo(Language::text("remove_language")); ?>" />
 								</fieldset>
 							</form>
+							<script>
+								$('.delLangForm').submit(function() {
+								    return confirm("<?php echo(Language::text("confirm_lang_del")); ?>");
+								});
+							</script>
 						<?php
 						} ?>
 				<?php }
